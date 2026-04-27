@@ -1,17 +1,42 @@
 ---
-title: "Intro"
+title: "Security Monitoring"
+description: "Real-time protection for your smart contracts against attacks, unauthorized changes, and suspicious activity."
 ---
 
-# Intro
-
-Enhance your address's security with our advanced Security Monitoring feature. It constantly monitors your blockchain and key security parameters to safeguard your smart contract from potential attacks, unauthorized ownership changes, contract upgrades, and suspicious interactions.
-
-By leveraging our Security Monitoring, you gain the power to identify early signs of potential hacks, giving you the control to trigger protective measures as needed.
-
-No additional configuration is required for this feature, as it seamlessly activates the moment you add your address.
-
+Enhance your address's security with advanced Security Monitoring. It constantly watches your blockchain and key security parameters to safeguard your smart contracts from potential attacks, unauthorized ownership changes, contract upgrades, and suspicious interactions.
 
 <Info>
-Please note that this feature is in testing mode. If you come across any inaccurate data or false positive notifications, kindly send us an email to notify us.&#x20;
+  Security Monitoring activates automatically the moment you add an address — no extra configuration required.
 </Info>
 
+## What it detects
+
+<CardGroup cols={2}>
+  <Card title="AML Detector" icon="shield-halved" href="/security-monitoring/detectors/aml-detector">
+    Flags addresses appearing on AML, sanctions, and exploit databases.
+  </Card>
+  <Card title="Address Poison" icon="skull-crossbones" href="/security-monitoring/detectors/address-poison">
+    Detects transaction history poisoning with look-alike addresses.
+  </Card>
+  <Card title="Block Anomaly" icon="cube" href="/security-monitoring/detectors/block-anomaly">
+    Monitors blocks for unusual transaction counts, gas, or block size.
+  </Card>
+  <Card title="Tracker" icon="route" href="/security-monitoring/detectors/tracker">
+    Traces asset movements and labels addresses across hops.
+  </Card>
+</CardGroup>
+
+## How alerts work
+
+When a detector fires, you receive a real-time alert with:
+
+| Field | Description |
+|-------|-------------|
+| **Severity** | Critical · High · Medium · Low · Info |
+| **Contract** | The monitored address that triggered the alert |
+| **Detector** | Which detector fired and its configuration |
+| **Metadata** | Contextual data specific to the detector type |
+
+<Warning>
+  This feature is currently in testing mode. If you encounter inaccurate data or false positives, please contact us at support@hacken.io.
+</Warning>

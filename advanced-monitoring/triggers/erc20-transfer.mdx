@@ -1,21 +1,58 @@
 ---
-title: "ERC20 Transfer"
-description: >-
-  This trigger alerts you whenever an ERC20 token transfer of more than a specified amount occurs, allowing you to monitor large transfers and protect against potential theft.
+title: "ERC-20 Transfer"
+description: "Fires whenever an ERC-20 token transfer above a configured threshold occurs on the monitored contract."
 ---
 
-# ERC20 Transfer
+Monitor large or suspicious token movements in real time. Configure a minimum transfer amount and the trigger fires the moment it's exceeded — giving your team an instant signal before funds move further.
 
-**Detector Configuration**  
-1. *Name* - Enter a descriptive name for your trigger, for example: "Blacklisted Callers".
-2. *Token address* - An address of the token that must be monitored.
-3. *Amount* - Token amount as a limit, transfer that exceeds the limit will be noticed.
-4. *Token decimals value* - Specifies the smallest fraction of a token that can be handled.
-5. *Transfer destination* - From, to or any of the contract.
+## Use cases
 
-![](/assets/erc_20_faq.png)
+<CardGroup cols={1}>
+  <Card title="Theft & drain detection" icon="money-bill-transfer">
+    Catch abnormally large token outflows the moment they happen. A transfer exceeding your threshold from a contract you monitor is often the first observable sign of an exploit.
+  </Card>
+  <Card title="Whale movement alerts" icon="fish">
+    Track significant holder movements — large transfers from known investor wallets can signal sell pressure or vesting unlocks worth acting on.
+  </Card>
+  <Card title="Treasury oversight" icon="building-columns">
+    Ensure no single transfer from your treasury contract exceeds your defined limits without an alert, regardless of who initiates it.
+  </Card>
+</CardGroup>
 
+## Configuration
 
-**Alert example**
+<Steps>
+  <Step title="Name">
+    Enter a descriptive name, e.g. `Large USDC Outflow`.
+  </Step>
+  <Step title="Token address">
+    The contract address of the ERC-20 token to monitor.
 
-![](/assets/erc_20_alert.png)
+    ```
+    0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
+    ```
+  </Step>
+  <Step title="Amount">
+    Minimum transfer amount that triggers an alert. Transfers at or above this value will fire.
+
+    ```
+    10000
+    ```
+  </Step>
+  <Step title="Token decimals">
+    The decimal precision of the token (e.g. `6` for USDC, `18` for most ERC-20s). Used to interpret the raw on-chain amount correctly.
+  </Step>
+  <Step title="Transfer direction">
+    Choose which side of the transfer to watch:
+
+    | Option | Meaning |
+    |--------|---------|
+    | **From** | Alert when the monitored address sends tokens |
+    | **To** | Alert when the monitored address receives tokens |
+    | **Any** | Alert on either direction |
+  </Step>
+</Steps>
+
+<Warning>
+  Make sure **Token decimals** matches the actual token. An incorrect value will cause the threshold comparison to use the wrong scale and either miss alerts or flood you with noise.
+</Warning>

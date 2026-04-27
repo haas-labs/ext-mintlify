@@ -1,26 +1,38 @@
 ---
 title: "Monitoring and Detection"
+description: "An overview of the four monitoring types available in Hacken Extractor."
 ---
 
-# Monitoring and Detection
+Hacken Extractor organizes monitoring into four specialized layers. Each targets a different risk surface — from on-chain attack detection to regulatory compliance and financial health.
 
-Extractor supports the following Monitoring Types:
+<CardGroup cols={2}>
+  <Card title="Security Monitoring" icon="shield" href="/security-monitoring/intro">
+    Real-time detection of on-chain threats — AML flags, address poisoning, block anomalies, and asset flow tracking. Built for security teams responding to active incidents.
+  </Card>
+  <Card title="Advanced Monitoring" icon="sliders" href="/advanced-monitoring/intro">
+    Custom triggers that fire on specific contract events — ERC-20 transfers above a threshold, function calls, blacklisted callers, and more. Built for teams with precise monitoring needs.
+  </Card>
+  <Card title="Compliance Monitoring" icon="scale-balanced">
+    Tracks price feeds, token supply, TVL, DNS records, and GitHub activity. Surfaces deviations that may indicate regulatory exposure or protocol integrity issues.
+  </Card>
+  <Card title="Financial Monitoring" icon="chart-line">
+    Monitors balances, circulation supply, multisig state, and token flows. Designed for treasury teams and protocols that need continuous financial health visibility.
+  </Card>
+</CardGroup>
 
-* Security Monitoring
+## How they work together
 
-![](/assets/security_monitoring.png)
-
-
-* Advanced Monitoring
-
-![](/assets/advanced_monitoring.png)
-
-
-* Compliance Monitoring
-
-![](/assets/compliance_monitoring.png)
-
-
-* Financial Monitoring
-
-![](/assets/financial_monitoring.png)
+<Steps>
+  <Step title="Security Monitoring catches threats first">
+    Detectors run continuously against every block and transaction, flagging known bad actors, anomalous blocks, and suspicious fund flows in real time.
+  </Step>
+  <Step title="Advanced Monitoring covers custom logic">
+    Where built-in detectors don't fit, triggers let you define your own conditions — any function call, event, transfer pattern, or caller restriction.
+  </Step>
+  <Step title="Compliance and Financial Monitoring track health over time">
+    Scheduled checks evaluate price deviations, supply changes, balance thresholds, and external data sources on a configurable cadence.
+  </Step>
+  <Step title="Alerts route to your team">
+    All monitoring types emit structured alerts with severity levels and full transaction context, delivered to your configured notification channels.
+  </Step>
+</Steps>

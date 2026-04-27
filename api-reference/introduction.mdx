@@ -1,0 +1,79 @@
+---
+title: "API Reference"
+description: "Interact with the Hacken Extractor API to manage projects, contracts, and alerts programmatically."
+---
+
+## Base URL
+
+```
+https://extractor.hacken.dev
+```
+
+## Authentication
+
+All requests require a Bearer token in the `Authorization` header.
+
+```bash
+Authorization: Bearer <your-api-key>
+```
+
+<Info>
+  Generate your API key from the Hacken Extractor dashboard under **Settings → API Keys**.
+</Info>
+
+## Response format
+
+All endpoints return JSON. Successful responses use HTTP `200`; errors return a non-2xx status with a descriptive body.
+
+<Tabs>
+  <Tab title="Success">
+    ```json
+    {
+      "id": 1,
+      "name": "My Project",
+      "networkStatus": "MAINNET"
+    }
+    ```
+  </Tab>
+  <Tab title="Error">
+    ```json
+    {
+      "statusCode": 400,
+      "message": "Validation failed",
+      "errors": ["name must not be empty"]
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Pagination
+
+Search and aggregation endpoints accept `from` and `size` for cursor-style pagination.
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `from` | integer | `0` | Starting document offset |
+| `size` | integer | `10` | Number of results to return |
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Create Project" icon="folder-plus" href="/api-reference/project-route/create-project">
+    `POST /api/v1/project`
+  </Card>
+  <Card title="Get Project" icon="folder-open" href="/api-reference/project-route/get-project">
+    `GET /api/v1/project/{id}`
+  </Card>
+  <Card title="Create Contract" icon="file-code" href="/api-reference/contract-route/create-contract">
+    `POST /api/v1/contract`
+  </Card>
+  <Card title="Get Contract" icon="file-magnifying-glass" href="/api-reference/contract-route/get-contract">
+    `GET /api/v1/contract/{id}`
+  </Card>
+  <Card title="Search Alerts" icon="magnifying-glass" href="/api-reference/detector-route/search-alerts">
+    `POST /api/v1/detector/alert/search`
+  </Card>
+  <Card title="Aggregate Alerts" icon="chart-bar" href="/api-reference/detector-route/aggregate-alerts">
+    `POST /api/v1/detector/alert/aggregation`
+  </Card>
+</CardGroup>

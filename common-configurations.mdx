@@ -1,126 +1,154 @@
 ---
 title: "Common Configurations"
-description: Common Detectors Configurations
+description: "Shared configuration options available across all detectors and triggers."
 ---
 
-# Common Configurations
+## Severity
 
-### Severity
+Every alert is assigned a severity level, either set manually or determined automatically by the detector.
 
-Alert (Event) Severity levels
+| Level | Meaning |
+|-------|---------|
+| `CRITICAL` | Immediate reaction required — treat as an active incident |
+| `HIGH` | Dangerous event that needs prompt attention and resolution |
+| `MEDIUM` | Important or suspicious event worth investigating |
+| `LOW` | Informational event that may provide useful insights or metrics |
+| `INFO` | Progress or state notification only |
+| `Auto` | Detector chooses severity based on its own logic; overriding this forces all alerts to the selected level |
 
-<table><thead><tr><th width="234.859375">Level</th><th width="395.4246826171875">Description</th><th>Comment</th></tr></thead><tbody><tr><td>**CRITICAL**</td><td>Critcial Event. Needs immediate reaction or automatica action (incident)</td><td></td></tr><tr><td>**HIGH**</td><td>Dangerous Event. Needs attention and resolution</td><td></td></tr><tr><td>**MEDIUM**</td><td>Important or Suspicious Event. </td><td></td></tr><tr><td>**LOW**</td><td>Useful information Event with may provide insights or metrics</td><td></td></tr><tr><td>**INFO**</td><td>Information only Event, often used for notification of the progress or state</td><td></td></tr><tr><td>Auto</td><td>Severity is determined by the Detector itself, based on Detector's functionality and intelligence.<br />In <code>Auto</code> severity mode, Detector may generate Alerts (Events) with different severities. If such intelligent Detector severity is overrided, all Alerts will be with overriden severity level</td><td></td></tr></tbody></table>
+<Info>
+  When a detector is set to **Auto**, it may emit alerts at different severity levels depending on conditions. Overriding forces a fixed level across all alerts from that detector.
+</Info>
 
-***
+---
 
-### Cron
+## Cron Schedule
 
-Cron Expression Configuration
+Controls how frequently a detector evaluates. Three formats are accepted:
 
-<table><thead><tr><th width="245.539794921875">Expression</th><th width="289.7244873046875">Description</th><th>Examples</th></tr></thead><tbody><tr><td>Quartz</td><td><a href="https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html">Quarz Cron</a> expresson Syntax</td><td><pre><code>0 0 12 * * ?
-</code></pre></td></tr><tr><td>Human</td><td>Simple Expression in human readable format interval</td><td><code>10 min</code>, <code>1 day</code>, 2 <code>hours</code>, </td></tr><tr><td></td><td></td><td></td></tr><tr><td>Milliseconds</td><td>Millisecond value interval</td><td><code>60000</code></td></tr></tbody></table>
+<Tabs>
+  <Tab title="Human readable">
+    Plain-language intervals — easiest to read and configure.
 
-***
+    ```
+    10 min
+    1 day
+    2 hours
+    30 seconds
+    ```
+  </Tab>
+  <Tab title="Quartz cron">
+    Full [Quartz cron](https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html) expression syntax for precise scheduling.
 
-### Condition (Threshold)
+    ```
+    0 0 12 * * ?       every day at noon
+    0 0/5 * * * ?      every 5 minutes
+    0 0 0 ? * MON-FRI  weekdays at midnight
+    ```
+  </Tab>
+  <Tab title="Milliseconds">
+    Raw millisecond interval — useful for programmatic configuration via the API.
 
-Condition (Threshold) Configuration
+    ```
+    60000     1 minute
+    3600000   1 hour
+    86400000  1 day
+    ```
+  </Tab>
+</Tabs>
 
-```scala
-1. BASIC COMPARISON OPERATORS:
-   = value      -> equals value (exact match)
-   != value     -> not equals value (exact match)
+---
 
-2. ABSOLUTE VALUE HANDLING:
-   > 10         -> v > 10 OR v < -10 (absolute value handling)
-   < 25         -> |v| < 25 (absolute value handling)
-   >= 35        -> |v| >= 35 (absolute value handling)
-   <= 50        -> |v| <= 50 (absolute value handling)
+## Condition (Threshold)
 
-3. EXPLICIT SIGN HANDLING (no absolute value):
-   > +10        -> v > 10 (exact value, no absolute handling)
-   > -15        -> v > -15 (exact value, no absolute handling)
-   < +30        -> v < 30 (exact value, no absolute handling)
-   < -20        -> v < -20 (exact value, no absolute handling)
+Conditions control when a detector fires based on a numeric value. The syntax supports basic comparisons, percentage changes, delta operations, and edge-detection operators.
 
-3.5. ONCE OPERATORS (edge detection - trigger only when condition transitions from false to true):
-   >> 10        -> v > 10 (triggers only once when condition becomes true, then false on subsequent evaluations)
-   << 25        -> v < 25 (triggers only once when condition becomes true, then false on subsequent evaluations)
-   >>= 10       -> v >= 10 (triggers only once when condition becomes true, then false on subsequent evaluations)
-   <<= 25       -> v <= 25 (triggers only once when condition becomes true, then false on subsequent evaluations)
-   >> ++100     -> increase > 100 (triggers only once when the increase condition becomes true)
-   << --50      -> decrease > 50 (triggers only once when the decrease condition becomes true)
-   >> 25%       -> percentage change > 25% (triggers only once when the percentage condition becomes true)
-   << 10%       -> percentage change < 10% (triggers only once when the percentage condition becomes true)
-   
-   Note: These operators return true only when the condition transitions from false to true (edge detection).
-         Once the condition becomes true, subsequent evaluations return false even if the condition remains true.
-         This is useful for detecting threshold crossings or one-time events.
+<AccordionGroup>
+  <Accordion title="Basic comparison" icon="equals">
+    Standard numeric comparison against a fixed value.
 
-3.6. MAX/MIN OPERATORS (trigger only on new maximum/minimum):
-   >>> 100      -> v > 100 AND v > previous max (triggers only when a new maximum is reached)
-   <<< 50       -> v < 50 AND v < previous min (triggers only when a new minimum is reached)
-   >>>= 100     -> v >= 100 AND v >= previous max (triggers only when a new maximum is reached, including equality)
-   <<<= 50      -> v <= 50 AND v <= previous min (triggers only when a new minimum is reached, including equality)
-   
-   Note: These operators track the maximum (>>>/>>>=) or minimum (<<</<<<=) value seen so far.
-         They return true only when:
-         - The value exceeds/meets (>>>/>>>=) or is below/meets (<<</<<<=) the threshold, AND
-         - The value is greater than/equal (>>>/>>>=) or less than/equal (<<</<<<=) all previously seen values that met the threshold.
-         Example for ">>> 100":
-         - v=90 -> false (90 < 100)
-         - v=200 -> true (200 > 100, and it's the first value exceeding threshold)
-         - v=150 -> false (150 > 100, but 150 < 200, so not a new max)
-         - v=300 -> true (300 > 100 AND 300 > 200, so new max)
-         - v=200 -> false (200 > 100, but 200 < 300, so not a new max)
-         Example for ">>>= 100":
-         - v=100 -> true (100 >= 100, and it's the first value meeting threshold)
-         - v=200 -> true (200 >= 100 AND 200 >= 100, so new max)
-         - v=150 -> false (150 >= 100, but 150 < 200, so not a new max)
-         - v=200 -> false (200 >= 100, but 200 <= 200, so not a new max)
+    ```
+    = 100     fires when value equals 100
+    != 100    fires when value does not equal 100
+    > 50      fires when |value| > 50
+    < 25      fires when |value| < 25
+    >= 35     fires when |value| >= 35
+    <= 50     fires when |value| <= 50
+    ```
 
-4. PERCENTAGE OPERATIONS:
-   > 25%        -> percentage change > 25% (absolute value handling)
-   < 10%        -> percentage change < 10% (absolute value handling)
-   >= 50%       -> percentage change >= 50% (absolute value handling)
-   <= 75%       -> percentage change <= 75% (absolute value handling)
-   = 100%       -> percentage change = 100% (exact match)
-   != 200%      -> percentage change != 200% (exact match)
-   
-   Note: This calculates the percentage change from previous value to current value.
-   Formula: (v - v0) / v0100. For example:
-   - v0=1000, v=700: percentage change = (700-1000)/1000*100 = -30% (decreased by 30%)
-   - v0=1000, v=1300: percentage change = (1300-1000)/1000*100 = 30% (increased by 30%)
-   - v0=100, v=100: percentage change = (100-100)/100*100 = 0% (no change)
+    <Tip>Operators `>`, `<`, `>=`, `<=` apply **absolute value handling** by default. Prefix with `+` or `-` to compare exact signed values instead.</Tip>
+  </Accordion>
 
-5. DELTA OPERATIONS (change from previous value):
-   > ++100      -> increase > 100 (absolute change)
-   < --50       -> decrease > 50 (magnitude of decrease)
-   >= ++30      -> increase >= 30 (absolute change)
-   <= --25      -> decrease >= 25 (magnitude of decrease)
-   = ++20       -> increase = 20 (exact change)
-   != ++40      -> increase != 40 (exact change)
+  <Accordion title="Explicit sign (no absolute value)" icon="plus-minus">
+    Prefix the threshold with `+` or `-` to skip absolute value handling and compare the exact signed value.
 
-6. PERCENTAGE DELTA OPERATIONS:
-   > ++25%      -> increase of percentage change > 25%
-   < --10%      -> increase of percentage change > 10%
-   >= ++50%     -> increase of percentage change >= 50%
-   <= --30%     -> increase of percentage change >= 30%
-   = ++100%     -> increase of percentage change = 100%
-   != ++200%    -> increase of percentage change != 200%
+    ```
+    > +10     fires when value > 10 (exact, positive only)
+    > -15     fires when value > -15
+    < +30     fires when value < 30
+    < -20     fires when value < -20
+    ```
+  </Accordion>
 
-7. SPACES SUPPORT:
-   > ++ 100     -> increase > 100 (spaces are ignored)
-   <= -- 25     -> decrease >= 25 (spaces are ignored)
-   = ++ 30.0 %  -> increase = 30% (spaces are ignored)
+  <Accordion title="Percentage change" icon="percent">
+    Fires based on the percentage change from the previous value. Formula: `(v - v₀) / v₀ × 100`.
 
+    ```
+    > 25%     change > 25%
+    < 10%     change < 10%
+    >= 50%    change >= 50%
+    = 100%    exact 100% change
+    ```
 
-NOTES:
-- Equality (=) and not equality (!=) always use exact value matching
-- Comparison operators (>, <, >=, <=) respect absolute value handling
-- Once operators (>>, <<) trigger only when condition transitions from false to true (edge detection)
-- Delta operations (++, --) work with all comparison operators including once operators
-- Percentage operations work with all comparison operators including once operators
-- Spaces are automatically removed during parsing
-- The abs parameter is automatically detected based on value prefix: + / - will not use absolute value handling
-```
+    **Example:** if `v₀ = 1000` and `v = 700`, the change is `-30%`.
+  </Accordion>
+
+  <Accordion title="Delta (absolute change)" icon="arrow-up-arrow-down">
+    Fires based on the absolute change from the previous value using `++` (increase) or `--` (decrease).
+
+    ```
+    > ++100    increase greater than 100
+    < --50     decrease greater than 50
+    >= ++30    increase of at least 30
+    = ++20     increase of exactly 20
+    ```
+  </Accordion>
+
+  <Accordion title="Once operators (edge detection)" icon="arrow-right-to-bracket">
+    `>>` and `<<` variants fire **only once** when a condition transitions from false to true. Subsequent evaluations return false even if the condition remains true — useful for detecting threshold crossings without repeated alerts.
+
+    ```
+    >> 10     fires once when value crosses above 10
+    << 25     fires once when value crosses below 25
+    >>= 10    fires once when value reaches or exceeds 10
+    <<= 25    fires once when value reaches or falls below 25
+    >> ++100  fires once when increase crosses 100
+    >> 25%    fires once when percentage change crosses 25%
+    ```
+  </Accordion>
+
+  <Accordion title="Max/Min operators" icon="chart-line">
+    `>>>` and `<<<` variants fire only when a **new all-time maximum or minimum** is reached above/below the threshold.
+
+    ```
+    >>> 100    new maximum above 100
+    <<< 50     new minimum below 50
+    >>>= 100   new maximum at or above 100
+    <<<= 50    new minimum at or below 50
+    ```
+
+    **Example for `>>> 100`:**
+
+    | Value | Fires? | Reason |
+    |-------|--------|--------|
+    | 90 | No | Below threshold |
+    | 200 | Yes | First value exceeding 100 |
+    | 150 | No | Above 100 but below previous max (200) |
+    | 300 | Yes | New maximum |
+    | 200 | No | Below current max (300) |
+  </Accordion>
+</AccordionGroup>
+
+<Info>
+  Spaces in condition expressions are ignored — `> ++ 100` and `>++100` are equivalent.
+</Info>

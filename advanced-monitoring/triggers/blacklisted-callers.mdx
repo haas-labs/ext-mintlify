@@ -1,18 +1,44 @@
 ---
 title: "Blacklisted Callers"
-description: >-
-  This trigger alerts you if a transaction is initiated from a blacklisted address, helping you to be informed of suspicious activity from known problematic accounts or contracts.
+description: "Fires whenever a transaction to the monitored contract is initiated by an address on your blacklist."
 ---
 
-# Blacklisted Callers
+Maintain a list of known malicious, sanctioned, or otherwise untrusted addresses. Any time one of them interacts with your contract, the trigger fires immediately — before the transaction has any further effect downstream.
 
-**Detector Configuration**  
-1. *Name* - Enter a descriptive name for your trigger, for example: "Blacklisted Callers".
-2. *Blacklisted Entities* - A list of addresses.
+<Warning>
+  This trigger fires on the **initiating address** (`msg.sender`), not intermediate contracts in a call chain. For full call-chain coverage, pair it with the **AML Detector**.
+</Warning>
 
-![](/assets/blacklisted_callers_faq.png)
+## Use cases
 
+<CardGroup cols={1}>
+  <Card title="Sanctions enforcement" icon="ban">
+    Block or flag interactions from OFAC-listed wallets and known exploit addresses before they can interact with your protocol.
+  </Card>
+  <Card title="Post-exploit containment" icon="shield-halved">
+    After a security incident, add the attacker's addresses to the blacklist immediately. Any follow-up interaction with surviving contracts triggers an instant alert.
+  </Card>
+  <Card title="Competitor or bot exclusion" icon="robot">
+    Track if specific bots or competitor addresses are interacting with your contract at unusual frequency.
+  </Card>
+</CardGroup>
 
-**Alert example**
+## Configuration
 
-![](/assets/blacklisted_callers_alert.png)
+<Steps>
+  <Step title="Name">
+    Enter a descriptive label, e.g. `Sanctioned Address Alert`.
+  </Step>
+  <Step title="Blacklisted entities">
+    Comma-separated list of addresses to watch. Any transaction initiated by one of these will fire the trigger:
+
+    ```
+    0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045,
+    0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  Keep your blacklist in sync with an external AML feed by periodically updating this field via the API. The **Custom Addresses** option in the AML Detector can automate this for larger lists.
+</Tip>

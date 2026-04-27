@@ -1,41 +1,55 @@
 ---
 title: "Block Anomaly"
-description: Monitors blocks for Block anomalies.Anomalies includes transaction count (low/large), large block size, large number of Events, etc
+description: "Monitors blocks for abnormal transaction counts, event counts, block size, and gas usage."
 ---
 
-# Block Anomaly
- 
-**Behavior**  
-Transactions Count - Very small or very large transaction count in a block  
-Events Count - Very large or very small events count  
-Block size - Very small or very large block size  
-Gas - Large and small Gas usage in block
+The Block Anomaly detector watches every produced block and fires when key metrics fall outside their expected ranges. It catches network-level anomalies that often precede or accompany on-chain attacks.
 
-**Use cases**
-* Network Health & Stability Monitoring -  A blockchain suddenly produces blocks with abnormally low transaction counts or gas usage, which can signal network congestion, validator downtime, or censorship attacks. The detector flags unusual block characteristics in real time, allowing infra teams (validators, node operators, custodians) to quickly investigate.
+## What it monitors
 
-* Exploit & Attack Detection - Certain exploits (e.g., MEV spam attacks, denial-of-service attacks, reorg attempts) generate blocks with extremely high transaction/event counts or inflated block sizes. The detector catches these anomalies immediately, correlating them with attack patterns (e.g., repeated reverts, flash-loan spam, or flood of small transfers).
+<Tabs>
+  <Tab title="Transactions">
+    Fires when the number of transactions in a block is unusually **low** (possible censorship or validator downtime) or unusually **high** (spam attack, MEV flood).
+  </Tab>
+  <Tab title="Events">
+    Fires when the number of emitted events is abnormal. A spike in events can indicate flash-loan attacks, mass token distributions, or event spam.
+  </Tab>
+  <Tab title="Block size">
+    Fires when the raw block size is outside the configured range. Oversized blocks may signal data-stuffing attacks; undersized blocks may indicate chain stall.
+  </Tab>
+  <Tab title="Gas">
+    Fires when gas usage per block or per transaction is outside expected bounds. High gas can indicate a DoS attempt; low gas may signal abnormal validator behavior.
+  </Tab>
+</Tabs>
 
-* Compliance & Forensics Auditing - Regulators, auditors, or compliance teams require visibility into abnormal block patterns that may indicate illicit activities (e.g., mixers, mass token distributions, laundering via event spam). The detector provides a structured log of block anomalies (e.g., spikes in event counts or gas usage), which can be cross-referenced with suspicious addresses and contracts.
+## Use cases
 
-**Detector Configuration**  
-1. *Name* - Enter a descriptive name for your monitor, for example: "Block Anomaly".
-2. *Transactions min/max*
-3. *Events min/max*
-4. *Block size min/max*
-5. *Gas min/max*
-6. *Gas min/max (Tx)*
-7. *Cron*
-8. *Track Latency*
-9. *Block Freq (min/max)* - Enter expected Block interval (msec).
+<AccordionGroup>
+  <Accordion title="Network health & stability monitoring" icon="heart-pulse">
+    A chain suddenly producing blocks with abnormally low transaction counts or gas usage can signal network congestion, validator downtime, or censorship attacks. The detector flags these in real time so infra teams can investigate immediately.
+  </Accordion>
+  <Accordion title="Exploit & attack detection" icon="bug">
+    MEV spam, denial-of-service attacks, and reorg attempts all produce blocks with extreme metrics. The detector correlates anomalies with known attack patterns (repeated reverts, flash-loan spam, flood of small transfers).
+  </Accordion>
+  <Accordion title="Compliance & forensics" icon="scale-balanced">
+    Auditors and compliance teams need structured logs of abnormal block patterns. The detector provides these for cross-referencing with suspicious addresses and regulatory reporting.
+  </Accordion>
+</AccordionGroup>
 
-![](/assets/block_anomaly_faq_1.png.png)
+## Configuration
 
+| Parameter | Description |
+|-----------|-------------|
+| **Name** | Descriptive label for this detector instance |
+| **Transactions min/max** | Acceptable transaction count range per block |
+| **Events min/max** | Acceptable event count range per block |
+| **Block size min/max** | Acceptable block size range (bytes) |
+| **Gas min/max** | Acceptable total gas usage range per block |
+| **Gas min/max (Tx)** | Acceptable gas usage range per individual transaction |
+| **Block Freq min/max** | Expected block interval in milliseconds |
+| **Cron** | Schedule for evaluation (leave empty for real-time) |
+| **Track Latency** | Whether to include block production latency in analysis |
 
-![](/assets/block_anomaly_faq_2.png)
-
-
-**Alert example**
-
-![](/assets/block_anomaly_alert.png)
-
+<Tip>
+  Start with wide min/max ranges and tighten them over time as you learn your network's baseline. Too-narrow ranges will produce noisy alerts early on.
+</Tip>

@@ -1,48 +1,60 @@
 ---
 title: "Getting Started"
-description: Discover how the Extractor app can safeguard your Address from potential hacks
+description: "Discover how Hacken Extractor safeguards your on-chain addresses from potential hacks."
 ---
-
-# 🚀 Getting Started
 
 ## About
 
-Hacken Extractor is an advanced on-chain security monitoring system that provides real-time monitoring of your addresses and alerts you of any suspicious activity to prevent potential hacks. With Hacken Extractor, you can rest assured that your addresses are secure, and take immediate action if any security threats are detected.
+Hacken Extractor is an advanced on-chain security monitoring system that provides real-time monitoring of your addresses and alerts you of any suspicious activity to prevent potential hacks.
 
-## How does it work? <a href="#how-does-it-work" id="how-does-it-work"></a>
+<CardGroup cols={2}>
+  <Card title="Security Monitoring" icon="shield" href="/security-monitoring/intro">
+    Detect AML flags, address poisoning, block anomalies, and more.
+  </Card>
+  <Card title="Advanced Monitoring" icon="sliders" href="/advanced-monitoring/intro">
+    Build custom triggers for ERC-20 transfers, function calls, and events.
+  </Card>
+  <Card title="Compliance Monitoring" icon="scale-balanced" href="/compliance-monitoring/intro">
+    Track price, TVL, supply, and regulatory risk indicators.
+  </Card>
+  <Card title="API Reference" icon="square-terminal" href="/api-reference/introduction">
+    Manage projects, contracts, and alerts programmatically.
+  </Card>
+</CardGroup>
 
-Hacken Extractor continuously monitors your addresses and checks every transaction against it by the triggers and detectors.
+## How it works
 
-The purpose of the attack detector is to recognize suspicious activity and collect suspicious accounts and contracts to warn against interactions with those addresses.\
-\
-A trigger is a specific condition or set of conditions that are monitored. When these conditions are met, the monitoring system will alert you in real time, providing complete monitoring and protection for your smart contracts. \
-\
-You have full control over the triggers and can customize them to meet your specific security needs, ensuring that the monitoring system only reacts to important events.
+Hacken Extractor continuously monitors your addresses and checks every transaction against your configured triggers and detectors.
+
+<AccordionGroup>
+  <Accordion title="Detectors" icon="magnifying-glass">
+    Detectors recognize suspicious activity and collect flagged accounts and contracts to warn against interactions with those addresses.
+  </Accordion>
+  <Accordion title="Triggers" icon="bolt">
+    A trigger is a specific condition (or set of conditions) that is monitored. When the conditions are met, the monitoring system alerts you in real time. You have full control to customise triggers to your security needs.
+  </Accordion>
+  <Accordion title="Actions" icon="play">
+    Smart Contract Actions let you automate on-chain responses when an alert fires — for example, pausing a contract or executing a withdrawal.
+  </Accordion>
+</AccordionGroup>
 
 ## Quick setup
 
-1. Sign up/in to the app.
-2. Create a project.
-   1. Click on "Add project" button
-      
-![](/assets/create_project_1.png)
+<Steps>
+  <Step title="Sign up">
+    Create your account at [extractor.hacken.dev](https://extractor.hacken.dev).
+  </Step>
+  <Step title="Create a project">
+    Click **Add project**, enter a name, and click **Create**.
+  </Step>
+  <Step title="Add an address">
+    Click **Add entity**, enter the entity name and address, choose the network, and click **Add Entity**.
+  </Step>
+  <Step title="Configure detectors & triggers">
+    Enable the detectors you need from the **Security**, **Compliance**, or **Financial Monitoring** sections, and set up any custom triggers.
+  </Step>
+</Steps>
 
-   2. Enter project name and click "Create"
-      
-![](/assets/create_project_2.png)
-
-
-3. Add an address.  
-   1. Click on "Add entity" button
-      
-![](/assets/create_entity_1.png)
-
-   2. Enter entity name, address, choose the network and click on "Add Entity"
-      
-![](/assets/create_entity_2.png)
-
-   3. Entity created
-      
-![](/assets/create_entity_3.png)
-
-
+<Tip>
+  You can also create projects and add contracts via the [REST API](/api-reference/introduction) for automated or programmatic setups.
+</Tip>

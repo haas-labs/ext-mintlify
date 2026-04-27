@@ -1,118 +1,81 @@
 ---
 title: "AML Detector"
-description: >
-  Monitors blockchain transactions and flags addresses that appear on Anti-Money
-  Laundering (AML) lists, including exploit and sanctions databases.
+description: "Monitors blockchain transactions and flags addresses that appear on AML lists, sanctions, and exploit databases."
 ---
 
-# AML Detector
+The AML Detector acts as a **pre-screening tool** — providing fast initial risk detection before deeper analysis. It checks every transaction against the configured address lists and fires an alert when a match is found.
 
-## Overview
-
-The AML Detector monitors blockchain transactions and flags addresses that appear on AML-related lists, including sanctions and exploit databases.
-
-It functions as a **pre-screening tool** — providing fast initial risk detection before deeper analysis.
-
-> ⚠️ AML scores are not always real-time. When you open an alert, the system may re-query or recalculate the score. As a result, the score shown in the alert may differ slightly from the one that originally triggered it.
-
-If an address has **no score data available** (depending on the selected data source), the alert defaults to **Info** severity instead of being skipped.
-
----
+<Warning>
+  AML scores are not always real-time. When you open an alert, the system may re-query the score — so the value shown may differ slightly from the one that originally triggered it.
+</Warning>
 
 ## Source
 
-Specifies which address list the detector checks against.  
-Only **one source** can be selected at a time.
+Specifies which address list the detector checks against. Only **one source** can be selected at a time.
 
-| Value | Meaning |
-|-------|---------|
-| `ext` | Extractor’s proprietary AML address database |
-| `custom` | Only addresses defined in the **Custom Addresses** field |
-| `empty` | Global internal address list |
+<Tabs>
+  <Tab title="ext">
+    Extractor's proprietary AML address database — maintained and updated continuously by Hacken.
+  </Tab>
+  <Tab title="custom">
+    Only addresses you define in the **Custom Addresses** field are checked. Useful for internal watchlists.
+  </Tab>
+  <Tab title="empty">
+    Uses the global internal address list shared across your tenant.
+  </Tab>
+</Tabs>
 
----
+## Tags filter
 
-## Tags Filter
+Narrows alerts to specific AML risk categories. Enter tags as comma-separated values — prefix with `!` to exclude.
 
-Allows you to narrow alerts to specific AML categories.
-
-- Enter tags as **comma-separated values**  
-  Example: `sanctions, exploit`
-- Prefix a tag with `!` to **exclude** it  
-  Example: `!sanctions`
+```
+sanctions, exploit        ← match either
+!sanctions                ← exclude sanctions, match everything else
+```
 
 | Tag | Meaning |
-|------|---------|
-| `cybercrime` | OFAC-listed or other cybercrime-related activity |
+|-----|---------|
+| `cybercrime` | OFAC-listed or cybercrime-related activity |
 | `sanctions` | Directly sanctioned entities |
 | `sanctions_exposure` | Indirect exposure to sanctioned entities |
 | `suspicious` | Flagged for suspicious behavior |
 | `exploit` | Involved in a known exploit |
 
----
+## Score condition
 
-## Score Condition
+Filters alerts based on AML risk score in the range **0.0 – 100.0**.
 
-Filters alerts based on the AML risk score range: **0.0 – 100.0**
+<AccordionGroup>
+  <Accordion title="Score > 0 (recommended for known addresses)">
+    Addresses **without a score will NOT trigger** an alert. Use this when you only care about addresses with confirmed risk data.
+  </Accordion>
+  <Accordion title="Score >= 0 (include unscored addresses)">
+    Addresses **without a score WILL trigger** an alert at Info severity. Use this when you want visibility into any address interaction, regardless of scoring coverage.
+  </Accordion>
+</AccordionGroup>
 
-⚠️ Important behavior:
+## Tracking options
 
-- Using `> 0` → addresses **without a score will NOT trigger**
-- Using `>= 0` → addresses **without a score WILL trigger**
+Select which transaction components are evaluated:
 
-Choose carefully depending on whether you want to include unscored addresses.
+- **Track Transaction** — all addresses involved in the transaction
+- **Track From** — sender address only
+- **Track To** — recipient address only
+- **Track Token** — token transfer addresses (the monitored address is treated as the token contract)
 
----
+## Custom addresses
 
-## Tracking Options
+Add your own addresses in CSV format:
 
-Select which transaction components should be evaluated:
-
-- **Track Transaction** — checks all addresses involved in the transaction
-- **Track From** — checks the sender address
-- **Track To** — checks the recipient address
-- **Track Token** — checks token transfer addresses  
-  - The monitored address is treated as the **token contract address**
-
----
-
-## Custom Addresses
-
-Add your own addresses to monitor in **CSV format**:
-
-```
+```csv
 Address, Score, Name, Tags
 0x1049a94a2238297156826cfcd8b35a3c0400ee98, 80.0, Tornado Cash, ofac;sanctions
 ```
 
-
-**Field Requirements:**
-
 - **Score** — value between `0.0` and `100.0`
 - **Tags** — semicolon-separated (e.g., `ofac;sanctions`)
 
----
-
-## Exclude Addresses
-
-Addresses listed here will be ignored by the detector — even if they appear in **Custom Addresses**.
-
-- Enter one address per line  
-  **or**
-- Provide a comma-separated list
-
-No additional metadata is required.
-
----
-
 ## Severity
 
-If set to **Auto**, the detector automatically maps the AML score to a severity level.
-
-You may override this by selecting a fixed severity:
-
-- **Critical**
-- **High**
-- **Medium**
-- **Low**
-- **Info**
+Set to **Auto** to let the detector map the AML score to severity automatically, or override with a fixed level: `Critical` · `High` · `Medium` · `Low` · `Info`.
