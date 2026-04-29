@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Hacken Extractor",
+  "name": "Hacken",
   "openapi": "openapi.json",
   "theme": "mint",
   "colors": {
@@ -12,7 +12,8 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Documentation",
+        "tab": "Extractor documentation",
+        "icon": "book-open",
         "groups": [
           {
             "group": "Getting Started",
@@ -34,9 +35,22 @@
                 "pages": [
                   "security-monitoring/detectors/index",
                   "security-monitoring/detectors/aml-detector",
+                  "security-monitoring/detectors/extractor-attack-detector",
                   "security-monitoring/detectors/address-poison",
+                  "security-monitoring/detectors/chainabuse-monitor",
                   "security-monitoring/detectors/block-anomaly",
-                  "security-monitoring/detectors/tracker"
+                  "security-monitoring/detectors/block-re-org",
+                  "security-monitoring/detectors/contract-hash-verification",
+                  "security-monitoring/detectors/dns-monitor",
+                  "security-monitoring/detectors/gas-monitor",
+                  "security-monitoring/detectors/github-monitor",
+                  "security-monitoring/detectors/network-monitor",
+                  "security-monitoring/detectors/nist-alerts-monitor",
+                  "security-monitoring/detectors/safe-multisig-monitor",
+                  "security-monitoring/detectors/security-sleuth",
+                  "security-monitoring/detectors/ssl-monitor",
+                  "security-monitoring/detectors/tracker",
+                  "security-monitoring/detectors/wallet"
                 ]
               }
             ]
@@ -49,11 +63,117 @@
               {
                 "group": "Triggers",
                 "pages": [
+                  "advanced-monitoring/triggers/index",
                   "advanced-monitoring/triggers/erc20-transfer",
                   "advanced-monitoring/triggers/blacklisted-callers",
-                  "advanced-monitoring/triggers/function-call"
+                  "advanced-monitoring/triggers/whitelisted-callers",
+                  "advanced-monitoring/triggers/failed-transaction",
+                  "advanced-monitoring/triggers/transaction-parameters",
+                  "advanced-monitoring/triggers/function-call",
+                  "advanced-monitoring/triggers/event-emitted",
+                  "advanced-monitoring/triggers/event-advanced"
+                ]
+              },
+              {
+                "group": "Recommendations by SC Type",
+                "pages": [
+                  "advanced-monitoring/recommendations-by-sc-type/index",
+                  "advanced-monitoring/recommendations-by-sc-type/staking",
+                  "advanced-monitoring/recommendations-by-sc-type/vesting",
+                  "advanced-monitoring/recommendations-by-sc-type/fungible-token-eip-20-compatible",
+                  "advanced-monitoring/recommendations-by-sc-type/non-fungible-token-eip-721-compatible",
+                  "advanced-monitoring/recommendations-by-sc-type/yield-farming",
+                  "advanced-monitoring/recommendations-by-sc-type/lending",
+                  "advanced-monitoring/recommendations-by-sc-type/token-sale"
                 ]
               }
+            ]
+          },
+          {
+            "group": "Compliance Monitoring",
+            "icon": "clipboard-check",
+            "pages": [
+              "compliance-monitoring/intro",
+              {
+                "group": "Detectors",
+                "pages": [
+                  "compliance-monitoring/detectors/index",
+                  "compliance-monitoring/detectors/aml-monitor",
+                  "compliance-monitoring/detectors/asterdex-monitor",
+                  "compliance-monitoring/detectors/balance-monitor",
+                  "compliance-monitoring/detectors/chainabuse-monitor",
+                  "compliance-monitoring/detectors/circulation-supply-monitor",
+                  "compliance-monitoring/detectors/contract-hash-verification",
+                  "compliance-monitoring/detectors/dns-monitor",
+                  "compliance-monitoring/detectors/github-monitor",
+                  "compliance-monitoring/detectors/nist-alerts-monitor",
+                  "compliance-monitoring/detectors/price-monitor",
+                  "compliance-monitoring/detectors/proof-of-reserves-monitor",
+                  "compliance-monitoring/detectors/safe-multisig-monitor",
+                  "compliance-monitoring/detectors/total-supply-monitor",
+                  "compliance-monitoring/detectors/total-supply-monitor-by-allocations",
+                  "compliance-monitoring/detectors/transfer-monitor",
+                  "compliance-monitoring/detectors/transfers-detector",
+                  "compliance-monitoring/detectors/tvl-monitor"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Financial Monitoring",
+            "icon": "chart-line",
+            "pages": [
+              "financial-monitoring/intro",
+              {
+                "group": "Detectors",
+                "pages": [
+                  "financial-monitoring/detectors/index",
+                  "financial-monitoring/detectors/aave-monitor",
+                  "financial-monitoring/detectors/asterdex-monitor",
+                  "financial-monitoring/detectors/balance-monitor",
+                  "financial-monitoring/detectors/circulation-supply-monitor",
+                  "financial-monitoring/detectors/price-monitor",
+                  "financial-monitoring/detectors/proof-of-reserves-monitor",
+                  "financial-monitoring/detectors/safe-multisig-monitor",
+                  "financial-monitoring/detectors/total-supply-monitor",
+                  "financial-monitoring/detectors/total-supply-monitor-by-allocations",
+                  "financial-monitoring/detectors/transfer-monitor",
+                  "financial-monitoring/detectors/transfers-detector",
+                  "financial-monitoring/detectors/tvl-monitor",
+                  "financial-monitoring/detectors/wallet"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Beta Features",
+            "icon": "flask",
+            "pages": [
+              "beta-features/index",
+              "detectors/Bubblemaps/DetectorBubblemaps",
+              "detectors/News/DetectorNews",
+              "detectors/Call/DetectorCall",
+              "detectors/Cron/DetectorCron",
+              "detectors/ChainlinkACE/DetectorChainlinkACE",
+              "detectors/PoR/DetectorPoR"
+            ]
+          },
+          {
+            "group": "Smart Contract Actions",
+            "icon": "bolt",
+            "pages": [
+              "smart-contract-actions/intro",
+              {
+                "group": "Action Providers",
+                "pages": [
+                  "smart-contract-actions/action-providers/index",
+                  "smart-contract-actions/action-providers/create-action-provider",
+                  "smart-contract-actions/action-providers/connect-action-provider",
+                  "smart-contract-actions/action-providers/deposit",
+                  "smart-contract-actions/action-providers/withdraw"
+                ]
+              },
+              "smart-contract-actions/setup-action"
             ]
           },
           {
@@ -68,37 +188,39 @@
         ]
       },
       {
+        "tab": "A3 Documentation",
+        "icon": "layer-group",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "icon": "rocket",
+            "pages": [
+              "a3-documentation/intro"
+            ]
+          },
+          {
+            "group": "Platform",
+            "icon": "gauge",
+            "pages": [
+              "a3-documentation/dashboard",
+              "a3-documentation/portfolios-and-projects",
+              "a3-documentation/alerts-history",
+              "a3-documentation/analytics",
+              "a3-documentation/audit-trail",
+              "a3-documentation/settings"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "API Reference",
         "icon": "square-terminal",
+        "openapi": "openapi.json",
         "groups": [
           {
             "group": "Overview",
             "pages": [
               "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Projects",
-            "openapi": "openapi.json",
-            "pages": [
-              "POST /api/v1/project",
-              "GET /api/v1/project/{id}"
-            ]
-          },
-          {
-            "group": "Contracts",
-            "openapi": "openapi.json",
-            "pages": [
-              "POST /api/v1/contract",
-              "GET /api/v1/contract/{id}"
-            ]
-          },
-          {
-            "group": "Alerts",
-            "openapi": "openapi.json",
-            "pages": [
-              "POST /api/v1/detector/alert/search",
-              "POST /api/v1/detector/alert/aggregation"
             ]
           }
         ]

@@ -2,6 +2,45 @@
 title: "Transfers Detector"
 ---
 
-# Transfers Detector
+Anomalies examples:
 
+* Large Transfers of ERC-20 or Native tokens
+* Frequent Transfers
 
+**Detector Configuration**
+
+<Steps>
+  <Step title="Name">
+    Enter a descriptive name for your monitor, for example: "Transfers".
+  </Step>
+  <Step title="Token">
+    Configure the token to monitor.
+  </Step>
+  <Step title="Track From">
+    Set the source address to track.
+  </Step>
+  <Step title="Track To">
+    Set the destination address to track.
+  </Step>
+  <Step title="From">
+    Specify the from address filter.
+  </Step>
+  <Step title="To">
+    Specify the to address filter.
+  </Step>
+  <Step title="Track Address">
+    Configure address tracking.
+  </Step>
+  <Step title="Track Frequent">
+    Enable tracking of frequent transfers.
+  </Step>
+  <Step title="Cron">
+    Configure the cron schedule.
+  </Step>
+</Steps>
+
+![](../../assets/transfer_detector_faq.png)
+
+**Alert example**
+
+![](../../assets/transfer_detector_alert.png)

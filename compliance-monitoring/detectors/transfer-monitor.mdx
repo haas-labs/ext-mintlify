@@ -5,8 +5,6 @@ description: >
   transfer involving a monitored address exceeds a configured token amount threshold.
 ---
 
-# Transfer Monitor
-
 ## Overview
 
 The Transfer Monitor processes every incoming transaction in real time, inspects its event logs for ERC-20 `Transfer` events, and fires an alert whenever a transfer involving a **monitored address** exceeds the configured **threshold**.
@@ -19,8 +17,6 @@ A monitored address is matched against three roles in each Transfer event:
 
 An alert is emitted if the raw transfer `value` is **greater than or equal to** the configured threshold.
 
----
-
 ## Threshold
 
 The minimum transfer amount that triggers an alert. Specified as a **raw integer** — i.e. the on-chain value without decimal adjustment.
@@ -31,9 +27,9 @@ The minimum transfer amount that triggers an alert. Specified as a **raw integer
 
 For example, to alert on transfers of 1,000 USDC (6 decimals), set the threshold to `1000000000` (1000 × 10⁶).
 
-> **How to define a threshold:** Specify the transfer amount that will trigger an alert in integer format, for example `1000000`.
-
----
+<Note>
+  **How to define a threshold:** Specify the transfer amount that will trigger an alert in integer format, for example `1000000`.
+</Note>
 
 ## Monitored Address Matching
 
@@ -47,8 +43,6 @@ The detector checks each Transfer event against every configured monitored addre
 
 A single transaction may produce multiple alerts if it contains multiple matching Transfer events or if the same address appears in several configurations.
 
----
-
 ## Severity
 
 Controls the severity level of the alert when the threshold is exceeded.
@@ -57,8 +51,6 @@ Controls the severity level of the alert when the threshold is exceeded.
 |-------|-----------|
 | _(not set)_ | Defaults to **Low** (`0.3`) |
 | Custom value | Applied directly to the alert |
-
----
 
 ## Alert Metadata
 
@@ -76,8 +68,6 @@ Every alert includes the following metadata fields:
 | `token` | Address of the ERC-20 token contract |
 | `symbol` | Token symbol resolved on-chain (falls back to token address if unavailable) |
 | `threshold` | The configured threshold value |
-
----
 
 ## Alert Types
 

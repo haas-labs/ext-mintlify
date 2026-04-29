@@ -1,8 +1,7 @@
 ---
 title: "Contract Call"
+description: "Execute calls to a contract function, extract results, and check conditions."
 ---
-
-# Contract Call
 
 Execute calls to a contract function (not a transaction), extract results, and check conditions.
 
@@ -14,7 +13,7 @@ Execute calls to a contract function (not a transaction), extract results, and c
 
 ## Configuration
 
-NOTE: Screenshot should be max size 800px and clickable to expand to full size
+![DetectorCall Configuration](/assets/DetectorCall-Config.png)
 
 - **Function**: Function to execute. It must be a full signature in the [foundry cast](https://getfoundry.sh/cast/reference/cast) format (e.g. `balanceOf(address)(uint256)`).
 - **Parameters**: Parameters to pass to the function. Parameters can be separated with spaces or new lines. Tuples must be enclosed in `()`, arrays in `[]`, and strings in `""`. Refer to the cast documentation for syntax.
@@ -26,4 +25,6 @@ NOTE: Screenshot should be max size 800px and clickable to expand to full size
 - **Always Error**: Alert on every error. If unchecked, only new unique errors will be alerted and duplicates omitted.
 - **Severity**: Alert severity level.
 
-**Supported networks**: Ethereum, Ethereum Sepolia.
+<Note>
+  Supported networks: Ethereum, Ethereum Sepolia.
+</Note>

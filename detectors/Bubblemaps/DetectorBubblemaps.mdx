@@ -1,8 +1,7 @@
 ---
 title: "Bubblemap Monitor"
+description: "Monitors coin centralization anomaly using Bubblemaps data."
 ---
-
-# Bubblemap Monitor
 
 Detector monitors Coin centralization anomaly
 
@@ -18,14 +17,14 @@ Detector monitors Coin centralization anomaly
 * Cluster share changes condition (in `[0..1]` range).
 * Track and alert on Errors.
 
-## Configuraiton
+## Configuration
 
-NOTE: Screenshot should be max size 800px and clickable to expand to full size
+![DetectorBubblemaps Configuration](/assets/DetectorBubblemaps-Config.png)
 
 * **Description** (`desc`, default: `Decentralization: {score}`): Description Template
 * **Score** (`condition`, default: `> 0.0`): Score Condition expression
-* **Cluster size** (`cluster_size`, default: \`\`): Cluster size condition
-* **Cluster share** (`cluster_share`, default: \`\`): Cluster share condition
+* **Cluster size** (`cluster_size`, default: ``): Cluster size condition
+* **Cluster share** (`cluster_share`, default: ``): Cluster share condition
 * **Track Holders** (`track_holders`, default: `5`): Track Top holders number
 * **Track Update** (`track_update`, default: `True`): Track Score update
 * **Track Errors** (`track_err`, default: `True`): Track Errors
@@ -35,4 +34,4 @@ NOTE: Screenshot should be max size 800px and clickable to expand to full size
 
 ## Tags
 
-* [Beta Features](../../beta-features/detectors/)
+* [Beta Features](/beta-features/)

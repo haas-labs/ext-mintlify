@@ -2,9 +2,7 @@
 title: "Non-Fungible Token (EIP-721 compatible)"
 ---
 
-# Non-Fungible Token (EIP-721 compatible)
-
-Implementations may have some differences, but all requirements of the [standard](https://eips.ethereum.org/EIPS/eip-721) must be met.&#x20;
+Implementations may have some differences, but all requirements of the [standard](https://eips.ethereum.org/EIPS/eip-721) must be met.
 
 ### Monitor the minting of new tokens
 
@@ -12,15 +10,15 @@ Implementations may have some differences, but all requirements of the [standard
 
 **Parameters:**
 
-* **event:**  Transfer
+* **event:** Transfer
 * **argument:** from
 * **comparator:** equal to
 * **value:** 0x0000000000000000000000000000000000000000
 
-**Severity:** Critical&#x20;
+**Severity:** Critical
 
 **Alerts:** On
 
-**Use cases:**&#x20;
+**Use cases:**
 
 * If your NFT collection is already complete and you are not expecting any new tokens to be created, then it is particularly important to monitor the creation of new tokens with unique IDs.

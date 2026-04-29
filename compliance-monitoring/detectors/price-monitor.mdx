@@ -4,36 +4,45 @@ description: >-
   Monitors Price changes of the Contract. Contract must be a Token contract (ERC-20 like)
 ---
 
-# Price Monitor
+**Behavior**
 
-**Behavior**  
+When to query price:
+`cron` - On Cron interval
+`block` - On every new block
 
-When to query price:  
-```cron``` - On Cron interval  
-```block``` - On every new block
+_Source_
+Where to query price:
+`oracle` - On-chain Feed (Chainlink Oracle format)
+`coingecko` - Coingecko Feed
 
-*Source*  
-Where to query price:  
-```oracle``` - On-chain Feed (Chainlink Oracle format)  
-```coingecko``` - Coingecko Feed
+_Currency_
+Currency of the price. Default is `usd`.
 
-*Currency*  
-Currency of the price. Default is ```usd```.
+_NOTE_: Currently supported only for `coingecko` feed.
+`oracle` feed requires adding Chainlink Oracle Contracts in configuration
 
-*NOTE*: Currently supported only for ```coingecko``` feed.  
-```oracle``` feed requires adding Chainlink Oracle Contracts in configuration
-
-**Use cases**  
+**Use cases**
 
 * Alert on sudden price drops of stablecoins or RWAs.
 * Detect oracle price manipulation attempts in DeFi protocols.
 * Track token price feeds for liquidation risk management.
 
+**Detector Configuration**
 
-**Detector Configuration**  
-1. *Name* - Enter a descriptive name for your monitor, for example: "Price Monitor".
-2. *Cron*
-3. *Threshold*
+<Steps>
+  <Step title="Name">
+    Enter a descriptive name for your monitor, for example: "Price Monitor".
+  </Step>
+  <Step title="Cron">
+    Enter a cron expression to define the schedule.
+  </Step>
+  <Step title="Threshold">
+    The price change threshold that triggers an alert.
+  </Step>
+</Steps>
 
+![](../../assets/price_monitor_faq.png)
 
 **Alert example**
+
+![](../../assets/price_monitor_alert.png)

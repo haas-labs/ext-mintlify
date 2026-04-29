@@ -6,8 +6,6 @@ description: >
   minimum threshold.
 ---
 
-# Balance Monitor
-
 ## Overview
 
 The Balance Monitor watches the balance of one or more addresses on a blockchain network and fires an alert whenever a balance drops to or below a configured threshold. Both the **native coin** (e.g. ETH) and any number of **ERC-20 tokens** can be monitored per address, each with its own independent threshold.
@@ -17,11 +15,13 @@ Checks are triggered in two ways:
 - **On startup** — the current balance of every configured address is fetched immediately at the latest block and compared against the threshold
 - **On each relevant transaction** — a balance re-check is performed whenever the monitored address appears as the sender or recipient of a native transfer, or as the sender in an ERC-20 `Transfer` event
 
-> ℹ️ An alert is suppressed if the balance has not changed since the previous check, preventing duplicate notifications for the same state.
->
-> ⚠️ Alerts fire when `balance ≤ threshold` — equality also triggers.
+<Info>
+  An alert is suppressed if the balance has not changed since the previous check, preventing duplicate notifications for the same state.
+</Info>
 
----
+<Warning>
+  Alerts fire when `balance ≤ threshold` — equality also triggers.
+</Warning>
 
 ## Native Token
 
@@ -45,8 +45,6 @@ The number of decimal places used by the native coin. Applied only for human-rea
 |-------|------|---------|
 | `decimals` | `int` | `18` |
 
----
-
 ## ERC-20 Tokens
 
 A list of ERC-20 token contracts to monitor for the same address. Each entry is checked independently.
@@ -62,8 +60,6 @@ A list of ERC-20 token contracts to monitor for the same address. Each entry is 
 
 Multiple ERC-20 tokens can be added to a single configuration. Each token fires its own independent alerts.
 
----
-
 ## Severity
 
 A single severity level applied to all alerts — both native and ERC-20 — for this configuration.
@@ -71,8 +67,6 @@ A single severity level applied to all alerts — both native and ERC-20 — for
 | Field | Type | Default |
 |-------|------|---------|
 | `severity` | `float` | `0.15` (Low) |
-
----
 
 ## How Monitoring Works
 
@@ -86,15 +80,11 @@ A balance re-check is triggered when a `Transfer` event with a **non-zero value*
 
 In both cases, if the new balance equals the previously cached balance, no alert is emitted.
 
----
-
 ## Alert Types
 
 | Event Type | Trigger |
 |---|---|
 | `balance_threshold` | Current balance ≤ configured threshold |
-
----
 
 ## Alert Metadata
 
@@ -110,8 +100,6 @@ In both cases, if the new balance equals the previously cached balance, no alert
 | `balance` | Current raw balance (not adjusted for decimals) |
 | `threshold` | Configured threshold (raw units) |
 | `desc` | Human-readable summary: `Balance <address> below threshold (<balance>, <threshold>)` |
-
----
 
 ## FAQ
 

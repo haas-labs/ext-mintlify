@@ -6,8 +6,6 @@ description: >
   user-defined inflation/deflation schedule.
 ---
 
-# Circulation Supply Detector
-
 ## Overview
 
 The Circulation Supply Detector processes every incoming transaction and inspects its logs for ERC-20 `Transfer` events that represent token minting or burning. It maintains an in-memory circulating supply counter and fires alerts in two scenarios:
@@ -15,10 +13,9 @@ The Circulation Supply Detector processes every incoming transaction and inspect
 1. **Supply change alert** — a single mint or burn moves the circulating supply by more than the configured percentage threshold
 2. **Unexpected inflation/deflation alert** — the actual supply change on a scheduled date differs from the expected value defined in the inflation/deflation schedule
 
-
-> ⚠️ Inflation/deflation schedule checks occur at most **once per calendar day** — on the first transaction processed after midnight UTC.
-
----
+<Warning>
+  Inflation/deflation schedule checks occur at most **once per calendar day** — on the first transaction processed after midnight UTC.
+</Warning>
 
 ## Threshold
 
@@ -35,8 +32,6 @@ The minimum relative supply change (as a decimal fraction) that triggers a `circ
 
 The comparison uses the **absolute value** of the change, so both large mints and large burns trigger at the same threshold.
 
----
-
 ## Locker Addresses
 
 A list of contract addresses that hold locked or vested tokens. Their balances are **excluded** from the circulating supply when the initial supply is fetched from the Transpose API at startup.
@@ -47,9 +42,9 @@ A list of contract addresses that hold locked or vested tokens. Their balances a
 
 Common examples include team vesting contracts, treasury multisigs, and future-reserve allocations. Tokens held in these addresses are not considered to be in active circulation.
 
-> Locker addresses affect only the **initial supply baseline**. Runtime mint/burn events are always applied to the full tracked supply regardless of recipient.
-
----
+<Note>
+  Locker addresses affect only the **initial supply baseline**. Runtime mint/burn events are always applied to the full tracked supply regardless of recipient.
+</Note>
 
 ## Inflation/Deflation Schedule
 
@@ -69,9 +64,9 @@ An optional list of expected supply change events on specific calendar dates. Wh
 
 If the actual supply change on a scheduled date does not match `expected_change`, an `inflation_detected` alert is fired.
 
-> The schedule check compares the **end-of-previous-day supply** against the supply at the time of the first transaction of the next day. If no schedule entry exists for a date, no check is performed.
-
----
+<Note>
+  The schedule check compares the **end-of-previous-day supply** against the supply at the time of the first transaction of the next day. If no schedule entry exists for a date, no check is performed.
+</Note>
 
 ## Alert Types
 
@@ -79,8 +74,6 @@ If the actual supply change on a scheduled date does not match `expected_change`
 |---|---|
 | `circulation_supply_change` | A single mint or burn changes the supply by ≥ `threshold` |
 | `inflation_detected` | The actual daily supply change differs from the scheduled `expected_change` |
-
----
 
 ## Alert Metadata
 
@@ -117,8 +110,6 @@ Fired once per day when the previous day's supply change deviates from the sched
 | `current_change` | Actual fractional supply change, formatted to 10 decimal places |
 | `expected_change` | Scheduled expected fractional change, formatted to 10 decimal places |
 | `expected_date` | The date (`YYYY-MM-DD`) for which the deviation was detected |
-
----
 
 ## FAQ
 

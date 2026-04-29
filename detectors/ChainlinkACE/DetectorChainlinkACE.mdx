@@ -1,8 +1,7 @@
 ---
 title: "Chainlink ACE Detector"
+description: "Monitors contracts under the Chainlink Automated Compliance Contract Engine (ACE)."
 ---
-
-# Chainlink ACE Detector
 
 Monitors contracts under the Chainlink Automated Compliance Contract Engine (ACE). Detects configuration changes, policy violations, transfers, contract calls, and CCIP transfers.
 
@@ -14,7 +13,7 @@ Monitors contracts under the Chainlink Automated Compliance Contract Engine (ACE
 
 ## Configuration
 
-[](DetectorChainlinkACE-Config.png)
+![DetectorChainlinkACE Configuration](/assets/DetectorChainlinkACE-Config.png)
 
 * **Description** (`desc`): Alert description template (default `{reason}{func}{input}{amount} {sym}{err}`).
 * **Track Failed** (`track_failed`): Track failed transactions / policy rejections.

@@ -1,22 +1,20 @@
 ---
 title: "Detectors"
+description: "The full suite of Extractor Financial Monitoring detectors."
 ---
 
-# Detectors
-
-### Extractor Financial Monitoring Detectors Suite:
-
-* [Call](../../detectors/Call/DetectorCall.md)
-* [Balance Monitor](balance-monitor.md)
-* [Circulation Supply Monitor](circulation-supply-monitor.md)
-* [Price Monitor](price-monitor.md)
-* [Safe Multisig Monitor](safe-multisig-monitor.md)
-* [Total Supply Monitor](total-supply-monitor.md)
-* [Total Supply Monitor By Allocations](total-supply-monitor-by-allocations.md)
-* [Transfer Monitor](transfer-monitor.md)
-* [Transfers Detector](transfers-detector.md)
-* [TVL Monitor](tvl-monitor.md)
-* [Wallet](wallet.md)
-
-##
-
+<CardGroup cols={2}>
+  <Card title="Aave Monitor" icon="building-columns" href="aave-monitor">Track Aave protocol positions and liquidity pool metrics.</Card>
+  <Card title="Aster DEX Monitor" icon="chart-line" href="asterdex-monitor">Monitor portfolio value and asset prices on Aster DEX.</Card>
+  <Card title="Balance Monitor" icon="wallet" href="balance-monitor">Alert when native coin or ERC-20 balances fall below threshold.</Card>
+  <Card title="Circulation Supply Monitor" icon="arrows-spin" href="circulation-supply-monitor">Track circulating token supply changes.</Card>
+  <Card title="Price Monitor" icon="dollar-sign" href="price-monitor">Alert on token price movements beyond configured thresholds.</Card>
+  <Card title="Proof of Reserves Monitor" icon="vault" href="proof-of-reserves-monitor">Verify on-chain reserve balances match reported values.</Card>
+  <Card title="Safe Multisig Monitor" icon="users" href="safe-multisig-monitor">Track Safe multisig proposals and executions.</Card>
+  <Card title="Total Supply Monitor" icon="coins" href="total-supply-monitor">Alert on unexpected changes to token total supply.</Card>
+  <Card title="Total Supply Monitor By Allocations" icon="chart-pie" href="total-supply-monitor-by-allocations">Monitor supply distribution across configured allocations.</Card>
+  <Card title="Transfer Monitor" icon="arrow-right-arrow-left" href="transfer-monitor">Alert on large or suspicious token transfers.</Card>
+  <Card title="Transfers Detector" icon="arrows-left-right" href="transfers-detector">Detect token transfer patterns matching configured criteria.</Card>
+  <Card title="TVL Monitor" icon="lock" href="tvl-monitor">Alert when total value locked drops significantly.</Card>
+  <Card title="Wallet" icon="briefcase" href="wallet">Monitor wallet balances and transaction activity.</Card>
+</CardGroup>

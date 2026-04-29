@@ -1,30 +1,47 @@
 ---
 title: "Security Sleuth"
-description: >-
-  Monitors Twitter for security sentiment (Attack and Exploits)
+description: Monitors Twitter for security sentiment (Attack and Exploits)
 ---
 
-# Security Sleuth
+**Behavior**
 
-**Behavior**  
-Listens to a set of Channels and analizes them for security incidents with LLM. Currently supported: Sources (*Twitter*), LLM (*OpenAI*)
+Listens to a set of Channels and analyses them for security incidents with LLM. Currently supported: Sources (_Twitter_), LLM (_OpenAI_).
 
-Channels are additional Twitter accounts (channels) to the predefined list of security information sources
+**Channels** are additional Twitter accounts (channels) to the predefined list of security information sources.
 
-Anchor is a text filter before sentiment analysis to target specific content (For example, messages often have headers or titles). This allows to improve true positives content for analysis
+**Anchor** is a text filter before sentiment analysis to target specific content (for example, messages often have headers or titles). This allows to improve true positives content for analysis.
 
-**Use cases**  
-* Hack Intel from Twitter: monitor a curated list of Twitter accounts belonging to known blockchain security experts and breach alert channels. When one of these sources tweets about a new exploit, hack, or vulnerability, the monitor’s LLM analyzes the tweet’s content for credibility and relevance. If it’s a valid incident, the system generates an alert with a summary, enabling the team to quickly assess if their organization’s systems could be affected by the same issue.
+**Use cases**
 
-* Brand Scam Monitoring: watch Twitter for any mentions of brand coupled with scam indicators. Set an anchor filter, such as the product name plus words like “scam” or “phishing”. If the monitor finds a tweet like “Beware, I got a phishing DM pretending to be [WalletName] support,” it will process it and alert the team. This heads-up allows the company to immediately notify users (via official channels) about the impersonation attempt and take steps to report or takedown the malicious account.
+* **Hack Intel from Twitter:** monitor a curated list of Twitter accounts belonging to known blockchain security experts and breach alert channels. When one of these sources tweets about a new exploit, hack, or vulnerability, the monitor's LLM analyzes the tweet's content for credibility and relevance. If it's a valid incident, the system generates an alert with a summary, enabling the team to quickly assess if their organization's systems could be affected by the same issue.
 
-**Detector Configuration**  
-1. *Name* - Enter a descriptive name for your monitor, for example: "Security Sleuth".
-2. *Cron*
-3. *Track any change*
-4. *Question*
-5. *Channel*
-6. *Score*
+* **Brand Scam Monitoring:** watch Twitter for any mentions of brand coupled with scam indicators. Set an anchor filter, such as the product name plus words like "scam" or "phishing". If the monitor finds a tweet like "Beware, I got a phishing DM pretending to be [WalletName] support," it will process it and alert the team. This heads-up allows the company to immediately notify users (via official channels) about the impersonation attempt and take steps to report or takedown the malicious account.
 
+## Configuration
+
+<Steps>
+  <Step title="Name">
+    Enter a descriptive name for your monitor, for example: "Security Sleuth".
+  </Step>
+  <Step title="Cron">
+    Enter a cron expression to define the schedule.
+  </Step>
+  <Step title="Track any change">
+    Enable to alert on any detected change.
+  </Step>
+  <Step title="Question">
+    The question or topic to analyse for security relevance.
+  </Step>
+  <Step title="Channel">
+    Additional Twitter account(s) to monitor beyond the predefined sources.
+  </Step>
+  <Step title="Score">
+    Minimum LLM confidence score threshold for generating an alert.
+  </Step>
+</Steps>
+
+![](../../assets/security_sleuth_faq.png)
 
 **Alert example**
+
+![](../../assets/security_sleuth_alert.png)

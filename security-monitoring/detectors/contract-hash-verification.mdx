@@ -1,12 +1,10 @@
 ---
 title: "Contract Hash Verification"
-description: >
+description: >-
   Monitors proxy contracts for upgrade events and verifies that the new
   implementation's bytecode checksum matches the expected value, alerting on
   any mismatch.
 ---
-
-# Contract Hash Verification
 
 ## Overview
 
@@ -19,9 +17,9 @@ There are two moments when verification runs:
 - **On startup** — if `initial_check` is enabled, the current implementation's bytecode is verified immediately against the expected checksum before any transactions are processed
 - **On upgrade** — every time an `Upgraded` event is detected in a transaction for a monitored proxy address
 
-> ✅ No alert is sent when the checksum matches — a silent pass indicates successful verification.
-
----
+<Note>
+  No alert is sent when the checksum matches — a silent pass indicates successful verification.
+</Note>
 
 ## Contract Bytecode Checksum
 
@@ -33,16 +31,12 @@ The expected hash of the implementation contract's compiled bytecode. This is th
 
 The checksum must be computed using the same hash function selected in `hash_type`. To obtain it, hash the deployed bytecode of the known-good implementation contract.
 
----
-
 ## Hash Type
 
 | Value | Algorithm |
 |-------|-----------|
 | `KECCAK` | Keccak-256 (standard EVM hash) |
 | `SHA256` | SHA-256 |
-
----
 
 ## Initial Check
 
@@ -56,15 +50,11 @@ When enabled, the detector fetches and hashes the bytecode at the monitored prox
 
 Use this to catch pre-existing mismatches or to validate the initial configuration before live monitoring begins.
 
----
-
 ## Alert Types
 
 | Event Type | Trigger |
 |---|---|
 | `contract_checksum_mismatch` | Deployed bytecode hash does not match `checksum`, either on startup (if `initial_check: true`) or after an `Upgraded` event |
-
----
 
 ## Alert Metadata
 
@@ -77,8 +67,6 @@ Use this to catch pre-existing mismatches or to validate the initial configurati
 | `hash_type` | Hash algorithm used for verification (`KECCAK` or `SHA256`) |
 | `deployed_hash` | Checksum computed from the live on-chain bytecode of the new implementation |
 | `expected_hash` | The configured expected checksum |
-
----
 
 ## FAQ
 
