@@ -1,0 +1,35 @@
+---
+title: "Contract Hash Verification"
+description: "Contract Hash Verification for detecting changes in a contract bytecode"
+---
+
+Continuously monitors EVM smart contracts for unauthorized bytecode changes by detecting upgrade events and comparing the updated contract bytecode hash against an expected checksum.
+
+## Functionality
+
+- **Overview**: Monitors the EVM network for `UPGRADED` events emitted by smart contracts. Upon detecting an upgrade, fetches the updated contract bytecode, calculates its hash, and compares it against the configured expected checksum. Any discrepancy triggers a notification.
+- **Hash Type**: Supports two hash functions for bytecode verification — `keccak` and `sha256`.
+- **Contract Bytecode Checksum**: The expected hash of the compiled contract bytecode used as the reference for comparison.
+- **Initial Check**: Optionally performs a one-time verification of the contract bytecode at detector setup, before any upgrade events occur.
+
+<AccordionGroup>
+  <Accordion title="Results of processing: Successful Checksum Match">
+    No notification is sent when the calculated bytecode hash matches the expected checksum. The contract has not been tampered with.
+  </Accordion>
+  <Accordion title="Results of processing: Checksum Mismatch">
+    An alert is triggered when the bytecode hash does not match the expected checksum, including details about the discrepancy. This indicates a potentially unauthorized contract upgrade.
+  </Accordion>
+</AccordionGroup>
+
+## Configuration
+
+![DetectorContractHashVerification Configuration](/assets/DetectorContractHashVerification-Config.png)
+
+- **Hash Type** (`hash_type`, default: `keccak`): The hash function used to compute the bytecode checksum. Supported values: `keccak`, `sha256`.
+- **Contract Bytecode Checksum** (`checksum`, default: none): The expected hash of the compiled contract bytecode to verify against.
+- **Initial Check** (`initial_check`, default: `true`): When enabled, performs a verification of the current contract bytecode immediately upon detector creation.
+- **Severity** (`severity`, default: `Auto`): Alert severity level. See [severity configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: evm.
+</Note>

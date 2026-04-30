@@ -1,0 +1,23 @@
+---
+title: "Address Poison"
+description: "Monitor for transaction history poisoning with fake similar addresses"
+---
+
+Monitors transaction history for address poisoning attacks, where attackers inject fake transactions using addresses that visually resemble the monitored address to trick users into sending funds to the wrong destination.
+
+## Functionality
+
+- **How does it work**: The detector scans transaction history for injected fake transactions and events that resemble the monitored address. A poisoned address is crafted to look nearly identical in wallet history — the first and last 2 bytes are identical to the real address, making it easy to confuse visually.
+
+## Configuration
+
+![DetectorAddressPoison Configuration](/assets/DetectorAddressPoison-Config.png)
+
+- **History past** (`past`, default: `600000`): How many blocks into the past to scan for poisoning attempts.
+- **History number** (`history`, default: `25`): How many past transactions to include in the scan.
+- **Patterns** (`patterns`, default: `["0xffff00000000000000000000000000000000ffff"]`): Address match patterns used to identify fake similar addresses. The default pattern matches addresses with identical first and last 2 bytes (`0xffff…ffff`). Multiple patterns can be added.
+- **Severity** (`severity`, default: `High`): Alert severity level. See [severity configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: evm.
+</Note>

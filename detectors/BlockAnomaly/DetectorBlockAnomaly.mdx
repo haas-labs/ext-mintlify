@@ -1,0 +1,42 @@
+---
+title: "Block Anomaly"
+description: "Monitors blocks for Block anomalies. Anomalies includes transaction count (low/large), large block size, large number of Events, etc"
+---
+
+Monitors EVM blocks for anomalies including unusual transaction counts, oversized blocks, abnormal event volumes, gas usage spikes, and liveness issues.
+
+## Functionality
+
+- **Transactions Count (min/max)**: Conditions for min and max transaction count in a block
+- **Transactions Gas (min/max)**: Conditions for min and max gas used in a transaction. Use `GasMonitor` for more gas related monitors
+- **Events Count (min/max)**: Conditions for min and max events count in a block
+- **Block size**: Conditions for block size (min/max)
+- **Gas**: Large and small Gas usage in block
+- **Block Frequency**: Expected Block frequency (max/min) (msec). This information is extracted from block timestamps
+- **Liveness**: Liveness check for block generation. Alert is triggered if no blocks are generated within the condition (e.g. `> 25000` means block is expected within 25 sec)
+- **Block Latency**: Track block latency. It is updated every 10 min
+
+## Configuration
+
+![DetectorBlockAnomaly Configuration](/assets/DetectorBlockAnomaly-Config.png)
+
+- **Transactions min** (`tx_min`, default: `<1`): Minimal transaction count in a block. See [condition syntax](/common-configurations#condition).
+- **Transactions max** (`tx_max`, default: `>2000`): Maximal transaction count in a block. See [condition syntax](/common-configurations#condition).
+- **Events min** (`event_min`, default: `<1`): Minimal Events count in a block. See [condition syntax](/common-configurations#condition).
+- **Events max** (`event_max`, default: `>3000`): Maximal Events count in a block. See [condition syntax](/common-configurations#condition).
+- **Block size min** (`block_min`, default: `<100`): Minimal block size. See [condition syntax](/common-configurations#condition).
+- **Block size max** (`block_max`, default: `>10000000`): Maximal block size. See [condition syntax](/common-configurations#condition).
+- **Gas min** (`gas_min`, default: `<22000`): Minimal gas used in a block. See [condition syntax](/common-configurations#condition).
+- **Gas max** (`gas_max`, default: `>29999000`): Max gas used in a block. See [condition syntax](/common-configurations#condition).
+- **Gas min (Tx)** (`tx_gas_min`, default: `<20000`): Minimal gas used in a Transaction. See [condition syntax](/common-configurations#condition).
+- **Gas max (Tx)** (`tx_gas_max`, default: `>10000000`): Max gas used in a Transaction. See [condition syntax](/common-configurations#condition).
+- **Cron** (`cron`, default: `1 sec`): Periodic check interval for anomalies. See [cron configuration](/common-configurations#cron).
+- **Track Latency** (`lat_enabled`, default: `false`): Enable tracking of block latency (updated every 10 min).
+- **Block Freq (min)** (`block_freq_min`, default: `<1000`): Min expected block creation interval in milliseconds. See [condition syntax](/common-configurations#condition).
+- **Block Freq (max)** (`block_freq_max`, default: `>12500`): Max expected block creation interval in milliseconds. See [condition syntax](/common-configurations#condition).
+- **Liveness interval** (`liveness`, default: `> 25000`): Alert if no block is generated within this threshold (ms). See [condition syntax](/common-configurations#condition).
+- **Severity** (`severity`, default: `Auto`): Alert severity level. See [severity configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: evm.
+</Note>
