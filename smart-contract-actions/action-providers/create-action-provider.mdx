@@ -1,27 +1,55 @@
 ---
-title: "Create Action Provider"
-description: "Step-by-step guide to creating an Action Provider in Hacken Extractor."
+title: "Create an Action Provider"
+description: "Step-by-step guide to registering a blockchain wallet as an Action Provider in Hacken Extractor."
 ---
 
-To create the Action Provider you need to accomplish the following steps:
+## Steps
 
 <Steps>
   <Step title="Open Action Providers">
-    Navigate to the Action Providers section in the app.
+    In the left sidebar, click **Action Providers**. Then click **Add Provider** in the top-right corner.
+  </Step>
 
-    ![Open Action Providers](/assets/create_provider_1.png)
-  </Step>
-  <Step title="Click on Add provider">
-    ![Add provider](/assets/create_provider_2.png)
-  </Step>
-  <Step title="Configure and save">
-    Choose the network, enter Provider name and click **Save**.
+  <Step title="Select a network">
+    In the **Network** dropdown, choose the blockchain network where your smart contract is deployed.
 
-    ![Configure provider](/assets/create_provider_3.png)
+    Available networks:
+    - Ethereum
+    - BSC
+    - Arbitrum One
+    - Optimism
+    - Gnosis
+    - Polygon Mainnet
+    - Polygon Amoy
+    - Fantom Opera
+    - Avalanche (C-Net)
   </Step>
-  <Step title="Action Provider created">
-    ![Action Provider created](/assets/create_provider_4.png)
+
+  <Step title="Enter a provider name">
+    In the **Provider name** field, enter a descriptive label (e.g., `Mainnet Pauser`). This name is only used within Extractor for identification.
+  </Step>
+
+  <Step title="Configure options (optional)">
+    Expand the **Options** section to set advanced parameters:
+
+    | Field | Description |
+    |---|---|
+    | **Tags** | Free-form labels for organizing providers (e.g., `production`, `staging`). |
+    | **Type** | **Default** — uses a private key you provide. **HSM** — uses a Hardware Security Module for key storage. |
+    | **Private Key** | *(Optional)* Your wallet's private key. If left empty, Extractor will automatically generate a new wallet for you. This value is encrypted and stored securely. |
+
+    <Warning>
+      Never use a wallet that holds user funds or has Owner-level permissions as an Action Provider. Create a dedicated wallet with only the minimum permissions needed.
+    </Warning>
+  </Step>
+
+  <Step title="Save">
+    Click **Save**. The provider will appear in the sidebar under **Action Providers** and on the main list.
   </Step>
 </Steps>
 
-As a next step, you should connect it to the contract and transfer funds to Provider's address.
+## What's next
+
+After creating a provider you need to:
+1. [Grant it access to your contract](/smart-contract-actions/action-providers/connect-action-provider) — so it can call contract functions.
+2. [Deposit gas funds](/smart-contract-actions/action-providers/deposit) — so it can pay for transactions.

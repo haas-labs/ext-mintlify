@@ -1,0 +1,47 @@
+---
+title: "Action Details"
+description: "View and manage the configuration, monitoring status, and execution history of a single smart contract action."
+---
+
+The **Action Detail** page opens when you select **View Details** from the action row menu on the [Actions tab](/smart-contract-actions/actions-overview). It shows the full configuration of a single action and its execution history.
+
+## Configuration fields
+
+| Field | Description |
+|---|---|
+| **Creation date** | When the action was first created. |
+| **Monitoring** | Toggle between `ENABLED` (action fires automatically on trigger) and `DISABLED` (action is paused). |
+| **Gas price** | The gas price in gwei used when submitting the transaction. |
+| **Gas limit** | The maximum gas units the transaction is allowed to consume. |
+| **Gas Tip** | An optional priority fee (EIP-1559) added on top of the base gas price to speed up inclusion. |
+| **Value** | The amount of native token (e.g., ETH) to send along with the transaction. Set to `0` for most contract calls. |
+| **Function** | The contract function that will be called, shown as `functionName() returnType` (e.g., `pause() void`, `decimals() uint8`). |
+
+<Tip>
+  Set **Monitoring** to `DISABLED` to temporarily pause an action without deleting it. Re-enable it when you're ready to resume automatic execution.
+</Tip>
+
+---
+
+## Action History
+
+The **Action History** section below the configuration shows every execution of this specific action.
+
+### Filters
+
+| Filter | Description |
+|---|---|
+| **Severity** | Filter by the severity of the event that triggered the execution: Any, Critical, High, Medium, Low, Info. |
+| **Date range** | Narrow results to a specific time period. |
+| **UTC Timezone** | Toggle to display timestamps in UTC instead of local time. |
+| **Refresh** | Manually reload the history. |
+
+### Columns
+
+| Column | Description |
+|---|---|
+| **Name** | The name of the action (same for all rows on this page). |
+| **Severity** | Severity level of the monitoring event that triggered this execution. |
+| **Tx Value** | Value sent in the transaction. |
+| **Date and time** | When the transaction was executed. |
+| **UID** | Unique identifier for the execution record. |

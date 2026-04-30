@@ -1,50 +1,92 @@
 ---
-title: "Setup Action"
-description: "How to create and run Smart Contract Actions manually or automatically in response to triggers."
+title: "Create an Action"
+description: "How to create a smart contract action that executes automatically in response to monitoring events, or manually on demand."
 ---
 
-To activate Smart Contract Action you need to complete the following steps:
+A **Smart Contract Action** defines a specific contract function call that Extractor can trigger automatically when a monitoring event fires, or that you can run manually at any time.
+
+## Prerequisites
+
+Before creating an action:
+1. An [Action Provider](/smart-contract-actions/action-providers/create-action-provider) must exist on the **same network** as the contract.
+2. The provider must have been [granted the required role](/smart-contract-actions/action-providers/connect-action-provider) on your contract.
+3. The provider must have [sufficient balance](/smart-contract-actions/action-providers/deposit) to pay gas fees.
+
+## Create an action
 
 <Steps>
-  <Step title="Create an action provider">
-    [Create an action provider](/smart-contract-actions/action-providers/create-action-provider)
+  <Step title="Open the Actions tab">
+    In the left sidebar, navigate to your monitored contract and click **Actions**. Then click **Create Action**.
   </Step>
-  <Step title="Open Actions page">
-    ![Actions page](/assets/create_action_1.png)
-  </Step>
-  <Step title="Click Create Action">
-    ![Create Action button](/assets/create_action_2.png)
-  </Step>
-  <Step title="Configure the action">
-    * Enter action name.
-    * Choose function you want to execute.
-    * Choose Trigger/Detector you want to run action (optionally, can be run manually).
-    * Enter gas (optionally).
-    * Click on **Create Action** button.
 
-    ![Action setup form](/assets/create_action_3.png)
+  <Step title="Enter a name">
+    Give the action a descriptive name (e.g., `Pause Contract`, `Emergency Withdraw`).
   </Step>
-  <Step title="Action created">
-    ![Action created](/assets/create_action_4.png)
+
+  <Step title="Select the contract function">
+    In the **Function** dropdown, choose the function you want to execute. Functions are loaded from the contract's ABI and shown in the format `functionName() returnType`.
+  </Step>
+
+  <Step title="Choose a trigger and/or detector (optional)">
+    Select a **trigger** and/or a **detector** that should automatically fire this action when an event is detected.
+
+    - **Trigger** — fires the action based on on-chain conditions (e.g., a specific function call, ERC-20 transfer, failed transaction).
+    - **Detector** — fires the action based on on-chain or off-chain signals (e.g., price drop, AML alert, balance threshold, contract hash change).
+
+    Both can be selected together. If left empty, the action can only be run manually.
+  </Step>
+
+  <Step title="Configure gas settings (optional)">
+    | Field | Description |
+    |---|---|
+    | **Gas price** | Override the network's default gas price (in gwei). Leave blank to use market values. |
+    | **Gas limit** | Maximum gas units for the transaction. Leave blank to use the estimated value. |
+    | **Gas Tip** | Priority fee for EIP-1559 networks to speed up transaction inclusion. |
+    | **Value** | Amount of native token to send with the call (usually `0`). |
+  </Step>
+
+  <Step title="Save">
+    Click **Create Action**. The action appears in the Actions tab with status `ENABLED`.
   </Step>
 </Steps>
 
-Contract Action will be called automatically in response to a trigger and in case you have enough funds on the Action Provider balance to cover the transaction gas fee. You can also run action manually if you need.
+<Info>
+  The action will execute automatically when the selected trigger fires **and** the linked Action Provider has enough balance to cover gas. If no provider is linked for the contract's network, the action will appear as **Unlinked** and will not run until a matching provider is added.
+</Info>
 
-## Run Manually
+---
+
+## Enable / Disable an action
+
+Open the action's [detail page](/smart-contract-actions/action-details) and use the **Monitoring** dropdown to switch between `ENABLED` and `DISABLED`. Disabling pauses automatic execution without deleting the action.
+
+---
+
+## Run an action manually
+
+You can trigger any action on demand, regardless of monitoring events.
 
 <Steps>
-  <Step title="Open the action menu">
-    Click on the action menu and select **Run Manually**.
-
-    ![Run Manually menu](/assets/run_action_1.png)
+  <Step title="Open the action row menu">
+    On the Actions tab, find the action and click **···** → **View Details**, then use the **Run Manually** option. Alternatively, click the run icon directly in the action row.
   </Step>
+
   <Step title="Configure the manual run">
-    * Choose severity (optionally, info by default).
-    * Enter alert message (optionally, detector/trigger message by default).
-    * Enter gas (optionally, market values by default).
-    * Click on **Run** button.
+    | Field | Description |
+    |---|---|
+    | **Severity** | Severity label to attach to this manual execution (default: Info). |
+    | **Alert message** | Custom message for the execution log (defaults to the detector/trigger message). |
+    | **Gas price** | Override gas price for this run only (defaults to market value). |
+    | **Gas limit** | Override gas limit for this run only. |
+  </Step>
 
-    ![Run action form](/assets/run_action_2.png)
+  <Step title="Click Run">
+    Click **Run** to submit the transaction. The execution will appear in the **Executions** tab and the action's **Action History**.
   </Step>
 </Steps>
+
+---
+
+## Delete an action
+
+On the Actions tab, click **···** → **Delete Action** on the action row. This permanently removes the action and cannot be undone.

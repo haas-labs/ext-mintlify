@@ -1,11 +1,64 @@
 ---
 title: "Action Providers"
-description: "Action Providers connect your address to Extractor to run contract actions and cover transaction gas fees."
+description: "Action Providers connect a blockchain wallet to Extractor so it can execute smart contract actions and cover transaction gas fees."
 ---
 
-Action Provider is a connector between your Address and Extractor. It is used to run contract actions and cover transaction gas fees.
+An **Action Provider** is a blockchain wallet registered in Extractor that can:
 
-In order to make it workable two conditions should be met:
+- Execute smart contract functions (e.g., pause, emergency withdrawal) triggered by monitoring events
+- Cover the gas fees required for those transactions
 
-* You need to give access to the address of the Action Provider to execute a function on your Smart Contract.
-* It should be funded to have enough gas to execute the transaction.
+Each provider is tied to a specific network and holds a native balance that gets consumed as gas. You can have multiple providers across different networks.
+
+## Prerequisites
+
+Before an Action Provider can execute transactions on a contract, two conditions must be met:
+
+<CardGroup cols={2}>
+  <Card title="Grant contract access" icon="key">
+    The Action Provider's address must be given an appropriate role on your smart contract (e.g., Pauser, Operator). Never grant Owner-level permissions.
+  </Card>
+  <Card title="Fund the provider" icon="coins">
+    The provider must hold enough native tokens to pay for gas fees on the target network.
+  </Card>
+</CardGroup>
+
+## Supported Networks
+
+Action Providers can be created on the following networks:
+
+| Network | Native Token |
+|---|---|
+| Ethereum | ETH |
+| BSC | BNB |
+| Arbitrum One | ETH |
+| Optimism | ETH |
+| Gnosis | xDAI |
+| Polygon Mainnet | POL |
+| Polygon Amoy | POL |
+| Fantom Opera | FTM |
+| Avalanche (C-Net) | AVAX |
+
+## Provider Types
+
+| Type | Description |
+|---|---|
+| **Default** | Standard private key–based provider. You can supply your own private key, or leave it blank and Extractor will generate a new wallet for you. |
+| **HSM** | Hardware Security Module–based provider for teams that require enterprise-grade key management. |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Create an Action Provider" icon="plus" href="/smart-contract-actions/action-providers/create-action-provider">
+    Register a new wallet as an Action Provider
+  </Card>
+  <Card title="Connect to a Contract" icon="link" href="/smart-contract-actions/action-providers/connect-action-provider">
+    Grant the provider permission to call your contract
+  </Card>
+  <Card title="Deposit Funds" icon="arrow-down-to-line" href="/smart-contract-actions/action-providers/deposit">
+    Fund the provider to cover gas fees
+  </Card>
+  <Card title="Withdraw Funds" icon="arrow-up-from-line" href="/smart-contract-actions/action-providers/withdraw">
+    Withdraw remaining balance from a provider
+  </Card>
+</CardGroup>

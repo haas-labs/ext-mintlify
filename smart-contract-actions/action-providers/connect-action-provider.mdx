@@ -1,22 +1,41 @@
 ---
-title: "Connect Action Provider"
-description: "How to activate an Action Provider by granting it a role on your smart contract."
+title: "Connect an Action Provider to a Contract"
+description: "Grant your Action Provider the permissions it needs to execute functions on your smart contract."
 ---
 
-In order to activate the Action Provider you need to do the following steps:
+An Action Provider can only execute transactions on a smart contract if it has been explicitly granted a role on that contract. This is a one-time on-chain setup.
+
+## Steps
 
 <Steps>
   <Step title="Copy the Action Provider address">
-    Copy the address shown for your Action Provider in the app.
+    Go to **Action Providers**, click on the provider you want to connect, and copy its address using the **Copy** icon next to the address.
+
+    <Tip>
+      You can also click the external link icon to view the address on a block explorer.
+    </Tip>
   </Step>
-  <Step title="Grant a role on your contract">
-    Give it a role in the contract you want to connect.
+
+  <Step title="Grant the required role on your contract">
+    Using your contract's admin interface (e.g., Etherscan, your own frontend, or a script), call the function that grants a role to the provider's address.
+
+    Common roles depending on your contract:
+    - `grantRole(PAUSER_ROLE, <provider_address>)`
+    - `grantRole(OPERATOR_ROLE, <provider_address>)`
+    - `addPauser(<provider_address>)`
 
     <Warning>
-      Do not give an Owner role, otherwise you'll lose access to the contract. Use a limited role such as Pause, Change Owner, or Transfer.
+      Do **not** grant `OWNER_ROLE` or equivalent. This would give the provider (and Extractor) full administrative control over your contract. Use only the minimum permissions required for the actions you want to automate.
     </Warning>
   </Step>
-  <Step title="Deposit gas funds">
-    Now the action provider is connected to the contract. Deposit the required amount to cover gas fees (you can see this amount during the contract action setup).
+
+  <Step title="Verify the connected actions">
+    Back in Extractor, open the provider's detail page and click the **Connected actions** tab. Actions that use this provider will appear here once configured.
   </Step>
 </Steps>
+
+## What's next
+
+Now that the provider has the right on-chain permissions, make sure it has enough balance to pay for gas:
+
+- [Deposit funds into the provider](/smart-contract-actions/action-providers/deposit)

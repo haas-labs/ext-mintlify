@@ -1,27 +1,36 @@
 ---
-title: "Withdraw"
-description: "How to withdraw funds from an Action Provider when you no longer need the Smart Contract action feature."
+title: "Withdraw Funds"
+description: "Withdraw the remaining native token balance from an Action Provider back to your own wallet."
 ---
 
-If you don't use the Smart Contract action feature anymore, you're able to withdraw all your funds from it. To do that make the following steps:
+You can withdraw the remaining balance from an Action Provider at any time — for example, when decommissioning a provider or rebalancing funds.
+
+## Steps
 
 <Steps>
-  <Step title="Open Action Providers">
-    ![Open Action Providers](/assets/create_provider_1.png)
+  <Step title="Open the provider">
+    In the left sidebar, click **Action Providers**, then click on the provider you want to withdraw from.
   </Step>
-  <Step title="Choose a provider">
-    Choose provider by clicking on it.
 
-    ![Choose provider](/assets/choose_provider.png)
-  </Step>
   <Step title="Click Withdraw">
-    Click on the **Withdraw** button.
-
-    ![Withdraw button](/assets/withdraw_1.png)
+    On the provider detail page, click the **Withdraw** button in the top-right area.
   </Step>
-  <Step title="Enter withdrawal details">
-    Enter address, amount, gas tip (optionally) and click on the **Withdraw** button.
 
-    ![Withdraw form](/assets/withdraw_2.png)
+  <Step title="Fill in withdrawal details">
+    In the withdrawal form, enter:
+
+    | Field | Description |
+    |---|---|
+    | **Address** | The destination wallet address to receive the funds. |
+    | **Amount** | The amount of native tokens to withdraw. |
+    | **Gas tip** *(optional)* | An additional miner tip (EIP-1559 networks) to prioritize the withdrawal transaction. |
+  </Step>
+
+  <Step title="Confirm withdrawal">
+    Click **Withdraw** to submit the transaction. The funds will be sent on-chain to the destination address.
   </Step>
 </Steps>
+
+<Warning>
+  Make sure you control the destination address before submitting. Blockchain transactions are irreversible.
+</Warning>

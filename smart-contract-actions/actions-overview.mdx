@@ -1,0 +1,73 @@
+---
+title: "Actions"
+description: "The Actions page for a monitored contract — view, manage, and track smart contract actions and their execution history."
+---
+
+The **Actions** page is accessible from within any monitored entity (contract) in the sidebar under **Actions**. It lets you manage the smart contract actions configured for that specific contract and review their execution history.
+
+## Page header
+
+The header shows the monitored contract's name, address, and two top-level controls:
+
+| Control | Description |
+|---|---|
+| **Add Action Provider** | Opens the Create Provider modal to register a new wallet as an Action Provider for this contract's network. |
+| **Entity Settings** | Opens the configuration settings for the monitored entity. |
+
+---
+
+## Executions tab
+
+The **Executions** tab shows a log of every transaction that has been executed by an Action Provider for this contract.
+
+### Filters
+
+| Filter | Description |
+|---|---|
+| **Severity** | Filter executions by the severity of the monitoring event that triggered them: Any Severity, Critical, High, Medium, Low, or Info. |
+| **Date range** | Narrow results to a specific time period. |
+| **UTC Timezone** | Toggle to display timestamps in UTC instead of local time. |
+| **Refresh** | Manually reload the execution list. |
+
+### Columns
+
+| Column | Description |
+|---|---|
+| **Name** | The name of the action that was executed. |
+| **Severity** | Severity level of the event that triggered the execution. |
+| **Tx Value** | Value transferred in the transaction. |
+| **Date and time** | Timestamp of the execution. |
+| **UID** | Unique identifier for the execution record. |
+
+---
+
+## Actions tab
+
+The **Actions** tab lists all smart contract actions configured for this entity.
+
+### Linked vs. Unlinked Actions
+
+An action becomes **linked** when there is an Action Provider on the same network as the contract. If no matching provider exists, actions appear in the **Unlinked Actions** section and will not execute automatically until a compatible provider is added.
+
+<Warning>
+  If you see the "Prevent Fund Losses with Actions" prompt, it means no Action Provider has been created for this contract's network. Click **Add Action Provider** to create one.
+</Warning>
+
+### Actions table columns
+
+| Column | Description |
+|---|---|
+| **Name** | The name you assigned to the action. |
+| **Last updated** | When the action configuration was last modified. |
+| **Status** | `ENABLED` — the action will trigger automatically. `DISABLED` — the action is paused and will not execute. |
+| **Gas price** | The gas price (in gwei) configured for this action's transactions. |
+| **Gas limit** | The maximum gas units allowed per transaction. |
+
+### Row menu (···)
+
+Each action row has a **···** menu with:
+
+| Option | Description |
+|---|---|
+| **View Details** | Opens the [Action Detail](#) page for full configuration and history. |
+| **Delete Action** | Permanently removes the action. |

@@ -155,7 +155,11 @@
               "detectors/Call/DetectorCall",
               "detectors/Cron/DetectorCron",
               "detectors/ChainlinkACE/DetectorChainlinkACE",
-              "detectors/PoR/DetectorPoR"
+              "detectors/PoR/DetectorPoR",
+              "detectors/DNS/DetectorDNS",
+              "detectors/BlockAnomaly/DetectorBlockAnomaly",
+              "detectors/ContractHashVerification/DetectorContractHashVerification",
+              "detectors/AddressPoison/DetectorAddressPoison"
             ]
           },
           {
@@ -168,11 +172,14 @@
                 "pages": [
                   "smart-contract-actions/action-providers/index",
                   "smart-contract-actions/action-providers/create-action-provider",
+                  "smart-contract-actions/action-providers/provider-details",
                   "smart-contract-actions/action-providers/connect-action-provider",
                   "smart-contract-actions/action-providers/deposit",
                   "smart-contract-actions/action-providers/withdraw"
                 ]
               },
+              "smart-contract-actions/actions-overview",
+              "smart-contract-actions/action-details",
               "smart-contract-actions/setup-action"
             ]
           },

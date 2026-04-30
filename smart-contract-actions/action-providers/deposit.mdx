@@ -1,27 +1,36 @@
 ---
-title: "Deposit"
-description: "How to deposit funds into an Action Provider to cover transaction gas fees."
+title: "Deposit Funds"
+description: "Fund an Action Provider with native tokens so it can pay gas fees when executing smart contract transactions."
 ---
 
-In order to execute a transaction that you configured as Smart Contract Action it should have sufficient balance to cover the transaction fee. To deposit action provider:
+An Action Provider must hold a native token balance on its network to pay gas fees. Without funds, configured actions will fail to execute.
+
+## Steps
 
 <Steps>
-  <Step title="Open Action Providers">
-    ![Open Action Providers](/assets/create_provider_1.png)
+  <Step title="Open the provider">
+    In the left sidebar, click **Action Providers**, then click on the provider you want to fund.
   </Step>
-  <Step title="Choose a provider">
-    Choose provider by clicking on it.
 
-    ![Choose provider](/assets/choose_provider.png)
-  </Step>
   <Step title="Click Deposit">
-    Click on the **Deposit** button.
-
-    ![Deposit button](/assets/deposit_1.png)
+    On the provider detail page, click the **Deposit** button in the top-right area.
   </Step>
-  <Step title="Send funds">
-    Scan the QR code or copy the deposit address to send funds.
 
-    ![Deposit address](/assets/deposit_2.png)
+  <Step title="Send funds to the deposit address">
+    A deposit address (and QR code) will be shown. Transfer the desired amount of native tokens to that address from any external wallet.
+
+    <Info>
+      The required amount depends on the gas price of the target network and how often your actions are expected to trigger. You can see an estimated gas cost during smart contract action setup.
+    </Info>
+  </Step>
+
+  <Step title="Confirm the balance">
+    After the transfer is confirmed on-chain, click **Refresh** on the provider detail page. The updated balance will appear under the provider name.
   </Step>
 </Steps>
+
+## Tips
+
+- Monitor your provider balance regularly, especially for high-frequency actions or on networks with volatile gas prices.
+- Use the **Refresh** button on the provider detail page to manually update the displayed balance at any time.
+- If a balance runs low, actions may fail. Extractor will show this in the **Transaction history** tab with a failed status.
