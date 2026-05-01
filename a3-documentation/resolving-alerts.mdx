@@ -1,0 +1,61 @@
+---
+title: "Resolving Alerts"
+description: "How to mark alerts as resolved — individually, in bulk, or from any page that surfaces the Alert Details panel."
+---
+
+## Overview
+
+Resolving an alert marks it as acknowledged and removes it from the active unresolved queue. Resolved alerts are never deleted — they stay in the full history and are accessible via the **Resolved** filter on the Alerts History page.
+
+The same **Alert Details** panel is available from multiple places in the platform, so you can resolve alerts without navigating away from your current context.
+
+## Where you can resolve alerts
+
+### Alerts History
+
+The primary place for alert triage. Two resolution flows are available:
+
+**Single alert** — click any row to open the Alert Details panel, then click **Mark as Resolved**.
+
+**Bulk resolve** — tick the checkboxes on the left of one or more rows. A selection toolbar appears above the table with the following actions:
+
+| Action | Effect |
+|---|---|
+| **Mark as Resolved** | Resolves all selected alerts at once |
+| **Mark as Read** | Marks selected alerts as read without resolving |
+| **Mark as Unread** | Marks selected alerts as unread |
+
+### Dashboard
+
+The **Latest Alerts** widget on the Dashboard shows the most recent unresolved alerts. Click any row to open the same Alert Details panel and resolve the alert from there.
+
+### Project Overview
+
+Each project's Overview page includes an **Alerts** section that lists recent alerts grouped by category. Click an alert card to expand it, then click **View Details** to open the Alert Details panel.
+
+## The Alert Details panel
+
+The panel is identical regardless of where it is opened:
+
+| Field | Description |
+|---|---|
+| **Alert name** | The rule that fired (e.g. `Interaction with suspicious account`) |
+| **Context value** | Human-readable metric snapshot or transaction hash |
+| **Date and time** | Exact timestamp |
+| **Severity** | Color-coded badge: `INFO`, `LOW`, `MEDIUM`, `HIGH`, or `CRITICAL` |
+| **Score Change** | Score before → after the alert fired |
+| **Alert status** | `UNRESOLVED` (orange) or `RESOLVED` (green) |
+| **Raw data** | Key/value pairs of the underlying on-chain data |
+
+Use **Previous** / **Next** in the panel header to step through adjacent alerts without closing the panel.
+
+### Resolving from the panel
+
+1. Open the Alert Details panel for an unresolved alert.
+2. Confirm the **Alert status** badge shows `UNRESOLVED`.
+3. Click **Mark as Resolved** at the bottom of the panel.
+4. The badge changes to `RESOLVED` (green) and the "Mark as Resolved" button is replaced by "Report a Mistake" only.
+
+### Viewing resolved alerts
+
+On the Alerts History page, use the **Alert Status** toggle in the right-hand filter panel to switch between **Resolved** and **Unresolved** views. Resolved rows display a green checkmark icon instead of the info icon shown on unresolved rows.
