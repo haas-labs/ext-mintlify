@@ -1,27 +1,55 @@
 ---
 title: "Event Emitted"
-description: >-
-  This trigger alerts you whenever an event is emitted from your smart contract, giving you real-time visibility into what's happening.
+description: "Fires when a specific event is emitted from the monitored smart contract. Select the event from the contract ABI."
 ---
 
-**Detector Configuration**
+The **Event Emitted** trigger alerts you whenever a particular event is logged by the monitored contract. Events are the standard way Solidity contracts signal state changes, making this trigger the most direct way to monitor your contract's activity.
+
+## Use cases
+
+<AccordionGroup>
+  <Accordion title="Token transfer tracking" icon="money-bill-transfer">
+    Alert on every `Transfer` event to monitor all token movements in real time.
+  </Accordion>
+  <Accordion title="Ownership and role changes" icon="user-gear">
+    Watch for `OwnershipTransferred` or `RoleGranted` / `RoleRevoked` events to detect any access control changes.
+  </Accordion>
+  <Accordion title="Pausing and emergency events" icon="circle-pause">
+    Catch `Paused` or `Unpaused` events immediately so your team knows when circuit-breaker logic has been activated.
+  </Accordion>
+</AccordionGroup>
+
+## Configuration
 
 <Steps>
-  <Step title="Name">
-    Enter a descriptive name for your trigger, for example: "Event Emitted".
+  <Step title="Trigger Name">
+    Enter a descriptive label, e.g. `Transfer Event Detected`.
   </Step>
+
   <Step title="Event">
-    Execution of certain actions within the contract.
+    Select the event to watch from the dropdown. Events are loaded from the contract's ABI.
   </Step>
-  <Step title="Include Transaction Value">
-    Configure the transaction value filter:
-    - *Operator*
-    - *Transaction Value*
+
+  <Step title="Include Transaction Value (optional)">
+    Toggle **Include Transaction Value** to only fire when the transaction that emitted the event also carries a native token value meeting a condition:
+
+    | Field | Description |
+    |-------|-------------|
+    | **Operator** | Comparison to apply: `=`, `!=`, `>`, `>=`, `<`, `<=` |
+    | **Transaction value** | Native token amount in wei |
+
+    Leave the toggle off to fire on every event emission regardless of value.
+  </Step>
+
+  <Step title="Severity">
+    Choose the alert severity: `Critical`, `High`, `Medium`, `Low`, or `Info`.
+  </Step>
+
+  <Step title="Notification Channels">
+    Select one or more channels to receive the alert.
   </Step>
 </Steps>
 
-![](../../assets/event_emitted_faq.png)
-
-**Alert example**
-
-![](../../assets/event_emitted_alert.png)
+<Info>
+  **Event Emitted** selects events from the monitored contract's ABI. To monitor events on a different contract address, use **Event Advanced** instead.
+</Info>

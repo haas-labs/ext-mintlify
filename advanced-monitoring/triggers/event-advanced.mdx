@@ -1,23 +1,55 @@
 ---
 title: "Event Advanced"
+description: "Fires when an event matching a free-text signature is emitted from any contract address you specify — not limited to the monitored contract."
 ---
 
-**Detector Configuration**
+**Event Advanced** extends the Event Emitted trigger in two key ways: the event is identified by a free-text signature search rather than a dropdown selection, and it can watch **any** contract address — not just the one you are monitoring. Use this when you need to react to events emitted by external contracts (e.g., a DEX, oracle, or bridge) in the context of your monitored entity.
+
+## Use cases
+
+<AccordionGroup>
+  <Accordion title="Cross-contract event monitoring" icon="arrows-left-right">
+    Monitor an oracle or price feed contract for its `AnswerUpdated` event and react within the context of your monitored contract.
+  </Accordion>
+  <Accordion title="DEX and liquidity events" icon="chart-line">
+    Watch for `Swap` or `Sync` events on a Uniswap pair contract that is related to your token, even though it is a third-party contract.
+  </Accordion>
+  <Accordion title="Bridge and relay tracking" icon="bridge">
+    Detect cross-chain message events emitted by a bridge contract to correlate with activity on your monitored contract.
+  </Accordion>
+</AccordionGroup>
+
+## Configuration
 
 <Steps>
-  <Step title="Name">
-    Enter a descriptive name for your trigger, for example: "Event Advanced".
+  <Step title="Trigger Name">
+    Enter a descriptive label, e.g. `Oracle Price Updated`.
   </Step>
+
   <Step title="Event">
-    Configure the event to monitor.
+    Search for the event by name or by its keccak-256 signature hash. Unlike **Event Emitted**, this field accepts free-text input and is not limited to the monitored contract's ABI.
+
+    | Search method | Example |
+    |---------------|---------|
+    | **By name** | `Transfer` — matches `Transfer(address,address,uint256)` |
+    | **By signature hash** | `0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c` |
+
+    <Tip>Use the signature hash when the event name is ambiguous or when you know the exact topic0 from a transaction receipt.</Tip>
   </Step>
+
   <Step title="Event Address">
-    Set the contract address emitting the event.
+    Enter the address of the contract that will emit the event. This can be any contract on the same network — it does not have to be the monitored contract.
+  </Step>
+
+  <Step title="Severity">
+    Choose the alert severity: `Critical`, `High`, `Medium`, `Low`, or `Info`.
+  </Step>
+
+  <Step title="Notification Channels">
+    Select one or more channels to receive the alert.
   </Step>
 </Steps>
 
-![](../../assets/event_advanced_faq.png)
-
-**Alert example**
-
-![](../../assets/event_advanced_alert.png)
+<Info>
+  Use **Event Emitted** when you want to watch an event on the contract you are already monitoring. Use **Event Advanced** when the event source is a different contract address.
+</Info>

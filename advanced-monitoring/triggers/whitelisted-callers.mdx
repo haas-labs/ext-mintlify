@@ -1,22 +1,46 @@
 ---
 title: "Whitelisted Callers"
-description: >-
-  This trigger alerts you if a transaction is initiated from an address that is not on your whitelist, helping you to be informed of unauthorized access to your contract.
+description: "Fires when a transaction is initiated by an address that is NOT on your whitelist, alerting you to unauthorized access attempts."
 ---
 
-**Detector Configuration**
+The **Whitelisted Callers** trigger alerts you any time a transaction reaches the monitored contract from an address that is not in your approved list. This is the inverse of blacklisting — only known, trusted addresses are allowed to interact silently.
+
+## Use cases
+
+<AccordionGroup>
+  <Accordion title="Access control enforcement" icon="lock">
+    Confirm that only authorized operators, bots, or contracts interact with privileged functions. Any unexpected caller immediately triggers an alert.
+  </Accordion>
+  <Accordion title="Protocol perimeter monitoring" icon="shield">
+    Ensure only whitelisted integrations (e.g., your own frontend router or partner contracts) reach the contract. Catches routing bugs and front-running bots.
+  </Accordion>
+  <Accordion title="Incident response" icon="triangle-exclamation">
+    After a security incident, lock down interaction to a minimal whitelist while you investigate, and get alerted to any attempt to bypass it.
+  </Accordion>
+</AccordionGroup>
+
+## Configuration
 
 <Steps>
-  <Step title="Name">
-    Enter a descriptive name for your trigger, for example: "Whitelisted Callers".
+  <Step title="Trigger Name">
+    Enter a descriptive label, e.g. `Unauthorized Caller Detected`.
   </Step>
+
   <Step title="Whitelisted Entities">
-    A list of addresses.
+    Add one or more wallet addresses that are **allowed** to interact with the contract. Any transaction from an address not on this list will trigger an alert.
+
+    You can add multiple addresses — use the multi-select field to build the full list.
+  </Step>
+
+  <Step title="Severity">
+    Choose the alert severity: `Critical`, `High`, `Medium`, `Low`, or `Info`.
+  </Step>
+
+  <Step title="Notification Channels">
+    Select one or more channels to receive the alert (email, Slack, webhook, PagerDuty, etc.).
   </Step>
 </Steps>
 
-![](../../assets/whitelisted_callers_faq.png)
-
-**Alert example**
-
-![](../../assets/whitelisted_callers_alert.png)
+<Warning>
+  An empty whitelist means **every** caller is unauthorized. Make sure to add all legitimate addresses before enabling this trigger, or you will receive an alert for every transaction.
+</Warning>

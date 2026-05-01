@@ -22,30 +22,30 @@ Watch for execution of any contract function — privileged admin calls, user-fa
 ## Configuration
 
 <Steps>
-  <Step title="Name">
+  <Step title="Trigger Name">
     Enter a descriptive label, e.g. `Ownership Transfer Detected`.
   </Step>
-  <Step title="Function">
-    The function signature to watch. Enter the name as it appears in the ABI:
 
-    ```
-    transferOwnership
-    pause
-    withdraw
-    ```
+  <Step title="Function">
+    Select the function to watch from the dropdown. Functions are loaded from the contract's ABI and shown in the format `functionName(argTypes) returnType`.
   </Step>
-  <Step title="Transaction value filter (optional)">
-    Optionally restrict alerts to calls that carry a native token value meeting a condition:
+
+  <Step title="Include Transaction Value (optional)">
+    Toggle **Include Transaction Value** to restrict alerts to calls that carry a native token value meeting a condition:
 
     | Field | Description |
     |-------|-------------|
-    | **Operator** | Comparison to apply: `>`, `>=`, `<`, `<=`, `=` |
+    | **Operator** | Comparison to apply: `=`, `!=`, `>`, `>=`, `<`, `<=` |
     | **Transaction value** | Native token amount in wei |
 
-    Leave empty to fire on every call regardless of value.
+    Leave the toggle off to fire on every call regardless of value.
+  </Step>
+
+  <Step title="Severity">
+    Choose the alert severity: `Critical`, `High`, `Medium`, `Low`, or `Info`.
+  </Step>
+
+  <Step title="Notification Channels">
+    Select one or more channels to receive the alert.
   </Step>
 </Steps>
-
-<Info>
-  The function filter matches by name only — it fires for all overloads of that function name. If you need to distinguish by argument types, use the **Event Advanced** trigger instead.
-</Info>

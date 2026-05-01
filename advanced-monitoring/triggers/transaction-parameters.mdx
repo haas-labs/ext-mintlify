@@ -1,27 +1,97 @@
 ---
 title: "Transaction Parameters"
-description: >-
-  A specific trigger that fires whenever any transaction parameter matches the rules you define.
+description: "Fires when any transaction or block parameter matches one or more rules you define."
 ---
 
-**Detector Configuration**
+The **Transaction Parameters** trigger gives you granular control over exactly which transactions produce alerts. You can match on any field of the transaction, receipt, or block — from the sender address and gas price to block-level metadata.
+
+## Use cases
+
+<AccordionGroup>
+  <Accordion title="Gas price anomaly detection" icon="gauge">
+    Alert when a transaction arrives with an unusually high gas price, which can indicate front-running or a misconfigured bot.
+  </Accordion>
+  <Accordion title="Large value transfers" icon="coins">
+    Fire an alert whenever a transaction carries more than a threshold amount of native token (Value field).
+  </Accordion>
+  <Accordion title="Specific sender monitoring" icon="user">
+    Watch for transactions from a particular address without adding it to a blacklist — useful for monitoring partner wallets or known bots.
+  </Accordion>
+  <Accordion title="Receipt and status checks" icon="receipt">
+    Trigger on receipt fields such as gas used or cumulative gas to catch unexpectedly expensive transactions.
+  </Accordion>
+</AccordionGroup>
+
+## Configuration
 
 <Steps>
-  <Step title="Name">
-    Enter a descriptive name for your trigger, for example: "Transaction Parameters".
+  <Step title="Trigger Name">
+    Enter a descriptive label, e.g. `High Gas Price Detected`.
   </Step>
-  <Step title="From contract">
-    Specify whether to filter by the originating contract.
+
+  <Step title="From contract (optional)">
+    Toggle **From contract** on to restrict the trigger to transactions that originate from a smart contract (i.e., internal calls), rather than externally owned accounts.
   </Step>
-  <Step title="Parameters configuration">
-    Configure the parameter rules:
-    - *Choose multiple parameters*
-    - *Parameter*
+
+  <Step title="Parameters">
+    Configure one or more parameter rules. Each rule consists of:
+
+    | Field | Description |
+    |-------|-------------|
+    | **Parameter** | The transaction/block/receipt field to inspect (see full list below). |
+    | **Operator** | Comparison operator: `=`, `!=`, `>`, `>=`, `<`, `<=`, `contains`, `startsWith`, `endsWith`. |
+    | **Value** | The value to compare against. |
+
+    Enable **Choose multiple parameters** to add additional rules. Multiple rules are combined with AND logic — all rules must match for the trigger to fire.
+  </Step>
+
+  <Step title="Severity">
+    Choose the alert severity: `Critical`, `High`, `Medium`, `Low`, or `Info`.
+  </Step>
+
+  <Step title="Notification Channels">
+    Select one or more channels to receive the alert.
   </Step>
 </Steps>
 
-![](../../assets/tx_params_faq.png)
+## Available parameters
 
-**Alert example**
-
-![](../../assets/tx_params_alert.png)
+| Parameter | Description |
+|-----------|-------------|
+| **From** | Sender address of the transaction. |
+| **To** | Recipient address of the transaction. |
+| **Value** | Native token amount sent with the transaction (in wei). |
+| **Gas** | Gas limit set by the sender. |
+| **Gas Price** | Gas price set by the sender (in wei). |
+| **Max Fee Per Gas** | Maximum total fee per gas unit (EIP-1559). |
+| **Max Priority Fee Per Gas** | Maximum priority fee (tip) per gas unit (EIP-1559). |
+| **Nonce** | Sender's transaction nonce. |
+| **Input** | Raw calldata of the transaction. |
+| **Transaction Hash** | Unique hash identifying the transaction. |
+| **Transaction Index** | Position of the transaction within its block. |
+| **Transaction Type** | Transaction type (0 = legacy, 1 = access list, 2 = EIP-1559). |
+| **Timestamp** | Unix timestamp of the block containing the transaction. |
+| **Block Number** | Height of the block containing the transaction. |
+| **Block Hash** | Hash of the block. |
+| **Block Gas Limit** | Maximum gas allowed in the block. |
+| **Block Gas Used** | Total gas used by all transactions in the block. |
+| **Block Base Fee Per Gas** | Base fee per gas in the block (EIP-1559). |
+| **Block Miner** | Address of the block producer. |
+| **Block Difficulty** | Proof-of-work difficulty of the block. |
+| **Block Total Difficulty** | Cumulative difficulty up to this block. |
+| **Block Size** | Size of the block in bytes. |
+| **Block Transaction Count** | Number of transactions in the block. |
+| **Block Parent Hash** | Hash of the parent block. |
+| **Block Nonce** | Block nonce used in proof-of-work. |
+| **Block SHA-3 Uncles** | SHA3 hash of the uncle blocks list. |
+| **Block State Root** | Root hash of the state trie after the block. |
+| **Block Transactions Root** | Root hash of the transactions trie. |
+| **Block Receipts Root** | Root hash of the receipts trie. |
+| **Block Logs Bloom** | Bloom filter for log entries in the block. |
+| **Block Extra Data** | Extra data field set by the block producer. |
+| **Receipt Status** | Transaction receipt status (1 = success, 0 = failure). |
+| **Receipt Gas Used** | Gas used by this transaction specifically. |
+| **Receipt Cumulative Gas Used** | Total gas used in the block up to and including this transaction. |
+| **Receipt Effective Gas Price** | Actual gas price paid (base fee + tip). |
+| **Receipt Contract Address** | Contract address created by this transaction, if any. |
+| **Receipt Root** | Post-transaction state root (pre-Byzantium). |

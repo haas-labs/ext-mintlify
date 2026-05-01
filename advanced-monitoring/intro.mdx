@@ -1,13 +1,9 @@
 ---
 title: "Advanced Monitoring"
-description: "Define custom conditions on your smart contracts and get alerted the moment they are met."
+description: "Define custom trigger conditions on your smart contracts and get alerted the moment they are met."
 ---
 
-Advanced Monitoring lets you go beyond built-in detectors and write your own rules. A trigger watches for a specific condition — a function call, a token transfer above a threshold, a blacklisted address — and fires an alert the instant it happens.
-
-<Info>
-  All triggers share a common set of parameters. See [Common Configurations](/common-configurations) for details on severity levels, cron schedules, and condition syntax.
-</Info>
+Advanced Monitoring lets you create custom triggers that watch for specific on-chain conditions — a function call, a token transfer, a blacklisted address, or a matching transaction parameter — and fire an alert the instant they occur.
 
 ## Available triggers
 
@@ -16,19 +12,59 @@ Advanced Monitoring lets you go beyond built-in detectors and write your own rul
     Fires when a token transfer exceeds a configured amount. Filter by direction (from / to / any) and token contract.
   </Card>
   <Card title="Blacklisted Callers" icon="ban" href="/advanced-monitoring/triggers/blacklisted-callers">
-    Fires when a transaction is initiated by an address on your blacklist. Useful for sanctions enforcement and post-exploit containment.
+    Fires when a transaction is initiated by an address on your blacklist.
+  </Card>
+  <Card title="Whitelisted Callers" icon="check" href="/advanced-monitoring/triggers/whitelisted-callers">
+    Fires when a transaction is initiated by an address that is NOT on your whitelist — catching unauthorized access.
+  </Card>
+  <Card title="Failed Transaction" icon="circle-xmark" href="/advanced-monitoring/triggers/failed-transaction">
+    Fires when any transaction to the monitored contract fails.
+  </Card>
+  <Card title="Transaction Parameters" icon="sliders" href="/advanced-monitoring/triggers/transaction-parameters">
+    Fires when any transaction parameter (gas, value, sender, block data, receipt fields, etc.) matches rules you define.
   </Card>
   <Card title="Function Call" icon="code" href="/advanced-monitoring/triggers/function-call">
     Fires whenever a specific contract function is executed. Optionally filter by transaction value.
   </Card>
+  <Card title="Event Emitted" icon="bell" href="/advanced-monitoring/triggers/event-emitted">
+    Fires when a specific event is emitted from the monitored contract. Select the event from the contract ABI.
+  </Card>
+  <Card title="Event Advanced" icon="magnifying-glass" href="/advanced-monitoring/triggers/event-advanced">
+    Fires when an event matching a free-text signature is emitted from any contract address you specify.
+  </Card>
 </CardGroup>
 
-## Common parameters
+---
+
+## Triggers tab
+
+The **Triggers** tab on an Advanced Monitoring entity lists all configured triggers.
+
+### Trigger statuses
+
+| Status | Meaning |
+|--------|---------|
+| **ENABLED** | Trigger is active and will fire alerts when conditions are met. |
+| **DISABLED** | Trigger is manually paused and will not fire. |
+| **PAUSED** | System automatically paused the trigger due to excessive alert volume. Re-enable it after reviewing the configuration. |
+
+### Row menu (···)
+
+Each trigger row has a **···** menu with:
+
+| Option | Description |
+|--------|-------------|
+| **Edit Trigger** | Modify the trigger configuration. |
+| **Delete Trigger** | Permanently remove the trigger. |
+
+---
+
+## Common configuration fields
 
 Every trigger shares these base fields:
 
-| Parameter | Description |
-|-----------|-------------|
-| **Name** | Descriptive label shown in alerts |
-| **Severity** | `Critical` · `High` · `Medium` · `Low` · `Info` · `Auto` |
-| **Notification channels** | Where alerts are delivered — email, webhook, Slack, etc. |
+| Field | Description |
+|-------|-------------|
+| **Trigger Name** | Descriptive label shown in alerts and the trigger list. |
+| **Severity** | `Critical` · `High` · `Medium` · `Low` · `Info` |
+| **Notification Channels** | Where alerts are delivered — email, webhook, Slack, PagerDuty, etc. |

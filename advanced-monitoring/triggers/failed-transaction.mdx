@@ -1,16 +1,40 @@
 ---
 title: "Failed Transaction"
-description: >-
-  This trigger alerts you if a transaction fails, allowing you to quickly
-  respond to any issues and minimize potential damage.
+description: "Fires when any transaction to the monitored contract is reverted or fails on-chain."
 ---
 
-**Detector Configuration**
+The **Failed Transaction** trigger alerts you any time a transaction directed at the monitored contract reverts or fails on-chain. Failed transactions often signal attempted exploits, misconfigured callers, or contract logic errors.
 
-_Name_ - Enter a descriptive name for your trigger, for example: "Failed Transaction".
+## Use cases
 
-![](../../assets/failed_tx_faq.png)
+<AccordionGroup>
+  <Accordion title="Exploit attempt detection" icon="bug">
+    Attackers frequently probe contracts with crafted calls that revert. A spike in failed transactions can be an early warning of a targeted attack.
+  </Accordion>
+  <Accordion title="Integration health" icon="heart-pulse">
+    Catch broken integrations or misconfigured bots that are sending transactions with wrong parameters before they cause downstream issues.
+  </Accordion>
+  <Accordion title="Contract logic errors" icon="triangle-exclamation">
+    A regression in contract logic that causes previously valid calls to revert will immediately surface as failed transaction alerts.
+  </Accordion>
+</AccordionGroup>
 
-**Alert example**
+## Configuration
 
-![](../../assets/failed_tx_alert.png)
+<Steps>
+  <Step title="Trigger Name">
+    Enter a descriptive label, e.g. `Failed Transaction Alert`.
+  </Step>
+
+  <Step title="Severity">
+    Choose the alert severity: `Critical`, `High`, `Medium`, `Low`, or `Info`.
+  </Step>
+
+  <Step title="Notification Channels">
+    Select one or more channels to receive the alert (email, Slack, webhook, PagerDuty, etc.).
+  </Step>
+</Steps>
+
+<Info>
+  This trigger has no additional filter fields — it fires on every failed transaction to the monitored contract. Use severity and notification channel settings to control alert routing.
+</Info>
