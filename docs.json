@@ -239,7 +239,7 @@
         {
           "anchor": "Support",
           "icon": "envelope",
-          "href": "/support/support"
+          "href": "/support"
         },
         {
           "anchor": "Open App",
@@ -248,5 +248,11 @@
         }
       ]
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/support/support",
+      "destination": "/support"
+    }
+  ]
 }
