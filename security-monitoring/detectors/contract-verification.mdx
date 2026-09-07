@@ -1,0 +1,30 @@
+---
+title: "Contract Verification"
+description: "Contract Verification sentry for detecting changes in a contract"
+---
+
+Contract Verification sentry for detecting changes in a contract
+
+## Functionality
+
+- The monitor tracks an EVM network for the `Upgraded` event emitted by smart contracts. Upon detecting an `Upgraded` event, the monitor triggers a contract build process to  verify the checksum of the implementation bytecode on the blockchain against a locally compiled version of the bytecode.
+- The name of the smart contract to be tracked and verified
+- The URL of the Git repository where the smart contract source code is stored.
+- The specific commit hash in the Git repository that corresponds to the contract's source code version to be compiled
+- The path within the Git repository where the smart contract source code is located. This should be a relative path from the root of the repository.
+- No notification is sent in this case, as the process completed successfully without any issues and the locally compiled bytecode matches the bytecode deployed on the blockchain
+- The contract build process fails due to issues such as: incorrect repository URL or commit hash, compilation errors due to missing dependencies, syntax errors, or incompatible Solidity versions, incorrect build path or missing source files, etc. As result, the monitor sends a notification with details about the failure
+- The build process completes successfully, but the checksum of the compiled bytecode does not match the bytecode on the blockchain. The monitor sends a notification with details about the checksum mismatch
+
+## Configuration
+
+- **Contract Name** (`contract_name`, default: `None`): Contract Name
+- **Respository URL** (`repo_url`, default: `None`): Git Repository URL
+- **Commit Hash** (`commit_hash`, default: `None`): Git Respository Commit Hash
+- **Build Path** (`build_path`, default: `/`): The build path in Git Repository
+- **EVM Version** (`evm_version`, default: `None`): Compiler EVM Version
+- **Severity** (`severity`, default: `-1.0`): Severity See [common configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: evm.
+</Note>

@@ -1,0 +1,44 @@
+---
+title: "Wallet"
+description: "Monitors address balances changes (Native Balance and SLP balances)"
+---
+
+Monitors address balances changes 
+
+(Native Balance and SLP balances)
+
+## Functionality
+
+- Detector monitors Address (Wallet or Contract) balances (native and tokens).
+
+Detector checks balances on any transaction which references `Address`:
+
+- Native transfer (from/to)
+- SLP transfer (from/to)
+- Transaction Events which has `Address` in its fields
+
+If Token is added to conditions, it will generate Alerts on conditon match.
+- List of SLP token addresses to monitor for conditions.
+Enter `*` in __Address__ field to monitor balance changes of every token. 
+
+Use network name (e.g. `solana`) in __Address__ field for Native token condition
+- Threshold condition to generate Alert. Refert to [Documantion](https://docs.extractor.live/common-configurations#condition-threshold) for `Condition` syntax
+- Description pattern
+- When enabled (default), detector queries current balances via Solana RPC API when it starts. This establishes the baseline for threshold conditions.
+
+If disabled, thresholds start at 0, which means first transaction will likely trigger alerts.
+- When enabled, detector generates events for every balance change, even if threshold condition is not crossed.
+
+Useful for complete transaction history tracking. Default is disabled (only threshold crossings generate alerts).
+
+## Configuration
+
+- **Tokens** (`tokens`, default: `[{'symbol': 'SOL', 'address': 'solana', 'decimals': 9, 'condition': '>100'}, {'symbol': 'USDC', 'address': 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', 'decimals': 6, 'condition': '> 10000'}, {'symbol': 'USDT', 'address': 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB', 'decimals': 6, 'condition': '> 10000'}]`): Tokens conditions
+- **Track Initial Snapshot** (`track_snap`, default: `True`): Query initial balances via RPC on detector start to establish baseline. If disabled, thresholds start at 0.
+- **Track All Changes** (`track_all`, default: `False`): Track all balance changes, not just threshold crossings. Useful for complete transaction history.
+- **Description** (`desc`, default: `{action}`): Description Pattern
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: solana.
+</Note>

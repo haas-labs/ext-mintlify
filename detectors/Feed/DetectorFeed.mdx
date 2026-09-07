@@ -1,0 +1,78 @@
+---
+title: "Feed"
+description: "Detector monitors and procesess feeds via scripts pipeline"
+---
+
+Detector monitors and procesess feeds via scripts pipeline
+
+## Functionality
+
+- Detects new messages/events from a feed and uses message data as input to scripts pipeline.
+
+Script results are used to generate alerts. Result can be treated as a score with a final `condition`.
+- Cron interval to check for new messages/events. Refer to [Cron](https://docs.extractor.live/common-configurations#cron) for more details
+- Feeds URI
+
+Mulitple URI's can be specified with comma separation. If `type` is not specified, feed can be prefixed with type (`rss://`. `atom://`, `reddit://`, `twitter://@channel`)
+
+- Type of feed:
+- `rss`
+- `atom`
+- `reddit`
+- `twitter`
+- `meltwater`
+- Max number of entries per Feed to process
+- Message Category filter (comma separated list of categories). If not specified, all messages will be processed.
+- Scripts to execute
+
+Scripts are executed in the order they are specified. Refer to [Scripts](https://docs.extractor.live/common-configurations#condition-threshold) for more details.
+
+Scripts execution result will be in `result` meta field.
+
+- Condition to filter Alerts score on `result` (result must be in the range: [0..1]). Refer to [Condition](https://docs.extractor.live/common-configurations#condition) for more details
+- Description template for the Alert description. Can use any meta field as placeholder (e.g. `{result}`)
+- Track Errors
+
+Muliple tags can be specified comma-separated (e.g. `sanctions, exploit`)
+
+Negative condition can be specified by prefixing tag with exclamation mark (e.g. `! sanctions`)
+
+__Tags__:
+
+`cybercrime` - OFAC or othe cybercrime activity
+
+`sanctions` - OFAC or other sanctioned entites
+
+`sanctions_exposure` - Indirect exposure to sanctioned entities
+
+`suspicious` - Suspcious activity
+
+`exploit` - Activity in Exploit case
+
+- Track Errors Always
+
+If enabled, the detector will track errors even if the script result is not a score.
+- Severity of the Alert. If not specified, the detector will use the severity of the script result.
+
+## Configuration
+
+- **Cron** (`cron`, default: `10 min`): Cron Interval See [common configuration](/common-configurations#cron).
+- **Feeds** (`feeds`, default: `rss://https://cointelegraph.com/rss`): Feeds URI
+- **Feed type** (`type`, default: `rss`): Feed Type
+- **Max** (`max`, default: `10`): Max news
+- **Category** (`category`, default: ``): Category filter
+- **Scripts** (`script`, default: `[]`): Scripts to execute
+- **Score condition** (`score`, default: ``): Score
+- **Track Errors** (`track_err`, default: `True`): Track Errors as Alerts
+- **Track Error (always)** (`err_always`, default: `True`): Always Alert on Error
+- **Description** (`desc`, default: `{title} {err}`): Description Template
+- **Event Type** (`event_type`, default: ``): Internal Event Type
+- **Event Category** (`event_cat`, default: ``): Internal Event Category
+- **Event Source ID** (`event_sid`, default: ``): Internal Source ID
+- **Timeout** (`timeout`, default: `10000`): Timeout
+- **Delay** (`delay`, default: `1000`): Delay
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
+
+<Note>
+  No specific network configuration required (Any network).
+</Note>

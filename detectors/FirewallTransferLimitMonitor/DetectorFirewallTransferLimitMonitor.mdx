@@ -1,0 +1,22 @@
+---
+title: "Rule: Transfer Limit"
+description: "Controls how much money can be transferred in and out of your contract. Sets limits on transfer amounts and monitors when these limits change. Protects against someone trying to move unusually large amounts that might indicate an attack or exploit."
+---
+
+Controls how much money can be transferred in and out of your contract. Sets limits on transfer amounts and monitors when these limits change. Protects against someone trying to move unusually large amounts that might indicate an attack or exploit.
+
+## Functionality
+
+- It sets spending limits on your contract. It watches for changes to these limits and alerts you when someone tries to transfer more than allowed.
+- You'll be notified when transfer limits change, when transfer protection is turned on or off, and when someone attempts to transfer more money than allowed.
+- Transfer limits prevent attackers from draining large amounts quickly. Even if someone gains access, they can only take small amounts at a time, giving you time to notice and stop the attack.
+
+## Configuration
+
+- **Transfer Limits** (`rules`, default: `[{'operator': 0, 'isIncoming': False}]`): 
+- **Severity: Rule Updates** (`severityRuleUpdate`, default: `0`): Severity: Rule Updates
+- **Severity: Rule Violations** (`severityRuleViolation`, default: `0.75`): Severity: Rule Violations
+
+<Note>
+  Supported networks: evm.
+</Note>

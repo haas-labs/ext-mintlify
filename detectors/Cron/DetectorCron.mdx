@@ -1,27 +1,32 @@
 ---
 title: "Cron"
-description: "The Cron detector schedules periodic tasks or event triggers — wallet top-ups, subscription payments, and contract job execution on a defined interval."
+description: "Simple Periodic Tasks or Events Trigger Examples: `Wallet top-up`, `Subscription Payment`, `Contract job execution`"
 ---
 
-Simple periodic tasks or event trigger. Examples include wallet top-up, subscription payment, and contract job execution.
+Simple Periodic Tasks or Events Trigger
+
+Examples: `Wallet top-up`, `Subscription Payment`, `Contract job execution`
 
 ## Functionality
 
-* Generates events on a cron schedule (Quartz syntax supported).
-* Passes arbitrary data into optional scripts for execution.
-* Emits alerts based on script results or errors.
+- Cron interval. Refer to [Cron](https://docs.extractor.live/common-configurations#cron) for syntax
+- Arbitrary data input to the Script (will be in `input` variable)
+- Scripts to execute
+
+- Generate Alerts on Errors (in Script execution)
+- Alert on every Error. If `unchecked`, only new unique Errors will be alerted and duplicates will be omitted
+- Description template for the Alert description. Can use any meta field as placeholder (e.g. `{result}`)
 
 ## Configuration
 
-![DetectorCron Configuration](/assets/DetectorCron-Config.png)
+- **Cron expression** (`cron`, default: `10 min`): Cron expression See [common configuration](/common-configurations#cron).
+- **Data** (`data`, default: `None`): Arbitrary data input to Script
+- **Scripts** (`script`, default: `[]`): Scripts to execute
+- **Track Errors** (`track_err`, default: `True`): Track Errors as Alerts
+- **Track Error (always)** (`err_always`, default: `True`): Always Alert on Error
+- **Description** (`desc`, default: `{result}{err}`): Description Pattern
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
 
-* **Cron expression** (`cron`): Schedule for event generation. Supports Quartz syntax (e.g., `0 0/10 * 1/1 * ? *` or `10 min`).
-* **Data** (`data`): Arbitrary input passed to scripts.
-* **Scripts** (`script`): List of scripts to execute. Each script supports:
-  * **Type** (`type`): `regexp`, `filter`, `sq`, `jq`, `js`, `ai`, `regexp_score`, `sq_score`, `jq_score`.
-  * **Source** (`src`): Script source code.
-  * **Options** (`options`): Script options.
-* **Track Errors** (`track_err`): Whether to create alerts when scripts error.
-* **Track Error (always)** (`err_always`): Always alert on error.
-* **Description** (`desc`): Alert description template (default `{result}{err}`).
-* **Severity** (`severity`): Alert severity (default `Auto`).
+<Note>
+  No specific network configuration required (Any network).
+</Note>

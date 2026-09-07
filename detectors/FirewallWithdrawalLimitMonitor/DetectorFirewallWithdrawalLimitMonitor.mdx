@@ -1,0 +1,22 @@
+---
+title: "Rule: Withdraw Limit (TVL)"
+description: "Protects your smart contract by monitoring withdrawal limits. Alerts you when withdrawal rules change, when someone tries to withdraw more than allowed, or when withdrawal protections are turned on or off. Helps prevent attackers from draining your contract's funds."
+---
+
+Protects your smart contract by monitoring withdrawal limits. Alerts you when withdrawal rules change, when someone tries to withdraw more than allowed, or when withdrawal protections are turned on or off. Helps prevent attackers from draining your contract's funds.
+
+## Functionality
+
+- It watches your contract's withdrawal limits to keep your funds safe. Think of it like a security guard that alerts you when someone changes the withdrawal rules or tries to take out more money than they're allowed to.
+- You'll get notified when withdrawal limits are updated, when someone tries to withdraw too much money (and fails), and when withdrawal protection is turned on or off.
+- Withdrawal limits are your first line of defense against hackers trying to drain your contract. This monitor ensures you know immediately if these protections are changed or if someone tries to bypass them.
+
+## Configuration
+
+- **Token thresholds** (`rules`, default: `[{'token': '', 'threshold': ''}]`): 
+- **Severity: Rule Updates** (`severityRuleUpdate`, default: `0`): Severity: Rule Updates
+- **Severity: Rule Violations** (`severityRuleViolation`, default: `0.75`): Severity: Rule Violations
+
+<Note>
+  Supported networks: evm.
+</Note>

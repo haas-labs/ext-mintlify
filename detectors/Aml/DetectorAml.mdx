@@ -1,0 +1,80 @@
+---
+title: "AML Detector"
+description: "Detector monitors transactions for addresses that match AML lists, across EVM and Solana networks"
+---
+
+Detector monitors transactions for addresses that match AML lists.
+
+## Functionality
+
+- Track transaction and event addresses against AML lists, including `exploit` lists.
+
+By default if no severity is defined, Detector will map AML score to Severity.
+
+Address score is not always real-time and thus Detector works as a pre-screening monitor.
+
+Viewing Alert will often query or recalculate the score and it may differ from the pre-screening score.
+
+Since the detector does pre-screening and may not have `scores` for some Addresses, it may not be able to map to Severity automatically. In such case, the address will be at `Info` severity.
+
+- Condition to filter Alerts by score.
+
+Addresses may not always have scores (depends on the `source` of Address information), thus if condition is `> 0`, it will not catch such addresses.
+
+- Track Addresses in Token (Monitored Address) transfers.
+
+`NOTE`: Monitored Address is assumed to be a token address.
+
+- Track transaction Addresses
+  - Track `from` Address
+  - Track `to` Address
+- Track only specified tags condition.
+
+Multiple tags can be specified comma-separated (e.g. `sanctions, exploit`). Negative condition can be specified by prefixing a tag with exclamation mark (e.g. `! sanctions`).
+
+__Tags__:
+
+`cybercrime` - OFAC or other cybercrime activity
+
+`sanctions` - OFAC or other sanctioned entities
+
+`sanctions_exposure` - Indirect exposure to sanctioned entities
+
+`suspicious` - Suspicious activity
+
+`exploit` - Activity in Exploit case
+
+- Multiple custom addresses can be added to tracking, as CSV: `Address, Score, Name, Tags` (`Tags` semicolon-separated, `Score` from 0.0 to 100.0). Example:
+
+<Tabs>
+  <Tab title="EVM">
+    ```
+    0x1049a94a2238297156826cfcd8b35a3c0400ee98, 80.0, Coin, ofac;sanctions
+    ```
+  </Tab>
+  <Tab title="Solana">
+    ```
+    hntyVP6YFm1Hg25TN9WGLqM12b8TQmcknKrdu1oxWux, 80.0, Coin, ofac;sanctions
+    ```
+  </Tab>
+</Tabs>
+
+- Exclusion Address list (EVM only). List should contain only comma or newline separated addresses (no metadata). `Custom` addresses will be excluded if also added to the `Exclude` list.
+
+## Configuration
+
+- **Description** (`desc`, default: `{addr} {dir} {score}` on EVM, `{addr} {score}` on Solana): Description Template
+- **Source** (`src`, default: ``, EVM only): AML Provider Filter
+- **Tags filter** (`tags`, default: ``): List of tags to filter
+- **Score condition** (`score`, default: `>= 0.0`): Track Address score condition
+- **Track Transaction** (`track_tx`, default: `True`): Track Transaction Addresses
+- **Track Token** (`track_tokens`, default: `True`): Track Contract token transfer Addresses
+- **Track From** (`track_from`, default: `True`): Track From Address
+- **Track To** (`track_to`, default: `True`): Track To Address
+- **Custom Addresses** (`custom`, default: ``): List of custom AML addresses
+- **Exclude Addresses** (`exclude`, default: ``, EVM only): List of exclusion addresses
+- **Severity** (`severity`, default: `-1`): Severity. See [common configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: ethereum, bsc, polygon, optimism, ethereum_sepolia, avalanche, arbitrum, base, hyperevm, solana.
+</Note>

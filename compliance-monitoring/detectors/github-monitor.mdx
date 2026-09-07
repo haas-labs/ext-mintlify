@@ -1,45 +1,31 @@
 ---
 title: "Github Monitor"
-description: "Track participation activity on a GitHub repository — weekly and monthly commit thresholds — for project maintenance and due-diligence compliance checks."
+description: "Monitors Github repository for participation activity (last week and last month commits)"
 ---
 
-**Behavior**
+Monitors Github repository for participation activity (last week and last month commits)
 
-* Repository Path to repository. Only https:// url supported
-* Weekly Commits Weekly aggregated commit threshold
-* Monthly Commits Monthly aggregated commit threshold
+## Functionality
 
-**Use cases**
+- Path to repository. Only `https://` url supported
+- Weekly aggregated commit threshdold
+- Monthly aggregated commit threshdold
+- Cron expression in Quartz syntax, milliseconds value or seconds/minutes/hours/days interval (e.g. `24 hours`)
+Since participation stat is only at weekly interval, Cron expression should be at day interval
 
-* Monitor repo inactivity for early signs of abandoned projects.
-* Detect sudden spikes in commits indicating emergency patches.
-* Provide due diligence insights to investors on dev activity.
+Cron interval will be limited to day interval.
+- Use custom provided API Token to access private repositories
 
-**Detector Configuration**
 
-<Steps>
-  <Step title="Name">
-    Enter a descriptive name for your monitor, for example: "Github Monitor".
-  </Step>
-  <Step title="Repository">
-    Enter the full URL of the GitHub repository you want to monitor.
-  </Step>
-  <Step title="Weekly commits">
-    Enter the number of commits you expect in a week.
-  </Step>
-  <Step title="Monthly commits">
-    Enter the number of commits you expect in a month.
-  </Step>
-  <Step title="Cron">
-    Enter a cron expression to define the schedule. Cron expression in Quartz syntax, milliseconds value or seconds/minutes/hours/days interval (e.g. `24 hours`)
-  </Step>
-  <Step title="Github Token">
-    Enter `github_token` if repository is private.
-  </Step>
-</Steps>
+## Configuration
 
-![](../../assets/github_monitor_faq.png)
+- **Repository** (`repo`, default: `None`): Repository url
+- **Weekly commits** (`commits_week`, default: `<5`): Weekly commits threshoold
+- **Monthly commits** (`commits_month`, default: `<50`): Monthly commits
+- **Cron** (`cron`, default: `1 day`): Check Interval See [common configuration](/common-configurations#cron).
+- **Github Token** (`api_token`, default: `None`): Github API Token with repo scope
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
 
-**Alert example**
-
-![](../../assets/github_monitor_alert.png)
+<Note>
+  No specific network configuration required (Any network).
+</Note>

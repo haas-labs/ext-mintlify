@@ -1,4 +1,29 @@
 ---
 title: "Aave Monitor"
-description: "The Aave Monitor tracks lending and borrowing activity on Aave markets, alerting on health-factor changes, liquidations, and large position movements."
+description: "Detector monitor Aave Pools and Borrower Health If `address` is Aave Pool address, Detector will monitor `TVL` If `address` is not a Pool, Detector will monitor health factor of an address"
 ---
+
+Detector monitor Aave Pools and Borrower Health
+
+If `address` is Aave Pool address, Detector will monitor `TVL`
+
+If `address` is not a Pool, Detector will monitor health factor of an address
+
+## Functionality
+
+- Borrowing Health threshold. (Ex: __&lt;1.9__).
+
+- TVL threshold in USD (Ex: __>250000000.0__)
+- Cron interval to query TVL (refer to Documenation for cron syntax)
+
+## Configuration
+
+- **Health** (`health`, default: `<1.5`): Health threshold
+- **TVL** (`tvl`, default: `>1000000000`): TVL threshold in USD
+- **Cron** (`cron`, default: `10 min`): Interval to query TVL See [common configuration](/common-configurations#cron).
+- **TVL source** (`tvl_method`, default: `contract`): TVL source method (contract,api)
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: ethereum.
+</Note>

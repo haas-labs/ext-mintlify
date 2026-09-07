@@ -1,42 +1,41 @@
 ---
 title: "DNS Monitor"
-description: "Monitor WHOIS and DNS records of your project's domains for hijacking attempts and upcoming expirations, with early-warning compliance alerts."
+description: "Detector monitors DNS for potential attacks (like DNS Hijacking)"
 ---
 
-**Behavior**
+Detector monitors DNS for potential attacks (like DNS Hijacking)
 
-Monitors WHOIS and DNS server records. Start alerting about Domain expiration before Domain expiration date.
+## Functionality
 
-**Use cases**
+- Detector monitors WHOIS and DNS server records for changes
+- WHOIS is mulitple registries for domains registration infomation
+- Nameservers for Domain resolution.
 
-* Domain Hijacking & Phishing Prevention - An attacker compromises DNS records and redirects users to a malicious clone of a DeFi protocol or exchange website. The detector continuously monitors DNS and WHOIS records for unauthorized changes (e.g., altered A, CNAME, or NS records).
-* Operational Continuity & Domain Expiration Alerts - A project's critical domain (API endpoint, wallet interface, or dApp front-end) is at risk of expiring because renewal was overlooked. The detector issues early warnings well before the expiration date. What is monitored
+If Nameserver field is empty, it will not be checked.
+- List of IP addresses domain is resolved to. Use `,` (semicolon) for mulitple IP addresses
+- It is a date when to start alerting about Domain expiration. It should be before Domain expiration date.
 
-**Detector Configuration**
+Use date format, not time should be specified (e.g. `2026-01-25`)
 
-<Steps>
-  <Step title="Name">
-    Enter a descriptive name for your monitor, for example: "DNS Monitor".
-  </Step>
-  <Step title="Cron">
-    Enter a cron expression to define the schedule.
-  </Step>
-  <Step title="Domain">
-    The domain name to monitor.
-  </Step>
-  <Step title="IP address(s)">
-    Expected IP addresses for the domain.
-  </Step>
-  <Step title="NS1/2/3/4">
-    Expected nameserver records.
-  </Step>
-  <Step title="Expiry Alert date">
-    Date threshold for domain expiration alerts.
-  </Step>
-</Steps>
+If no value is specified expiration will not be checked.
+- Cron expression (Quartz expression syntax, millisecond value or seconds/minutes/hours expression)
 
-![](../../assets/dns_monitor_faq.png)
+Periodic check example: `10 min`
 
-**Alert example**
+Cron expression is Quartz syntax example for every hour:  `0 0 0/1 1/1 * ? *`" 
 
-![](../../assets/dns_monitor_alert.png)
+## Configuration
+
+- **Cron** (`cron`, default: `10 min`): Cron expression to check DNS See [common configuration](/common-configurations#cron).
+- **Domain** (`domain`, default: ``): Domain to monitor
+- **IP address(s)** (`ip`, default: ``): List of expected resolved addresses
+- **NS1** (`ns1`, default: ``): Nameserver
+- **NS2** (`ns2`, default: ``): Nameserver
+- **NS3** (`ns3`, default: ``): Nameserver
+- **NS4** (`ns4`, default: ``): Nameserver
+- **Expiry Alert date** (`expiry_alert`, default: ``): The date when to start alerting about expriration
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
+
+<Note>
+  No specific network configuration required (Any network).
+</Note>

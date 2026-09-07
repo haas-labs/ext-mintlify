@@ -1,48 +1,49 @@
 ---
-title: "Price Monitor for financial monitoring"
-description: "Track ERC-20 token price changes via Chainlink on-chain feeds or CoinGecko, alerting on configured movement thresholds for financial monitoring."
+title: "Price Monitor"
+description: "Monitors Price changes of the Contract. Contract must be a Token contract (ERC-20 like)"
 ---
 
-**Behavior**
+Monitors Price changes of the Contract.
 
-When to query price:\
-`cron` - On Cron interval\
-`block` - On every new block
+Contract must be a Token contract (ERC-20 like)
 
-_Source_\
-Where to query price:\
-`oracle` - On-chain Feed (Chainlink Oracle format)\
+## Functionality
+
+- Cron expression can be specified in milliseconds, Quartz expression syntax or seconds/minutes/hours prefix (e.g.  `10 minutes`).
+
+There is an internal throttling with 60 seconds interval, so intervals should be >1 minute
+
+Cron expression is Quartz syntax (ex:  "0 0/10 * 1/1 * ? *" == every 10 minutes)
+- Price value threshold for triggering Alerts. (Ex: >5% for percentage or &lt;200 for absolute values)
+
+Refer to the [documentation](https://docs.extractor.live/) for supported formats
+- Supply your own Coingecko API key for faster Cron interval (default minimum is 10 min)
+- When to query price:
+
+`cron` - On Cron interval
+
+`block` - On every new block(Useful for Oracle source)
+- Where to query price:
+
+`oracle` - On-chain Feed (Chainlink Oracle format)
+
 `coingecko` - Coingecko Feed
+- Currency of the price. Default is `usd`. (Refer to CoinGecko documentation for supported currencies)
 
-_Currency_\
-Currency of the price. Default is `usd`.
+__NOTE__: Currently supported only for `coingecko` feed. 
+
+`oracle` feed requires adding Chainlink Oracle Contracts in configuration
+
+## Configuration
+
+- **Cron expression** (`cron`, default: `10 min`): Cron expression in Quartz format (or milliseconds) See [common configuration](/common-configurations#cron).
+- **Price Threshold** (`threshold`, default: ``): Price threshold in USD See [common configuration](/common-configurations#condition).
+- **API Key** (`api_key`, default: `None`): Custom API Key
+- **When** (`when`, default: `cron`): When to query price
+- **Source** (`source`, default: `coingecko`): Price feed source
+- **Currency** (`currency`, default: `usd`): Price currency
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
 
 <Note>
-  Currently supported only for `coingecko` feed. `oracle` feed requires adding Chainlink Oracle Contracts in configuration.
+  Supported networks: evm.
 </Note>
-
-**Use cases**
-
-* Alert on sudden price drops of stablecoins or RWAs.
-* Detect oracle price manipulation attempts in DeFi protocols.
-* Track token price feeds for liquidation risk management.
-
-**Detector Configuration**
-
-<Steps>
-  <Step title="Name">
-    Enter a descriptive name for your monitor, for example: "Price Monitor".
-  </Step>
-  <Step title="Cron">
-    Configure the cron schedule for when to query the price.
-  </Step>
-  <Step title="Threshold">
-    Set the threshold value that triggers an alert.
-  </Step>
-</Steps>
-
-![](../../assets/price_monitor_faq.png)
-
-**Alert example**
-
-![](../../assets/price_monitor_alert.png)

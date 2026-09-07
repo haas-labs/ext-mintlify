@@ -1,56 +1,29 @@
 ---
 title: "Chainabuse Monitor"
-description: "The Chainabuse Monitor analyzes reports from chainabuse.com with LLM filtering to flag phishing, ransomware, scams, and other malicious crypto activity."
+description: "Detector monitors Chainabuse alerts"
 ---
 
-**Behavior**
+Detector monitors Chainabuse alerts
 
-Analyse and filter by LLM the malicious crypto activity to identify connection and pattern of latest reported threads with clients infrastructure as soon as possible to minimise harmful outcomes.
+## Functionality
 
-**Supported Categories:**
+- Chainabuse categories list to filter (`PHISHING`,`OTHER_HACK`, ...). Use `!` prefix to exclude category.
 
-* PHISHING
-* OTHER\_BLACKMAIL
-* SEXTORTION
-* RANSOMWARE
-* IMPERSONATION
-* FAKE\_RETURNS
-* OTHER\_HACK
-* FAKE\_PROJECT
-* AIRDROP
-* ROMANCE
-* PIGBUTCHERING
-* CONTRACT\_EXPLOIT
-* DONATION\_SCAM
-* SIM\_SWAP
-* OTHER\_INVESTMENT\_SCAM
-* JOB\_SCAM
-* UPGRADE\_SCAM
-* MAN\_IN\_THE\_MIDDLE\_ATTACK
-* OTHER
+If empty, all categories will be alerted
 
-**Use cases**
+See Chainabuse documentation for supported categories
+- Cron expression for interval to check. Reports are cached internally. 
 
-* Scam Alerts: get instant alerts when new scam reports (e.g. phishing or fake airdrops) appear on Chainabuse that target its brand or users. This allows security team to quickly warn customers and block any associated malicious addresses.
-* Fraud Detection: scan incoming transactions against reported scam addresses. If a user's wallet is involved with an address flagged for scams (like a romance or "pig butchering" scam), the system notifies the provider to investigate and potentially freeze the suspicious activity.
-* Infrastructure Protection: A blockchain project team monitors Chainabuse reports for any mention of their smart contracts or tokens. For example, if a fake project or impersonation scam uses the project's name, the Chainabuse Monitor will alert the team so they can address the issue.
+Cron expression can be Quartz syntax, milliseconds value or seconds/minutes/hours/days expression (e.g. `5 hours`)
 
-**Detector Configuration**
+Example: `0 0 12 1/1 * ? *`
 
-<Steps>
-  <Step title="Name">
-    Enter a descriptive name for your monitor, for example: "Chainabuse Monitor".
-  </Step>
-  <Step title="Category (optional)">
-    If empty, all categories will be alerted.
-  </Step>
-  <Step title="Cron">
-    Enter a cron expression to define the schedule. Cron expression in Quartz syntax, milliseconds value or seconds/minutes/hours/days interval (e.g. `24 hours`)
-  </Step>
-</Steps>
+## Configuration
 
-![](../../assets/chainabuse_monitor_faq.png)
+- **Category** (`category`, default: ``): Categories to filter
+- **Cron** (`cron`, default: `1 day`): Check Interval See [common configuration](/common-configurations#cron).
+- **Severity** (`severity`, default: `0.2`): Severity See [common configuration](/common-configurations#severity).
 
-**Alert example**
-
-![](../../assets/chainabuse_monitor_alert.png)
+<Note>
+  No specific network configuration required (Any network).
+</Note>

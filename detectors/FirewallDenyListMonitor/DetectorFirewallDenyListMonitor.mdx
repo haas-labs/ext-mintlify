@@ -1,0 +1,22 @@
+---
+title: "Rule: Black List"
+description: "Maintains a block list of suspicious or dangerous addresses that are banned from using your contract. Alerts you when addresses are added to or removed from the block list, and warns you when blocked addresses try to interact with your contract."
+---
+
+Maintains a block list of suspicious or dangerous addresses that are banned from using your contract. Alerts you when addresses are added to or removed from the block list, and warns you when blocked addresses try to interact with your contract.
+
+## Functionality
+
+- This is a monitoring service that tracks deny list events from Firewall Contract
+- You'll be notified when the black list is updated, and when a denied address tries to access your contract.
+- Block lists help you proactively ban known scammers, hackers, or problematic addresses before they can interact with your contract.
+
+## Configuration
+
+- **Address** (`rules`, default: `['']`): Blacklisted Addresses
+- **Severity: Rule Updates** (`severityRuleUpdate`, default: `0`): Severity: Rule Updates
+- **Severity: Rule Violations** (`severityRuleViolation`, default: `0.75`): Severity: Rule Violations
+
+<Note>
+  Supported networks: evm.
+</Note>

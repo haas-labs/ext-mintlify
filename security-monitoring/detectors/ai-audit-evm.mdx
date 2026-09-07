@@ -1,0 +1,42 @@
+---
+title: "AI Audit (EVM)"
+description: "Configuration for the AI auditor - EVM/Solidity"
+---
+
+Configuration for the AI auditor - EVM/Solidity
+
+## Functionality
+
+- This Schema holds the configuration for the AI auditor.
+
+## Configuration
+
+- **Agentic Auditor Enabled** (`agentic_auditor_enabled`, default: `True`): Enable the LLM-driven auditor activity. Required for script-style mode.
+- **Script-Style Mode** (`agentic_script_style_mode`, default: `True`): Route audits through the script-style pipeline (vendored SC-AI skill, persona fan-out, fp-check verdict, Hacken severity calibration).
+- **Script-Style Default Model** (`agentic_script_style_model`, default: `gpt-5.5`): Default LLM model identifier or provider-qualified route for every script-style stage not overridden below. Hosted multi-model routes must be explicit and operator-enabled, for example 'ollama://glm-5.2', 'venice://zai-org-glm-5-2', or 'venice://kimi-k3'.
+- **Auditor Skill** (`agentic_script_style_skill`, default: `solidity-auditor`): Language-isolated script-style pipeline for EVM/Solidity audits. Fixed to the Solidity auditor for this detector.
+- **Hard Budget (USD)** (`agentic_audit_hard_budget_usd`, default: `350`): BudgetGuard ceiling for a single audit in USD. The worker aborts when this is crossed. Typical script-style scans land between $50-$300 depending on repository size, model routing, and bug-hunt iterations.
+- **Expected Audit Cost (USD)** (`expected_audit_cost_usd`, default: `None`): Cold-start estimate of the expected real LLM cost (pre-markup) of a single audit with this preset, in USD. Used only for a client's first audits on this preset — before there is enough real-cost history to average — after which the backend averages the client's actual costs and ignores this value. The backend applies its own markup and safety factor on top; do not bake markup into this number. Leave unset or non-positive to fall back to the global default.
+- **Max Tokens Per Audit** (`agentic_audit_max_tokens_per_audit`, default: `0`): Hard token-count cap per audit across all LLM calls. 0 means no token-level cap (only the USD budget applies).
+- **Stage Max Output Tokens** (`agentic_script_style_max_output_tokens`, default: `32768`): Maximum output tokens for normal script-style LLM stages. This does not change the separate emergency final-synthesis cap.
+- **Synthesis Stage Output Token Overrides** (`agentic_script_style_synthesis_stage_max_output_tokens`, default: `{}`): Optional sparse output-token overrides for known long-form synthesis and artifact stages routed explicitly to Venice. Other providers ignore these overrides. Omitted stages inherit agentic_script_style_max_output_tokens, so an empty object preserves existing behavior.
+- **Final Synthesis Max Output Tokens** (`agentic_script_style_final_synthesis_max_output_tokens`, default: `8192`): Maximum output tokens for the no-tools recovery turn used when an agent-loop stage exhausts turns or is cut off. Keep this smaller than the normal stage ceiling to avoid runaway cost.
+- **Final Synthesis Tool Trace Character Cap** (`agentic_script_style_final_synthesis_tool_trace_max_chars`, default: `60000`): Maximum guarded tool-result excerpt characters reinjected into the emergency final-synthesis prompt. 0 disables tool-trace reinjection for recovery.
+- **Agent Loop Enabled** (`agentic_script_style_agent_loop_enabled`, default: `True`): Allow the script-style auditor to iterate (review-and-refine) up to agent_loop_max_iterations.
+- **Agent Loop Max Iterations** (`agentic_script_style_agent_loop_max_iterations`, default: `10`): Hard ceiling on the agent loop's refinement passes. Enforced even when agent_loop_enabled is true.
+- **Script-Style Pipeline Mode** (`agentic_script_style_pipeline_mode`, default: `auditor`): Which orchestration mode the script-style runner uses. Currently only 'auditor' is supported.
+- **Script-Style Bug-Hunt Iterations** (`agentic_script_style_bug_hunt_iterations`, default: `2`): Number of independent bug-hunt runs. Each run starts with a fresh model session.
+- **Per-Stage Model Overrides** (`agentic_script_style_step_model_overrides`, default: `None`): Optional per-stage model routing on top of the default model. Each row picks the model for one stage. Use the reserved stage id 'default' for the global fallback. Solidity stage ids include 'x-ray', 'solidity_auditor_merge', 'finding-formatter', and 'solidity_auditor_persona.*'.
+- **Persona Fan-Out Enabled** (`agentic_script_style_persona_fanout_enabled`, default: `True`): Run the multi-persona fan-out stage of the script-style pipeline. Disabling this collapses the audit to a single persona.
+- **Persona Fan-Out Passes** (`agentic_script_style_persona_fanout_passes`, default: `2`): Number of fresh independent persona fan-out passes. Use 2 for higher recall when budget allows.
+- **Persona Max Concurrency** (`agentic_script_style_persona_max_concurrency`, default: `4`): Upper bound on concurrent persona LLM calls during fan-out. Higher values reduce wall-clock time at the cost of provider rate-limit pressure.
+- **Script-Style Coverage Matrix** (`agentic_script_style_coverage_matrix_enabled`, default: `True`): Emit a deterministic script-style file/function coverage matrix for quality comparison and missed-surface analysis.
+- **Guardrail (Internal)** (`guardrail_local_enabled`, default: `True`): Per-audit override for the in-process regex/heuristic guardrail that scans repository files for prompt-injection markers before the auditor sees them. Leave unset to inherit the cluster default (env GUARDRAIL_LOCAL_ENABLED). Set true or false to force on/off for this audit. Turning it off skips the scan; the guardrails comparison report still runs.
+- **Guardrail (TS)** (`guardrail_testsavant_enabled`, default: `None`): Per-audit override for the prompt-injection guardrail. Leave unset to inherit the cluster default (env GUARDRAIL_TESTSAVANT_ENABLED). Set true to require it (worker aborts if TS credentials are missing) or false to skip it for this audit.
+- **Script-Style Missed-Issue Review** (`agentic_script_style_missed_issue_review_enabled`, default: `True`): Run an additional script-style LLM pass over coverage gaps before fp-check. The pass improves recall but does not bypass fp-check or reportability gates.
+- **Merge Reconciliation** (`agentic_script_style_merge_reconciliation_enabled`, default: `True`): Run an additional reconciliation pass after the persona-merge stage to dedupe and stabilize findings.
+- **Auto-Ingest Documentation** (`include_documentation`, default: `None`): Per-audit override for the documentation walker that auto-includes README, design notes, whitepapers, and PDFs as context-only inputs. Leave unset to skip documentation (cluster default). Set true to auto-ingest the repository's docs for this audit; useful when the design docs or whitepaper add material context, at the cost of a larger LLM context budget.
+
+<Note>
+  No specific network configuration required (Any network).
+</Note>

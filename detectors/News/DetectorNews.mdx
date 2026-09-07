@@ -1,48 +1,73 @@
 ---
-title: "News Detector"
-description: "The News Detector monitors RSS and Reddit feeds with tag-based filtering, surfacing security-relevant news that may affect your monitored contracts."
+title: "News"
+description: "Detector monitors news feeds"
 ---
 
 Detector monitors news feeds
 
 ## Functionality
 
-* Track news from different feeds
-* Condition to filter Alerts score.
-* Type of news:
-  * `rss`
-  * `reddit`
-* Feeds URI
-* Multiple URIs can be specified with comma separation. If `type` is not specified, feed can be prefixed with type (`rss://`, `reddit://`)
-* Content Processor (currently `regexp` filter)
-* Max number of entries per Feed
-* Track Errors
-* Multiple tags can be specified comma-separated (e.g. `sanctions, exploit`)
-* Negative condition can be specified by prefixing tag with exclamation mark (e.g. `! sanctions`)
+- Track news from different feeds
+- Feeds URI
 
-**Tags**
+Mulitple URI's can be specified with comma separation. If `type` is not specified, feed can be prefixed with type (`rss://`. `reddit://`)
 
-* `cybercrime` - OFAC or other cybercrime activity
-* `sanctions` - OFAC or other sanctioned entities
-* `sanctions_exposure` - Indirect exposure to sanctioned entities
-* `suspicious` - Suspicious activity
-* `exploit` - Activity in Exploit case
+- Cron interval to check for new posts. Refer to [Cron](https://docs.extractor.live/common-configurations#cron) for more details
+- Type of news:
+- `rss`
+- `reddit`
+- Max number of entries per Feed
+- Message Category filter (comma separated list of categories). If not specified, all messages will be processed.
+- Scripts to execute
+
+Scripts are executed in the order they are specified. Refer to [Scripts](https://docs.extractor.live/common-configurations#condition-threshold) for more details.
+
+Scripts execution result will be in `result` meta field.
+
+- Condition to filter Alerts score on `result` (result must be in the range: [0..1]). Refer to [Condition](https://docs.extractor.live/common-configurations#condition) for more details
+- Track Errors
+
+Muliple tags can be specified comma-separated (e.g. `sanctions, exploit`)
+
+Negative condition can be specified by prefixing tag with exclamation mark (e.g. `! sanctions`)
+
+__Tags__:
+
+`cybercrime` - OFAC or othe cybercrime activity
+
+`sanctions` - OFAC or other sanctioned entites
+
+`sanctions_exposure` - Indirect exposure to sanctioned entities
+
+`suspicious` - Suspcious activity
+
+`exploit` - Activity in Exploit case
+
+- Track Errors Always
+
+If enabled, the detector will track errors even if the script result is not a score.
+- Severity of the Alert. If not specified, the detector will use the severity of the script result.
+- Description template for the Alert description. Can use any meta field as placeholder (e.g. `{title}`)
 
 ## Configuration
 
-![DetectorNews Configuration](/assets/DetectorNews-Config.png)
+- **Cron** (`cron`, default: `10 min`): Cron Interval See [common configuration](/common-configurations#cron).
+- **Feeds** (`feeds`, default: `https://cointelegraph.com/rss`): Feeds URI
+- **Feed type** (`type`, default: `rss`): Feed Type
+- **Max** (`max`, default: `10`): Max news
+- **Category** (`category`, default: ``): Category filter
+- **Score condition** (`score`, default: ``): Score 
+- **Scripts** (`script`, default: `[]`): Scripts to execute
+- **Track Errors** (`track_err`, default: `True`): Track Errors as Alerts
+- **Track Error (always)** (`err_always`, default: `True`): Always Alert on Error
+- **Description** (`desc`, default: `{title} {err}`): Description Template
+- **Event Type** (`event_type`, default: ``): Internal Event Type
+- **Event Category** (`event_cat`, default: ``): Internal Event Category
+- **Event Source ID** (`event_sid`, default: ``): Internal Source ID
+- **Timeout** (`timeout`, default: `10000`): Timeout
+- **Delay** (`delay`, default: `1000`): Delay
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
 
-* **Cron** (`cron`, default: `10 min`): Cron Interval
-* **Description** (`desc`, default: `New post: {title}{err}`): Description Template
-* **Feeds** (`feeds`, default: `https://cointelegraph.com/rss`): Feeds URI
-* **Feed type** (`type`, default: `rss`): Feed Type
-* **Max** (`max`, default: `10`): Max news
-* **Score condition** (`score`, default: ``): Score
-* **Scripts** (`script`, default: `[]`): Scripts to execute
-* **Track Errors** (`track_err`, default: `True`): Track Errors as Alerts
-* **Track Error (always)** (`err_always`, default: `True`): Always Alert on Error
-* **Severity** (`severity`, default: `-1`): Severity
-
-## Tags
-
-* [Beta Features](/beta-features/)
+<Note>
+  No specific network configuration required (Any network).
+</Note>

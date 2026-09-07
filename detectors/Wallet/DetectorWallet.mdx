@@ -1,0 +1,45 @@
+---
+title: "Wallet"
+description: "Monitors changes to address balances"
+---
+
+Monitors changes to address balances
+
+## Functionality
+
+- Detector monitors Address (Wallet or Contract) balances (native and tokens).
+
+Detector checks balances on any transaction which references `Address`:
+
+- Native transfer (from/to)
+- ERC20 transfer (from/to)
+- Transaction Events which has `Address` in its fields
+
+If ERC-20 token is added to conditions, it will generate Alerts on conditon match.
+
+Detector will generate __INFO__ events on any token balance changes unless history tracking is disabled
+- List of ERC-20 token addresses to monitor for conditions.
+
+Use network name (e.g. `ethereum`) in __address__ field for Native token condition
+- Threshold condition for Alert. 
+Condition is for value / dec (after division)
+E.g. for `WETH`: __>1.5__ means __>1.5 WETH__
+Refer to documentation for supported formats (e.g. `>100.0`)
+
+- Start block (used only for replays). Leave empty to track from `latest` block.
+
+This option is used only by `Admins` for replays and will have no effect for real-time on-chain streams
+- Track all Balance changes (not only conditional).
+
+It will generate `Info` Events for any tokens balances
+
+## Configuration
+
+- **Tokens** (`tokens`, default: `[{'symbol': 'USDT', 'address': '0xdAC17F958D2ee523a2206206994597C13D831ec7', 'decimals': 6, 'condition': '<10000'}, {'symbol': 'USDC', 'address': '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 'decimals': 6, 'condition': '<10000'}, {'symbol': 'WETH', 'address': '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', 'decimals': 18, 'condition': '<10'}, {'symbol': 'ETH', 'address': 'ethereum', 'decimals': 18, 'condition': '<10'}, {'symbol': 'WETH', 'address': '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', 'decimals': 18, 'condition': '<10'}]`): Tokens conditions
+- **Description** (`desc`, default: `{action}`): Description Pattern
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
+- **Capture Snapshots** (`track_snap`, default: `True`): Query initial balances on start and emit a one-time snapshot (INFO) event. This also seeds the baseline used by change/percent conditions. Disable to skip the startup balance query and the snapshot event.
+
+<Note>
+  Supported networks: ethereum, polygon, ethereum_sepolia, arbitrum, hyperevm, base.
+</Note>

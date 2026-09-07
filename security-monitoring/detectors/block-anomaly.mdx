@@ -1,55 +1,41 @@
 ---
 title: "Block Anomaly"
-description: "The Block Anomaly detector monitors blocks for abnormal transaction counts, event counts, block sizes, and gas usage that may signal network attacks."
+description: "Monitors blocks for Block anomalies. Anomalies includes transaction count (low/large), large block size, large number of Events, etc"
 ---
 
-The Block Anomaly detector watches every produced block and fires when key metrics fall outside their expected ranges. It catches network-level anomalies that often precede or accompany on-chain attacks.
+Monitors blocks for Block anomalies.
+Anomalies includes transaction count (low/large), large block size, large number of Events, etc
 
-## What it monitors
+## Functionality
 
-<Tabs>
-  <Tab title="Transactions">
-    Fires when the number of transactions in a block is unusually **low** (possible censorship or validator downtime) or unusually **high** (spam attack, MEV flood).
-  </Tab>
-  <Tab title="Events">
-    Fires when the number of emitted events is abnormal. A spike in events can indicate flash-loan attacks, mass token distributions, or event spam.
-  </Tab>
-  <Tab title="Block size">
-    Fires when the raw block size is outside the configured range. Oversized blocks may signal data-stuffing attacks; undersized blocks may indicate chain stall.
-  </Tab>
-  <Tab title="Gas">
-    Fires when gas usage per block or per transaction is outside expected bounds. High gas can indicate a DoS attempt; low gas may signal abnormal validator behavior.
-  </Tab>
-</Tabs>
-
-## Use cases
-
-<AccordionGroup>
-  <Accordion title="Network health & stability monitoring" icon="heart-pulse">
-    A chain suddenly producing blocks with abnormally low transaction counts or gas usage can signal network congestion, validator downtime, or censorship attacks. The detector flags these in real time so infra teams can investigate immediately.
-  </Accordion>
-  <Accordion title="Exploit & attack detection" icon="bug">
-    MEV spam, denial-of-service attacks, and reorg attempts all produce blocks with extreme metrics. The detector correlates anomalies with known attack patterns (repeated reverts, flash-loan spam, flood of small transfers).
-  </Accordion>
-  <Accordion title="Compliance & forensics" icon="scale-balanced">
-    Auditors and compliance teams need structured logs of abnormal block patterns. The detector provides these for cross-referencing with suspicious addresses and regulatory reporting.
-  </Accordion>
-</AccordionGroup>
+- Conditions for min and max transaction count in a block
+- Conditions for min and max gas used in a transaction. Use `GasMonitor` for more gas related monitors
+- Conditions for min and max events count in a block
+- Conditions for block size (min/max)
+- Large and small Gas usage in block
+- Expected Block frequency (max/min) (msec). This informaiton is extracted from block timestamps.
+- Liveness check for block generation. Alert is triggered if __no__ blocks are generated within the conditiion (E.g. `> 25000` means block is expected within 25 sec )
+- Track block latency. It is updated evey 10 min
 
 ## Configuration
 
-| Parameter | Description |
-|-----------|-------------|
-| **Name** | Descriptive label for this detector instance |
-| **Transactions min/max** | Acceptable transaction count range per block |
-| **Events min/max** | Acceptable event count range per block |
-| **Block size min/max** | Acceptable block size range (bytes) |
-| **Gas min/max** | Acceptable total gas usage range per block |
-| **Gas min/max (Tx)** | Acceptable gas usage range per individual transaction |
-| **Block Freq min/max** | Expected block interval in milliseconds |
-| **Cron** | Schedule for evaluation (leave empty for real-time) |
-| **Track Latency** | Whether to include block production latency in analysis |
+- **Transactions min** (`tx_min`, default: `<1`): Minimal transaction in block
+- **Transactions max** (`tx_max`, default: `>2000`): Maximal transaction in block
+- **Events min** (`event_min`, default: `<1`): Minimal Events in block
+- **Events max** (`event_max`, default: `>3000`): Maximal Events in block
+- **Block size min** (`block_min`, default: `<100`): Minimal block size
+- **Block size max** (`block_max`, default: `>10000000`): Maximal block size
+- **Gas min** (`gas_min`, default: `<22000`): Minimal gas used in a block
+- **Gas max** (`gas_max`, default: `>29999000`): Max gas used in a block
+- **Gas min (Tx)** (`tx_gas_min`, default: `<20000`): Minimal gas used in a Transaction
+- **Gas max (Tx)** (`tx_gas_max`, default: `>10000000`): Max gas used in a Transaction
+- **Cron** (`cron`, default: `60 sec`): Periodic check for anomalies See [common configuration](/common-configurations#cron).
+- **Track Latency** (`lat_enabled`, default: `False`): Track Blocks Latency
+- **Block Freq (min)** (`block_freq_min`, default: `<1000`): Min Block creation interval
+- **Block Freq (max)** (`block_freq_max`, default: `>12500`): Max Block creation interval
+- **Liveness interval** (`liveness`, default: `> 25000`): Liveness interval threshold
+- **Severity** (`severity`, default: `-1.0`): Severity See [common configuration](/common-configurations#severity).
 
-<Tip>
-  Start with wide min/max ranges and tighten them over time as you learn your network's baseline. Too-narrow ranges will produce noisy alerts early on.
-</Tip>
+<Note>
+  Supported networks: evm.
+</Note>

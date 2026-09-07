@@ -1,0 +1,48 @@
+---
+title: "Tracker"
+description: "Tracks transfers and labels addresses"
+---
+
+Tracks transfers and labels addresses
+
+## Functionality
+
+- Track transfers from `Address` list (source addresses) for funds funelling/dispersal
+- List of original addresses to track (comma separated)
+
+- Cron to pediodically flush caches and build statistics 
+
+(currently does not produce any Events)
+- Track Identifier to group label address (e.g. `bybit`).
+
+Mandatory and must be unqiue for every tracker
+
+
+- Comma-separated list of tags to add to each detected address
+- Exclude addresses (with optional labels).
+
+__ATTENTION__:  Each address should be on a new line (it is in `CSV` format)
+- Track Native (ETH) transfer
+- Tracking threshold for Native tokens 
+- Tracking threshold  for ERC-20 transfers
+- Track ERC-20 tokens transfers
+
+## Configuration
+
+- **Tags list** (`tags`, default: `exploit, suspicious_address`): List of tags
+- **Addresses list** (`addr`, default: `0x47666fab8bd0ac7003bce3f5c3585383f09486e2`): List of track addresses
+- **Exclude Addresses** (`exclude`, default: `0xf1dA173228fcf015F43f3eA15aBBB51f0d8f1123, eXch
+0xDFaa75323fB721e5f29D43859390f62Cc4B600b8, shuffle.com
+0x29f3bD6461bEcb25A89A576763b2C290EB41E64d,OKXDep-0x29f3b
+0xBf94F0AC752C739F623C463b5210a7fb2cbb420B,OKX-24
+0xf89d7b9c864f589bbF53a82105107622B35EaA40,Bybit-Hot-0xf8`): List exclude addresses (like exchanges)
+- **Track Native** (`track_native`, default: `True`): Track native
+- **Track Native threshold** (`limit_native`, default: `>1.0`): Native transfer threshold for alert
+- **Track ERC20** (`track_tokens`, default: `True`): Track tokens
+- **Track ERC20 threshold** (`limit_tokens`, default: `>10.0`): ERC20 transfer threshold for alert
+- **Cron** (`cron`, default: `10 min`): Cron expression to check DNS See [common configuration](/common-configurations#cron).
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: ethereum, bsc.
+</Note>

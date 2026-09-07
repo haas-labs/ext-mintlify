@@ -1,0 +1,58 @@
+---
+title: "Contract Call"
+description: "Execute calls to contract function (not transaction), extracts results and check conditions"
+---
+
+Execute calls to contract function (not transaction), extracts results and check conditions
+
+## Functionality
+
+- Function to execute.
+It must be a full signature in the [foundry cast](https://getfoundry.sh/cast/reference/cast) format 
+
+(e.g. `balanceOf(address)(uint256)`)
+- Parameters to pass to the function. 
+Parameters can be separated with spaces or new lines. 
+
+Tuples must be enclosed in `()`.
+
+Arrays must be enclosed in `[]`
+
+Strings must be enclosed in `""`
+
+Refer to [cast](https://getfoundry.sh/cast/reference/cast) documentation for syntax
+- Sender address (optional). If not specified, the contract address will be used as sender.
+- Cron interval to execute call (for `cron` __When__ mode). Refer to [Cron](https://docs.extractor.live/common-configurations#cron) for more details
+- Scripts to execute
+
+Scripts are executed in the order they are specified. Refer to [Scripts](https://docs.extractor.live/common-configurations#condition-threshold) for more details.
+
+Scripts execution result will be in `result` meta field.
+
+- When to execute script:
+
+`block` - every block
+`cron` - at cron intervals
+- Desciption field pattern. Metadata fields from Alert can be used as Substitutions and must be enclosed in `{}`
+
+Example: `{func}: {result}`
+
+- Generate Alerts on Errors (in Contract Call or Evaluation Script)
+- Alert on every Error. If `unchecked`, only new unique Errors will be alerted and duplicates will be omitted
+
+## Configuration
+
+- **When** (`when`, default: `cron`): When to call the contract
+- **Cron** (`cron`, default: `10 min`): Interval to execute See [common configuration](/common-configurations#cron).
+- **Function** (`func`, default: `None`): Function signature (foundry format)
+- **Parameters** (`params`, default: ``): Function parameters
+- **Sender** (`sender`, default: ``): Sender address (optional)
+- **Scripts** (`script`, default: `[]`): Scripts to execute
+- **Track Errors** (`track_err`, default: `True`): Track Call/Script error
+- **Track Errors (always)** (`err_always`, default: `False`): Always Alert on Error
+- **Description** (`desc`, default: `{func}: {result}{err}`): Description Pattern
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: ethereum, ethereum_sepolia, hyperevm, base.
+</Note>

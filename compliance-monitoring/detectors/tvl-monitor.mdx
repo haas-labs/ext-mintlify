@@ -1,123 +1,26 @@
 ---
-title: "TVL Monitor for compliance"
-description: "Track liquidity changes for ERC-20 tokens and native coins in a contract for compliance, alerting when balances drop beyond a threshold between blocks."
+title: "TVL Monitor"
+description: "TVL Monitor tracks liquidity changes for ERC20 tokens & contracts by referencing your pre-configured thresholds. If the balance of a particular asset declined below a threshold, Extractor will notify your team."
 ---
 
-## Overview
+TVL Monitor tracks liquidity changes for ERC20 tokens & contracts by referencing your pre-configured thresholds. If the balance of a particular asset declined below a threshold, Extractor will notify your team.
 
-The TVL Monitor watches the balance of specified assets held by a monitored contract and fires an alert whenever the balance drops by more than a configured threshold between the **previous block** and the **current block**.
+## Functionality
 
-Two asset types are supported independently:
+- You can monitor two types of assets for TVL monitoring: ERC-20 tokens and Native coin of the network
+- To define a ERC-20 token for monitoring you need to specify its address and threshold for Value Locked for that particular asset
+- To include Native coin holdings for TVL monitoring you need to click on "Monitoring Native Token" checkbox and to provide a threshold as well.
+- To define a threshold, specify the absolute value or the percentage with '%' sign
+- No, in the current version, each threshold is set regarding particular asset (ERC-20 token of Native coin)
+- No, you will be notified only about balances change of the assets you have specified for the monitoring.
 
-- **Native coin** (ETH, MATIC, etc.) — monitored via direct RPC balance queries
-- **ERC-20 tokens** — monitored via `balanceOf()` calls against each configured token contract
+## Configuration
 
-Both the native coin and each ERC-20 token have their own threshold, so drops in different assets trigger separate alerts.
-
-<Warning>
-  Thresholds apply to balance **drops** only. An increase in balance never triggers an alert.
-</Warning>
-
-<Warning>
-  Alerts are only issued per-transaction — if the balance of a monitored asset did not change in a given transaction, no check is performed for that asset in that block.
-</Warning>
-
-## Monitoring Tokens
-
-A list of ERC-20 token addresses to watch, each with its own drop threshold.
-
-| Sub-field | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `token` | `string` | — | ERC-20 token contract address |
-| `threshold` | `string` | `"1%"` | Drop amount that triggers an alert (absolute or percentage) |
-
-Multiple tokens can be added. Each token is checked independently — a drop in one does not affect others.
+- **Monitoring Tokens** (`tokens`, default: `None`): Monitoring Tokens
+- **Native Token** (`native_token_status`, default: `True`): Monitoring Native Token
+- **Native Token Threshold** (`native_token_threshold`, default: `1%`): Native Token Threshold, the value can be entered as absolute value or as percentage (with '%' sign)
+- **Severity** (`severity`, default: `0.5`): Event Severity See [common configuration](/common-configurations#severity).
 
 <Note>
-  **How to specify ERC-20 tokens:** provide the token contract address and a threshold for the value locked in that particular asset.
+  Supported networks: evm.
 </Note>
-
-## Native Token
-
-Enables monitoring of the network's native coin (e.g. ETH) balance held by the monitored contract.
-
-| Field | Type | Default |
-|-------|------|---------|
-| `native_token_status` | `bool` | `true` |
-| `native_token_threshold` | `string` | `"1%"` |
-
-- Set `native_token_status` to `true` to enable native coin monitoring.
-- `native_token_threshold` follows the same format as ERC-20 thresholds (absolute or percentage).
-
-<Note>
-  Native coin monitoring is only triggered when a transaction carries a non-zero `value` directly to the monitored contract address.
-</Note>
-
-## Threshold Format
-
-Thresholds can be expressed in two formats:
-
-| Format | Example | Behaviour |
-|--------|---------|-----------|
-| Percentage | `"5%"` | Alert when balance drops by ≥ 5% relative to the previous block |
-| Absolute | `"1000000000000000000"` | Alert when balance drops by ≥ the raw integer amount (not adjusted for decimals) |
-
-To use a percentage, include the `%` sign. To use an absolute value, enter a plain number string.
-
-<Note>
-  Thresholds are per-asset and are not denominated in USD. A `5%` threshold on USDC and a `5%` threshold on ETH are evaluated independently in their respective token units.
-</Note>
-
-## Severity
-
-A single severity level applied to all `balance_drop` alerts for this configuration.
-
-| Field | Type | Default |
-|-------|------|---------|
-| `severity` | `float` | `0.5` (Medium) |
-
-Internal errors (e.g. RPC failures during balance resolution) always emit at a fixed severity of `0.7` (High), regardless of this setting.
-
-## Alert Types
-
-| Event Type | Trigger | Severity |
-|---|---|---|
-| `balance_drop` | Balance of a monitored asset dropped by ≥ threshold between blocks | Configured (default `0.5`) |
-| `tvl_monitor_error` | RPC error during `balanceOf` call for a tracked token | Fixed `0.7` |
-
-## Alert Metadata
-
-### `balance_drop`
-
-| Field | Description |
-|-------|-------------|
-| `tx_hash` | Hash of the transaction that caused the balance change |
-| `tx_from` | Sender of the outer transaction |
-| `tx_to` | Recipient of the outer transaction |
-| `monitored_contract` | Address of the monitored contract |
-| `token` | Token address (`0x000…0000` for native coin) |
-| `curr_balance` | Balance at the current block (raw on-chain value) |
-| `prev_balance` | Balance at the previous block (raw on-chain value) |
-| `drop_percentage` | Computed drop — percentage or absolute value depending on threshold type |
-
-### `tvl_monitor_error`
-
-| Field | Description |
-|-------|-------------|
-| `tx_hash` | Hash of the transaction being processed when the error occurred |
-| `tx_from` | Sender of the outer transaction |
-| `tx_to` | Recipient of the outer transaction |
-| `monitored_contract` | Address of the monitored contract |
-| `token` | Token address that caused the RPC failure |
-| `desc` | Error message describing the failure |
-
-## FAQ
-
-**Which assets can be tracked?**
-ERC-20 tokens and the native coin of the network (e.g. ETH on Ethereum).
-
-**Will I be notified about assets I haven't configured?**
-No. Only balances of explicitly configured tokens and the native coin (when enabled) are checked.
-
-**Is the threshold in USD?**
-No. Each threshold is evaluated against the raw balance of the specific asset, not its USD equivalent.

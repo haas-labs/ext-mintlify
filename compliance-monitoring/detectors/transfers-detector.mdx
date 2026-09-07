@@ -1,47 +1,50 @@
 ---
-title: "Transfers Detector for compliance"
-description: "Detect anomalous ERC-20 and native token transfers — large or frequent movements — relevant to compliance reporting on monitored addresses."
+title: "Transfers"
+description: "Detector monitors asset transfers (both native and tokens) to and from Monitored Address Detector can be used to detect anomolous, frequent, whale transfers. Detector can track `monitored` Address as ERC-20 for Token transfers in addition to `from` and `to` condition."
 ---
 
-Anomalies examples:
+Detector monitors asset transfers (both native and tokens) to and from Monitored Address
 
-* Large Transfers of ERC-20 or Native tokens
-* Frequent Transfers
+Detector can be used to detect anomolous, frequent, whale transfers.
 
-**Detector Configuration**
+Detector can track `monitored` Address as ERC-20 for Token transfers in addition to `from` and `to` condition.
 
-<Steps>
-  <Step title="Name">
-    Enter a descriptive name for your monitor, for example: "Transfers".
-  </Step>
-  <Step title="Token">
-    The token contract address to monitor.
-  </Step>
-  <Step title="Track From">
-    Enable tracking of outbound transfers.
-  </Step>
-  <Step title="Track To">
-    Enable tracking of inbound transfers.
-  </Step>
-  <Step title="From">
-    Specific sender address to monitor.
-  </Step>
-  <Step title="To">
-    Specific recipient address to monitor.
-  </Step>
-  <Step title="Track Address">
-    Address to track for transfers.
-  </Step>
-  <Step title="Track Frequent">
-    Enable frequent transfer anomaly detection.
-  </Step>
-  <Step title="Cron">
-    Enter a cron expression to define the schedule.
-  </Step>
-</Steps>
+## Functionality
 
-![](../../assets/transfer_detector_faq.png)
+- Detector monitors Token transfers (both ERC-20 and Native token supported) for value amount
+- List of token addresses to monitor. 
 
-**Alert example**
+For native transfer monitoring, use native token symbol in `address` fields (e.g. `ETH` for Ethereum, `BNB` for BSC network)
+- The **Threshold** value is interpreted based on the **Decimals** setting. 
+If **Decimals** matches the token's standard precision (e.g. `6` for **USDC**), the input represents *whole tokens* (e.g. `50` equals **50 USDC**). 
+If **Decimals** is set to `0`, the input is treated as the smallest unit (*wei*), meaning `50` equals **0.000050 USDC**. 
 
-![](../../assets/transfer_detector_alert.png)
+Refer to the documentation for supported formats.
+- Track Monitored address in `to`
+- Track Monitoed Address in `from`
+- Track `frequent` transfers. Parameter specified transfers number threshold within `cron` interval
+
+Value `0` means no tracking
+
+- Track Monitored Address as ERC-20 token for this Token transfers
+- Optional `From` address filter. 
+
+NOTE: It it is not correlated with `Track From`
+- Optional `To` address filter. 
+
+NOTE: It it is not correlated with `Track To`
+
+## Configuration
+
+- **Tokens** (`tokens`, default: `[{'symbol': 'USDT', 'address': '0xdAC17F958D2ee523a2206206994597C13D831ec7', 'decimals': 6, 'threshold': '>10000000'}, {'symbol': 'USDC', 'address': '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 'decimals': 6, 'threshold': '>10000000'}, {'symbol': 'WETH', 'address': '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', 'decimals': 18, 'threshold': '>10000'}, {'symbol': 'ETH', 'address': 'ethereum', 'decimals': 18, 'threshold': '>10000'}, {'symbol': 'BNB', 'address': 'BNB', 'decimals': 18, 'threshold': '>100000'}]`): Additional tokens to monitor
+- **Track From** (`track_from`, default: `True`): Track From Address
+- **Track To** (`track_to`, default: `True`): Track To Address
+- **From** (`from`, default: ``): From address filter
+- **To** (`to`, default: ``): To address filter
+- **Track Address** (`track_addr`, default: `True`): Track Address as ERC-20 token
+- **Description** (`desc`, default: `{action} {dir} {amount} {sym}`): Desription pattern
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: zeta, ethereum, bsc, polygon, ethereum_sepolia, polygon_amoy, arbitrum, base_sepolia, hyperevm, base.
+</Note>

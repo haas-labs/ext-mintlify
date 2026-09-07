@@ -1,0 +1,42 @@
+---
+title: "Transfers"
+description: "Monitors funds transfers (both native and tokens)"
+---
+
+Monitors funds transfers (both native and tokens)
+
+## Functionality
+
+- Monitors SLP tokens Transfers and Native transfers.
+It is not associated with monitored Contract and ignores it.
+- List of Token addresses to monitor. Use `solana` address for SOL
+- Threshold condition to generate Alert. Refert to [Documantion](https://docs.extractor.live/common-configurations#condition-threshold) for `Condition` syntax
+- Track Monitored address in `to`
+- Track Monitoed Address in `from`
+- Track `frequent` transfers. Parameter specified transfers number threshold within `cron` interval
+
+Value `0` means no tracking
+
+- Track Monitored Address as SPL token for this Token transfers
+- Optional `From` address filter. 
+
+NOTE: It it is not correlated with `Track From`
+- Optional `To` address filter. 
+
+NOTE: It it is not correlated with `Track To`
+- Description pattern
+
+## Configuration
+
+- **Tokens** (`tokens`, default: `[{'symbol': 'SOL', 'address': 'solana', 'decimals': 9, 'condition': '>100'}, {'symbol': 'USDC', 'address': 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', 'decimals': 6, 'condition': '> 10000'}, {'symbol': 'USDT', 'address': 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB', 'decimals': 6, 'condition': '> 10000'}]`): Tokens conditions
+- **Track From** (`track_from`, default: `True`): Track source address 
+- **Track To** (`track_to`, default: `True`): Track destination address
+- **Track Address** (`track_addr`, default: `True`): Track Address as SPL token
+- **From Address** (`from`, default: ``): Filter by source address. Empty to ignore
+- **To Address** (`to`, default: ``): Filter by destination address. Empty to ignore
+- **Description** (`desc`, default: `{action} {dir} {amount} {sym}`): Description Pattern
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: solana.
+</Note>

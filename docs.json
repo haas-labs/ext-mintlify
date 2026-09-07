@@ -33,8 +33,6 @@
               {
                 "group": "Detectors",
                 "pages": [
-                  "security-monitoring/detectors/index",
-                  "security-monitoring/detectors/aml-detector",
                   "security-monitoring/detectors/extractor-attack-detector",
                   "security-monitoring/detectors/address-poison",
                   "security-monitoring/detectors/chainabuse-monitor",
@@ -49,8 +47,11 @@
                   "security-monitoring/detectors/safe-multisig-monitor",
                   "security-monitoring/detectors/security-sleuth",
                   "security-monitoring/detectors/ssl-monitor",
-                  "security-monitoring/detectors/tracker",
-                  "security-monitoring/detectors/wallet"
+                  "security-monitoring/detectors/due-diligence",
+                  "security-monitoring/detectors/contract-call",
+                  "security-monitoring/detectors/chainlink-ace-monitor",
+                  "security-monitoring/detectors/contract-verification",
+                  "security-monitoring/detectors/forta-detector"
                 ]
               }
             ]
@@ -97,24 +98,24 @@
               {
                 "group": "Detectors",
                 "pages": [
-                  "compliance-monitoring/detectors/index",
-                  "compliance-monitoring/detectors/aml-monitor",
                   "compliance-monitoring/detectors/asterdex-monitor",
                   "compliance-monitoring/detectors/balance-monitor",
                   "compliance-monitoring/detectors/chainabuse-monitor",
-                  "compliance-monitoring/detectors/circulation-supply-monitor",
                   "compliance-monitoring/detectors/contract-hash-verification",
                   "compliance-monitoring/detectors/dns-monitor",
                   "compliance-monitoring/detectors/github-monitor",
                   "compliance-monitoring/detectors/nist-alerts-monitor",
                   "compliance-monitoring/detectors/price-monitor",
-                  "compliance-monitoring/detectors/proof-of-reserves-monitor",
                   "compliance-monitoring/detectors/safe-multisig-monitor",
                   "compliance-monitoring/detectors/total-supply-monitor",
                   "compliance-monitoring/detectors/total-supply-monitor-by-allocations",
                   "compliance-monitoring/detectors/transfer-monitor",
                   "compliance-monitoring/detectors/transfers-detector",
-                  "compliance-monitoring/detectors/tvl-monitor"
+                  "compliance-monitoring/detectors/tvl-monitor",
+                  "compliance-monitoring/detectors/network-monitor",
+                  "compliance-monitoring/detectors/contract-call",
+                  "compliance-monitoring/detectors/chainlink-ace-monitor",
+                  "compliance-monitoring/detectors/contract-verification"
                 ]
               }
             ]
@@ -127,20 +128,18 @@
               {
                 "group": "Detectors",
                 "pages": [
-                  "financial-monitoring/detectors/index",
                   "financial-monitoring/detectors/aave-monitor",
                   "financial-monitoring/detectors/asterdex-monitor",
                   "financial-monitoring/detectors/balance-monitor",
-                  "financial-monitoring/detectors/circulation-supply-monitor",
                   "financial-monitoring/detectors/price-monitor",
-                  "financial-monitoring/detectors/proof-of-reserves-monitor",
                   "financial-monitoring/detectors/safe-multisig-monitor",
                   "financial-monitoring/detectors/total-supply-monitor",
                   "financial-monitoring/detectors/total-supply-monitor-by-allocations",
                   "financial-monitoring/detectors/transfer-monitor",
                   "financial-monitoring/detectors/transfers-detector",
                   "financial-monitoring/detectors/tvl-monitor",
-                  "financial-monitoring/detectors/wallet"
+                  "financial-monitoring/detectors/network-monitor",
+                  "financial-monitoring/detectors/contract-call"
                 ]
               }
             ]
@@ -152,14 +151,16 @@
               "beta-features/index",
               "detectors/Bubblemaps/DetectorBubblemaps",
               "detectors/News/DetectorNews",
-              "detectors/Call/DetectorCall",
               "detectors/Cron/DetectorCron",
-              "detectors/ChainlinkACE/DetectorChainlinkACE",
-              "detectors/PoR/DetectorPoR",
-              "detectors/DNS/DetectorDNS",
-              "detectors/BlockAnomaly/DetectorBlockAnomaly",
-              "detectors/ContractHashVerification/DetectorContractHashVerification",
-              "detectors/AddressPoison/DetectorAddressPoison"
+              "detectors/Wallet/DetectorWallet",
+              "detectors/WalletSol/DetectorWalletSol",
+              "detectors/TxSol/DetectorTxSol",
+              "detectors/TransferSol/DetectorTransferSol",
+              "detectors/Feed/DetectorFeed",
+              "detectors/Aml/DetectorAml",
+              "detectors/Oneinch/DetectorOneinch",
+              "detectors/Tracker/DetectorTracker",
+              "detectors/CirculationSupplyDetector/DetectorCirculationSupplyDetector"
             ]
           },
           {

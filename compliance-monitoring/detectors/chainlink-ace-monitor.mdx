@@ -1,0 +1,39 @@
+---
+title: "Chainlink ACE Monitor"
+description: "Monitors Contract under Chainlink [Automated Compliance Contract](https://chain.link/automated-compliance-engine) Engine. It understands all ACE Entities and can detect configuration changes, policy violations, transfers and contract calls. CCIP Tracking supports tracking any tokens (no monitored address)"
+---
+
+Monitors Contract under Chainlink [Automated Compliance Contract](https://chain.link/automated-compliance-engine) Engine.
+
+It understands all ACE Entities and can detect configuration changes, policy violations, transfers and contract calls.
+
+CCIP Tracking supports tracking any tokens (no monitored address)
+
+## Functionality
+
+- - Detects all ACE Events
+- Detects all Policy Rejections (Transactions `reverts`)
+- Detects Contract token transfers (if token is ERC-20 compatible)
+- Detects function calls
+- Detects CCIP Transfers
+- Track Condition for transfers (e.g. `> 0`) 
+
+NOTE: In token denomination (not decimals)
+- Track Contract function calls
+- Track CCIP Transfers
+- Track Failed transactions. Policy Rejections are failed transactions!
+- Track ACE Events
+
+## Configuration
+
+- **Description** (`desc`, default: `{reason}{func}{input}{amount} {sym}{err}`): Description pattern
+- **Track Failed** (`track_failed`, default: `True`): Track Failed and Rejections
+- **Track calls** (`track_calls`, default: `True`): Track Contract calls
+- **Track CCIP** (`track_ccip`, default: `True`): Track CCIP Transfers
+- **Track Events** (`track_events`, default: `True`): Track ACE Events
+- **Track Transfers** (`track_transfers`, default: `> 0`): Track ERC20 Transfers Condition
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: ethereum_sepolia, base_sepolia.
+</Note>

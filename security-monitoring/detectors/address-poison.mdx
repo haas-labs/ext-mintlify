@@ -1,47 +1,28 @@
 ---
 title: "Address Poison"
-description: "Detects transaction history poisoning attacks where fake look-alike addresses are injected to trick users into sending funds to the wrong destination."
+description: "Detector monitor for transaction history poisoning with fake addresses"
 ---
 
-Address poisoning is an attack where a malicious actor injects zero-value transactions into a victim's history using an address that closely resembles a trusted one (same first and last few bytes). The goal is to trick the victim into copy-pasting the poisoned address for their next real transfer.
+Detector monitor for transaction history poisoning with fake addresses
 
-<Warning>
-  This attack is particularly dangerous because most wallet UIs only show the first and last 4–6 characters of an address. Always verify the **full address** before sending funds.
-</Warning>
+## Functionality
 
-## How it works
+- Detector monitors transaction history for injection of fake transactions and events which resemble monitored address.
 
-<Steps>
-  <Step title="Build a whale address dataset">
-    The detector continuously builds and updates a dataset of "whale" addresses — addresses holding token balances above a configurable threshold (e.g. $100K across native + ERC-20 tokens).
-  </Step>
-  <Step title="Monitor for look-alike injection">
-    Every transaction and ERC-20 transfer event is scanned for addresses where the first and last 2–4 bytes match a whale address. This is the fingerprint of a poisoning attempt.
-  </Step>
-  <Step title="Fire an alert">
-    When a match is found, an alert is raised containing the whale victim address, the phishing initiator address, and full transaction metadata.
-  </Step>
-</Steps>
+Poisoned address looks very similar in history because first and last 2-3 bytes are identical. 
 
-## Use cases
-
-<CardGroup cols={1}>
-  <Card title="Whale protection" icon="fish">
-    Identify when a whale address is being mimicked in transaction history, preventing operators from accidentally copying a poisoned address for withdrawals or transfers.
-  </Card>
-  <Card title="Exchange & custodian compliance" icon="building-columns">
-    Exchanges managing large user funds can cross-check all outbound transactions for similarity-based poisoning attempts in real time.
-  </Card>
-  <Card title="Threat intelligence" icon="globe">
-    Map and share poisoned address attempts across chains. Detected addresses are stored in the labels database tagged as `whale`, enriched with poisoning metadata.
-  </Card>
-</CardGroup>
+Copy-pasting poison address from history can result in funds loss
+- Mask for matching address to poisoning pattern. 
+- How many historical transaction to check for poisoning
+- How far into the past to keep transactions history (in milliseconds)
 
 ## Configuration
 
-| Field | Description |
-|-------|-------------|
-| **Name** | Descriptive label for this detector instance |
-| **Past** | How far back in history to scan on initial activation |
-| **History** | Depth of transaction history to maintain for matching |
-| **Patterns** | Similarity pattern rules (byte prefix/suffix length to match) |
+- **Past** (`past`, default: `2592000000`): How long to monitor history into the past
+- **History** (`history`, default: `25`): How many past transactions to monitor
+- **Patterns** (`patterns`, default: `['0xffff00000000000000000000000000000000ffff']`): Address match patterns
+- **Severity** (`severity`, default: `0.5`): Severity See [common configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: ethereum, bsc.
+</Note>

@@ -1,0 +1,33 @@
+---
+title: "Due Diligence"
+description: "Automatically runs due diligence reports for DeFi protocols. Given a protocol name and a set of URLs or seed addresses, the detector triggers an automated DD workflow that discovers contracts, verifies audits, researches security posture, and generates a scored Markdown + JSON report. Emits progress alerts at each pipeline stage, human-in-the-loop review gates, and on completion with download links for the Markdown, JSON, and PDF reports."
+---
+
+Automatically runs due diligence reports for DeFi protocols. Given a protocol name and a set of URLs or seed addresses, the detector triggers an automated DD workflow that discovers contracts, verifies audits, researches security posture, and generates a scored Markdown + JSON report. Emits progress alerts at each pipeline stage, human-in-the-loop review gates, and on completion with download links for the Markdown, JSON, and PDF reports.
+
+## Functionality
+
+- See configuration parameters below.
+
+## Configuration
+
+- **Protocol Name** (`protocol_name`, default: `None`): Display name of the protocol (e.g. 'EtherFi'). Used in the report header.
+- **Protocol Slug** (`protocol_slug`, default: `None`): URL-safe identifier (e.g. 'etherfi'). Used as the S3 prefix and Temporal workflow ID. Must be unique per protocol — changing it starts a brand new run. Derive from protocol_name: lowercase, spaces to hyphens (e.g. 'My Protocol' → 'my-protocol').
+- **GitHub Organisation** (`github_org`, default: `None`): GitHub organisation handle (e.g. 'etherfi-protocol'). Enables repo scanning, fork detection, and audit PDF discovery from GitHub.
+- **Docs / Contract List URLs** (`docs_urls`, default: `[]`): Pages listing deployed contract addresses (GitBook, Notion, protocol docs). At least one of docs_urls, security_urls, github_org, or seed_addresses is required.
+- **Security / Audit URLs** (`security_urls`, default: `[]`): Audit pages, GitHub /audits folders, or direct PDF links. The more context provided, the richer the output.
+- **Customer Name** (`customer_name`, default: `None`): Legal client name for the report header. Defaults to Protocol Name if not set.
+- **Auto-Approve (Skip HITL Gates)** (`auto_approve`, default: `False`): When False (default), the workflow pauses at two human-in-the-loop review gates. When True, the workflow runs fully autonomously without any human review.
+- **Clean Run** (`is_clean_run`, default: `False`): When True, all previous database and S3 data for this protocol_slug is deleted before starting a new run. Use to force a full re-analysis.
+- **Mock Run** (`is_mock_run`, default: `False`): When True, the workflow performs a simulated run without executing real transactions or external state changes. Use for testing configurations.
+- **Researcher Notes** (`researcher_notes`, default: `None`): Free-text analyst prior passed to the DD workflow as additional context (e.g. known risks, recent incidents, scope hints). Max 2000 characters.
+- **Website URL** (`website_url`, default: `None`): Protocol website (e.g. 'https://ether.fi'). Auto-derived from docs_urls if omitted.
+- **Registry URLs** (`registry_urls`, default: `[]`): GitHub repos containing .sol or JSON address files (e.g. euler-interfaces).
+- **Seed Addresses** (`seed_addresses`, default: `[]`): Known contracts to seed contract discovery. Format: chain_id (int), address (0x...), optional label.
+- **Protocol Category** (`protocol_category`, default: `general`): Category used for scoring context. One of: general, Lending, DEX, Yield, Bridge, Staking, Derivatives, CDP, RWA.
+- **Report Tags** (`report_tags`, default: `due-diligence,dd,ai`): Comma-separated tags attached to the generated PDF report in the Reports API.
+- **Track Errors** (`track_errors`, default: `True`): When True, the detector sends alerts with internal errors.
+
+<Note>
+  No specific network configuration required (Any network).
+</Note>

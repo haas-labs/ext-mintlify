@@ -1,47 +1,27 @@
 ---
 title: "Security Sleuth"
-description: "The Security Sleuth detector monitors Twitter for security-related sentiment, surfacing attack chatter, exploits, and incidents relevant to your contracts."
+description: "Monitors Twitter for security sentiment (Attack and Exploits)"
 ---
 
-**Behavior**
+Monitors Twitter for security sentiment (Attack and Exploits)
 
-Listens to a set of Channels and analyses them for security incidents with LLM. Currently supported: Sources (_Twitter_), LLM (_OpenAI_).
+## Functionality
 
-**Channels** are additional Twitter accounts (channels) to the predefined list of security information sources.
+- Listens to a set of Channels and analizes them for security incidents with LLM
 
-**Anchor** is a text filter before sentiment analysis to target specific content (for example, messages often have headers or titles). This allows to improve true positives content for analysis.
-
-**Use cases**
-
-* **Hack Intel from Twitter:** monitor a curated list of Twitter accounts belonging to known blockchain security experts and breach alert channels. When one of these sources tweets about a new exploit, hack, or vulnerability, the monitor's LLM analyzes the tweet's content for credibility and relevance. If it's a valid incident, the system generates an alert with a summary, enabling the team to quickly assess if their organization's systems could be affected by the same issue.
-
-* **Brand Scam Monitoring:** watch Twitter for any mentions of brand coupled with scam indicators. Set an anchor filter, such as the product name plus words like "scam" or "phishing". If the monitor finds a tweet like "Beware, I got a phishing DM pretending to be [WalletName] support," it will process it and alert the team. This heads-up allows the company to immediately notify users (via official channels) about the impersonation attempt and take steps to report or takedown the malicious account.
+Currently supported: Sources (__Twitter__), LLM (__OpenAI__)
+- Channels are additional Twitter accounts (channels) to the predefined list of security information sources
+- Anchor is a text filter before sentiment analysis to target specific content (For example, messages often have headers or titles). This allows to improve true positives content for analysis
+- Security question to analyze channel messages
 
 ## Configuration
 
-<Steps>
-  <Step title="Name">
-    Enter a descriptive name for your monitor, for example: "Security Sleuth".
-  </Step>
-  <Step title="Cron">
-    Enter a cron expression to define the schedule.
-  </Step>
-  <Step title="Track any change">
-    Enable to alert on any detected change.
-  </Step>
-  <Step title="Question">
-    The question or topic to analyse for security relevance.
-  </Step>
-  <Step title="Channel">
-    Additional Twitter account(s) to monitor beyond the predefined sources.
-  </Step>
-  <Step title="Score">
-    Minimum LLM confidence score threshold for generating an alert.
-  </Step>
-</Steps>
+- **Cron** (`cron`, default: `10 min`): Cron expression See [common configuration](/common-configurations#cron).
+- **Question** (`question`, default: ``): Global Question (if empty default question will be used)
+- **Channels** (`channels`, default: `None`): Additional Twitter channels (authors)
+- **Score** (`score`, default: `0.85`): Sentiment Score
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
 
-![](../../assets/security_sleuth_faq.png)
-
-**Alert example**
-
-![](../../assets/security_sleuth_alert.png)
+<Note>
+  No specific network configuration required (Any network).
+</Note>

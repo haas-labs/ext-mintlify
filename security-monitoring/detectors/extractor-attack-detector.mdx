@@ -1,30 +1,21 @@
 ---
-title: "Extractor Attack Detector"
-description: "The Extractor Attack Detector activates automatically when you add an address to Security Monitoring, flagging suspicious accounts and contracts."
+title: "Attack Detector"
+description: "Attack Detector identifies any unusual activity and gathers information on suspicious accounts and contracts to prevent potential harmful interactions from suspicious addresses."
 ---
 
-### Attack detector
+Attack Detector identifies any unusual activity and gathers information on suspicious accounts and contracts to prevent potential harmful 
+ interactions from suspicious addresses.
 
-Our detection system identifies any unusual activity and gathers information on suspicious accounts and contracts to prevent any potential interactions with these addresses. You may receive alerts regarding such activity:
+## Functionality
 
-**Interaction with suspicious account**
+- This alert triggers when a transaction from a suspicious account is directed towards an address you are monitoring. This helps you keep track of potentially harmful interactions that could affect your assets.
+- If a transaction to your monitored address includes internal calls from a suspicious contract, an alert is issued to inform you of these potentially hidden interactions.
+- When a new contract is created under dubious circumstances and involves addresses you monitor, you'll receive an alert. This ensures you're aware of new threats that may target your contracts directly
 
-This alert triggers when a transaction from a suspicious account is directed towards an address you are monitoring. This helps you keep track of potentially harmful interactions that could affect your assets.
+## Configuration
 
-**Interaction with suspicious contract**
+- No configurable parameters beyond the standard detector settings.
 
-If a transaction to your monitored address includes internal calls from a suspicious contract, an alert is issued to inform you of these potentially hidden interactions.
-
-**Suspicious contract detected**
-
-When a new contract is created under dubious circumstances and involves addresses you monitor, you'll receive an alert. This ensures you're aware of new threats that may target your contracts directly.
-
-**Detector Configuration**
-
-_Name_ - Enter a descriptive name for your monitor, for example: "Attack Detector".
-
-![](../../assets/attack_detector_faq.png)
-
-**Alert example**
-
-![](../../assets/attack_detector_alert.png)
+<Note>
+  Supported networks: evm.
+</Note>

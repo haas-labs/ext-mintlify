@@ -1,0 +1,59 @@
+---
+title: "Transaction Monitor"
+description: "Match Solana transactions using ordered `conditions` records."
+---
+
+Match Solana transactions using ordered `conditions` records.
+
+## Functionality
+
+- Add one or more rows under **`conditions`**. Each row has three keys:
+
+- **`field`**: which part of the transaction to test (`error`, `status`, `signer`, `accounts`, `fee`, `consumed`, `version`, `logs`).
+- **`condition`**: the rule for that field (regex, comparison, exact value, or comma-separated accounts — see other FAQ entries).
+- **`op`**: `OR` or `AND` — how this row combines with the running result from **previous** rows (left → right). The **first** row only seeds the accumulator; its `op` is ignored.
+
+A row is skipped if `condition` is blank after trim. If `conditions` is empty, the detector does nothing.
+- | `field` | `condition` means |
+| --- | --- |
+| `error` | Must be a **valid** regex (optional leading `!` for negative). When `tx.err` is set, the pattern runs on it; when there is **no** error, only a **negative** regex matches (metadata value `null`). Invalid regex never matches. |
+| `status` | If the string compiles as a regex (optional `!`), it is applied to `tx.sta`; if compilation **fails**, the whole string is compared to `tx.sta` with case-insensitive equality. |
+| `signer` | Case-insensitive equality of `condition` to the **first** account key (fee payer). |
+| `accounts` | Comma-separated addresses; match if **any** appears among message account keys (case-insensitive). |
+| `fee` | Numeric comparison on `tx.fee` (e.g. `> 100000`, `== 5000`). |
+| `consumed` | Numeric comparison on `tx.cost` (compute units consumed). |
+| `version` | Exact match to `tx.ver`, or treat empty `ver` as `legacy` and match that. |
+| `logs` | Valid regex on each log line; **any** line may satisfy. Invalid regex never matches. |
+- **error** and **logs** use normal regex rules; prefix with **`!`** for a negative regex (match when the pattern does **not** match).
+
+**status**: you can use a plain string (e.g. `Ok`) or a regex (e.g. `InstructionError`). If the string is not a valid regex, it is compared as exact text (case-insensitive).
+
+Examples:
+- `error` + `.*6001.*` — custom program error in `tx.err`.
+- `error` + `!Success` — when you intend regex semantics on the error string (not the same as “successful tx” unless `tx.err` contains `Success`).
+- `status` + `Ok` — successful transaction status.
+- Use comparison operators on numeric fields:
+
+- `>100000`, `<5000`, `>=10000`, `<=50000`
+- `==5000` or `=5000`
+- `!=0`
+
+Whitespace around the operator and number is allowed.
+- For **`logs`**, the regex is tested against **each** log line; one hit is enough. Examples: `Program.*failed`, `Error:.*`, `Program.*invoke`.
+- When a transaction matches, metadata typically includes:
+
+- **`conditions`**: comma-separated list of **field** names that matched.
+- **`err`**, **`status`**, **`signer`**, **`accounts`**, **`fee`**, **`consumed`**, **`version`**, **`logs`**: values for rows that matched (each key appears only if that field matched).
+- **`desc`**: from the config template.
+
+The transaction signature is on the event’s transaction object (`tx.sig`), not necessarily in metadata.
+
+## Configuration
+
+- **Conditions** (`conditions`, default: `[{'op': 'AND', 'field': 'error', 'condition': 'InstructionError'}, {'op': 'AND', 'field': 'fee', 'condition': '>6500000'}]`): Ordered rules; each row: `field`, `condition`, `op` (see FAQ).
+- **Description** (`desc`, default: `{conditions}: {error} {fee}`): Alert description template.
+- **Severity** (`severity`, default: `-1`): Severity override (-1 = auto / default). See [common configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: solana.
+</Note>

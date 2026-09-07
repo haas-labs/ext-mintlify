@@ -1,42 +1,31 @@
 ---
 title: "Gas Monitor"
-description: "The Gas Monitor tracks network gas prices and fires alerts when the gas price crosses configured thresholds — useful for cost and congestion alerts."
+description: "Detector monitors gas related parameters"
 ---
 
-**Behavior**
+Detector monitors gas related parameters
 
-* _Price Avg_ — Average Price threshold in gwei. (Ex: >150.0)
-* _Price Max_ — Max Price threshold in gwei. (Ex: >250.0)
-* _Price Min_ — Min Price threshold in gwei. (Ex: &lt;1.0)
+## Functionality
 
-**Use cases**
-
-* Detect suspicious drops or high spike in gas usage that could indicate network attack.
-* Trading Bot Fee Optimization: optimize transaction timing. The bot's operators define a maximum gas price (say 150 gwei); if the current gas exceeds this, the Gas Monitor event tells the bot to hold off on executing trades.
-* Network Congestion Safeguard: automatically safeguard users during extreme network congestion.
+- Average Price threshold in gwei. (Ex: __>150.0__)
+- Max Price threshold in gwei. (Ex: __>250.0__)
+- Min Price threshold in gwei. (Ex: __&lt;1.0__)
+- Max Cost (price * gas) threshold in Eth (`gwei * 1^dec`). (Ex: __> 0.1__)
+- Min Cost (price * gas) threshold in Eth (`gwei * 1^dec`). (Ex: __&lt;0.00001__)
+- Decimals for convenience (default is 18)
+- Cron interval to send event about `Average Price`
 
 ## Configuration
 
-<Steps>
-  <Step title="Name">
-    Enter a descriptive name for your monitor, for example: "Gas Monitor".
-  </Step>
-  <Step title="Price Avg (gwei)">
-    Average price threshold in gwei.
-  </Step>
-  <Step title="Price Max (gwei)">
-    Maximum price threshold in gwei.
-  </Step>
-  <Step title="Price Min (gwei)">
-    Minimum price threshold in gwei.
-  </Step>
-  <Step title="Cron">
-    Enter a cron expression to define the schedule.
-  </Step>
-</Steps>
+- **Price Avg (gwei)** (`price_avg`, default: `>25.0`): Average Gas Price threshold
+- **Price Max (gwei)** (`price_max`, default: `>250.0`): Max Gas price threshold
+- **Price Min (gwei)** (`price_min`, default: `<0.05`): Min Gas price threshold
+- **Cost Min (Eth)** (`cost_min`, default: ``): Min Cost threshold
+- **Cost Max (Eth)** (`cost_max`, default: `>0.1`): Max Cost threshold
+- **Decimals** (`dec`, default: `18`): Decimals
+- **Cron** (`cron`, default: `10 min`): Periodic Average Gas price events See [common configuration](/common-configurations#cron).
+- **Severity** (`severity`, default: `0.15`): Severity See [common configuration](/common-configurations#severity).
 
-![](../../assets/gas_monitor_faq.png)
-
-**Alert example**
-
-![](../../assets/gas_monitor_alert.png)
+<Note>
+  Supported networks: evm.
+</Note>

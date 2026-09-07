@@ -1,0 +1,34 @@
+---
+title: "Fusion Monitor"
+description: "1Inch Fusion Monitor ([https://1inch.io/fusion/](https://1inch.io/fusion/)) Monitor tracks Fusion Orders and allows to detect abnormalities"
+---
+
+1Inch Fusion Monitor ([https://1inch.io/fusion/](https://1inch.io/fusion/))
+
+Monitor tracks Fusion Orders and allows to detect abnormalities
+
+## Functionality
+
+- Tracks Fusion Orders
+- Cron expression in Quartz syntax (ex:  `0 0 0/1 1/1 * ? *` - every hour), frequency in milliseconds or expression (e.g. `1 min`).
+
+__Not used__
+- Amount threshold (maker)
+- Create events for __filled__ Orders
+- Create events for __invalid__ Orders
+- Detector will evaluate risk score of Order (e.g. `addresses`)
+
+## Configuration
+
+- **Amount (Maker)** (`threshold`, default: `>0.0`): Amount threshold for Maker See [common configuration](/common-configurations#condition).
+- **Track Filled** (`track_filled`, default: `False`): Track Filled Order
+- **Track Filled Partially** (`track_partially`, default: `False`): Track Filled Partially Order
+- **Track Cancelled** (`track_cancelled`, default: `False`): Track Cancelled Order
+- **Track Invalid** (`track_invalid`, default: `False`): Track Invalid Order
+- **Track Risk** (`track_risk`, default: `False`): Track Order Risks
+- **Cron** (`cron`, default: `10 min`): Cron for Stat See [common configuration](/common-configurations#cron).
+- **Severity** (`severity`, default: `-1`): Severity See [common configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: ethereum.
+</Note>

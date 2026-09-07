@@ -1,0 +1,23 @@
+---
+title: "Circulation Supply Detector"
+description: "Circulating Supply Detector tracks token minting and burning, calculates the circulating supply, monitors unexpected inflation or deflation and triggers alerts when significant changes occur."
+---
+
+Circulating Supply Detector tracks token minting and burning, calculates the circulating supply, monitors unexpected inflation or deflation and triggers alerts when significant changes occur.
+
+## Functionality
+
+- A locker address is a contract address that holds locked or  vested tokens, which are subtracted from the total circulating  supply to provide a more accurate supply calculation. These  contracts usually hold tokens that are not in active circulation,  such as tokens reserved for future use, team allocations, or vesting  schedules. By excluding these tokens from the circulating supply, the  detector ensures that the supply data reflects only the tokens that  are actively available in the market.
+- To define a threshold, specify the percentage value change in the circulating  supply that will trigger an alert. This should be in decimal format, for example,  if you want to monitor a 1% change in circulation supply, use 0.01. For monitoring  drops, you need to specify negative values, like -0.01. This ensures you are notified  only when there are significant changes.
+- The inflation/deflation schedule is a list of dates and expected changes in the  circulating supply. Each entry specifies a date (in YYYY-MM-DD format) and an expected  change percentage. Positive values indicate expected inflation, while negative values  indicate expected deflation. The detector compares the actual changes with the expected  values and triggers alerts if the actual change deviates significantly from the expected change.
+
+## Configuration
+
+- **Threshold** (`threshold`, default: `None`): Threshold See [common configuration](/common-configurations#condition).
+- **Locker** (`locker_address`, default: `[]`): Locker Address
+- **Inflation/Deflation Schedule** (`inflation_deflation_schedule`, default: `[]`): List of expected token address, expected dates and expected changes
+- **Severity** (`severity`, default: `-1.0`): Severity See [common configuration](/common-configurations#severity).
+
+<Note>
+  Supported networks: evm.
+</Note>

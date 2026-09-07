@@ -1,0 +1,22 @@
+---
+title: "Rule: White List"
+description: "Manages who can interact with your smart contract by maintaining an approved address list. Alerts you when addresses are updated in the whitelist, and warns you if unauthorized addresses try to access your contract. Only trusted addresses get through."
+---
+
+Manages who can interact with your smart contract by maintaining an approved address list. Alerts you when addresses are updated in the whitelist, and warns you if unauthorized addresses try to access your contract. Only trusted addresses get through.
+
+## Functionality
+
+- It maintains a list of allowed addresses that are allowed to use your contract. Think of it like a VIP list for your smart contract. Only addresses on this list can interact with it.
+- You'll be notified when the list is updated, and when someone not on the list tries to interact with your contract.
+- Whitelists help you control exactly who can use your contract. This is perfect for private launches, trusted partner integrations, or any situation where you want to limit access to specific, verified addresses.
+
+## Configuration
+
+- **Address** (`rules`, default: `['']`): Whitelisted Addresses
+- **Severity: Rule Updates** (`severityRuleUpdate`, default: `0`): Severity: Rule Updates
+- **Severity: Rule Violations** (`severityRuleViolation`, default: `0.75`): Severity: Rule Violations
+
+<Note>
+  Supported networks: evm.
+</Note>
