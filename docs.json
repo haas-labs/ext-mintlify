@@ -22,7 +22,8 @@
               "index",
               "supported-networks",
               "monitoring-and-detection",
-              "common-configurations"
+              "common-configurations",
+              "notifications"
             ]
           },
           {
