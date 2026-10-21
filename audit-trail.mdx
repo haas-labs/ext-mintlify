@@ -1,0 +1,88 @@
+---
+title: "Audit Trail"
+description: "Review every change made in your Hacken Extractor tenant: who created, updated, paused, or deleted detectors, triggers, entities, projects, and other resources, and when."
+---
+
+The **Audit Trail** records every action performed in your tenant, by team members, API keys, and service accounts. Use it to investigate configuration changes, track user logins, and keep a compliance record of who changed what and when.
+
+Open it from the sidebar: **Audit Trail**.
+
+## Log table
+
+Each row in the table is one recorded action.
+
+| Column | Description |
+|--------|-------------|
+| **Entity** | Type of object the action was performed on, for example `Detector`, `Trigger`, or `User` |
+| **User** | Email of the team member, or the name of the service account, that performed the action |
+| **Date and time** | When the action happened. Sort by this column to change the order (newest first by default) |
+| **Id** | ID of the affected object |
+| **Action** | Type of action performed |
+| **Details** | Opens the full log record |
+
+Results are paginated. Use the page size selector at the bottom of the table to show more rows per page.
+
+## Filters
+
+Narrow down the log with the filters above the table:
+
+- **Search**: free-text search across the log records.
+- **Entity**: show only actions on a specific object type.
+- **Action**: show only a specific action type.
+- **Date range**: limit records to a period. Defaults to the last 30 days.
+
+Use the **UTC Timezone** toggle to display timestamps in UTC instead of your local timezone, and **Refresh** to load the latest records.
+
+### Entity types
+
+| Entity | Description |
+|--------|-------------|
+| `Invite` | Team invitations |
+| `User` | User accounts, including logins |
+| `Project` | Projects |
+| `Subscription` | Tenant subscription |
+| `OTP` | One-time passwords |
+| `ApiKey` | API keys |
+| `TenantDestination` | [Notification channels](/settings#notifications) |
+| `Workflow` | Workflows |
+| `Detector` | Detectors |
+| `Action` | Smart contract actions |
+| `Entity` | Monitored entities (addresses, contracts, domains, etc.) |
+| `Trigger` | Triggers |
+| `Wallet` | Wallets |
+| `Audit` | AI Auditor runs |
+
+### Action types
+
+| Action | Meaning |
+|--------|---------|
+| `CREATE` | Object was created |
+| `UPDATE` | Object configuration was changed |
+| `DELETE` | Object was deleted |
+| `PAUSE` | Object was paused |
+| `WITHDRAW` | Funds were withdrawn |
+| `LOGIN` | User signed in |
+
+## Log details
+
+Click **Details** on any row to open the **Log details** panel.
+
+| Field | Description |
+|-------|-------------|
+| **Date and time** | When the action happened |
+| **uid** | Unique ID of the log record |
+| **Project** | Project the object belongs to |
+| **Entity type** | Type of object |
+| **Action** | Type of action performed |
+| **Entity id** | ID of the affected object |
+| **Updated by** | User or service account that performed the action |
+| **Severity** | Severity of the record, for example `Info` |
+
+Below the fields, the panel shows two JSON blocks:
+
+- **Metadata**: context of the action, such as the tenant ID, contract address, object name, and network.
+- **Data**: full snapshot of the object after the action, useful for comparing configurations between consecutive `UPDATE` records.
+
+<Tip>
+  To see the full change history of one detector or trigger, filter by its **Entity** type and look for its **Id** in the table. Open consecutive `UPDATE` records and compare their **Data** blocks.
+</Tip>

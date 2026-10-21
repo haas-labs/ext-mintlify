@@ -23,7 +23,8 @@
               "supported-networks",
               "monitoring-and-detection",
               "common-configurations",
-              "notifications"
+              "audit-trail",
+              "settings"
             ]
           },
           {
@@ -255,6 +256,10 @@
     {
       "source": "/support/support",
       "destination": "/support"
+    },
+    {
+      "source": "/notifications",
+      "destination": "/settings#notifications"
     }
   ]
 }
