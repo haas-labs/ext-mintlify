@@ -1,0 +1,123 @@
+---
+title: "Settings"
+description: "Manage your Hacken Extractor profile preferences, two-factor authentication, notification channels, team members and roles, API keys, and subscriptions."
+---
+
+Open **Settings** from the bottom of the sidebar. Settings are split into six tabs:
+
+<CardGroup cols={3}>
+  <Card title="Profile Settings" icon="user" href="#profile-settings">
+    Table size and theme
+  </Card>
+  <Card title="Security" icon="shield" href="#security">
+    Two-factor authentication
+  </Card>
+  <Card title="Notifications" icon="bell" href="#notifications">
+    Alert delivery channels
+  </Card>
+  <Card title="Team" icon="users" href="#team">
+    Members, invites, and roles
+  </Card>
+  <Card title="API Keys" icon="key" href="#api-keys">
+    Keys for programmatic access
+  </Card>
+  <Card title="Subscription" icon="credit-card" href="#subscription">
+    Plans and renewal
+  </Card>
+</CardGroup>
+
+## Profile Settings
+
+General preferences for your account.
+
+| Setting | Description |
+|---------|-------------|
+| **Default Table Size** | Number of rows per page used by tables across the application, for example `100 / page` |
+| **Theme** | Switch between **Light** and **Dark** mode |
+
+## Security
+
+Protect your account with **Two Factor Authentication**. Click **Add new 2FA device** to register an authenticator device. Registered devices are listed in the table with their **Enabled** status.
+
+## Notifications
+
+Manage the channels that receive alerts from your detectors and triggers. The list shows every channel in the tenant with its type and destination, and **Edit** and **Delete** actions.
+
+Click **Add channel** and pick a channel type:
+
+<Tabs>
+  <Tab title="Email">
+    Enter the email address that should receive alerts. Adding a notification email does not change your account's primary email.
+  </Tab>
+  <Tab title="HTTP">
+    Enter the **HTTP Endpoint** URL and the **HTTP method**. Optionally click **Add header** to send custom headers, for example an authorization token. The endpoint must respond with `200` to the request.
+  </Tab>
+  <Tab title="Telegram">
+    Follow the instructions in the dialog:
+
+    - **Private notifications**: start a chat with the Extractor bot linked in the dialog, then click **Finish** once the bot replies.
+    - **Group notifications**: add the bot to a group chat, paste the `start/...` command shown in the dialog into the chat, then click **Finish** once the bot replies.
+  </Tab>
+  <Tab title="Slack">
+    Click **Add Slack**. A new browser tab opens where you choose the Slack channel, after which you are redirected back to Extractor for confirmation.
+  </Tab>
+</Tabs>
+
+To route alerts to a channel, select it under **Notification Channels** when configuring a detector or trigger. Every alert it emits is delivered to all selected channels.
+
+<Tip>
+  Combine channels by severity: for example, route `CRITICAL` and `HIGH` alerts to Telegram or Slack for immediate response, and send lower-severity alerts to email for review. See [Severity](/common-configurations#severity).
+</Tip>
+
+## Team
+
+Manage who has access to your tenant. The table lists every member with their **Name**, **Status**, and **Role**. Use **Search members** to find someone by name or email.
+
+| Status | Meaning |
+|--------|---------|
+| `INVITED` | Invitation sent, the user has not registered yet |
+| `REGISTERED` | The user has accepted the invitation and has an account |
+
+### Invite a team member
+
+<Steps>
+  <Step title="Open the invite form">
+    Click **Invite team member**.
+  </Step>
+  <Step title="Add emails and roles">
+    Enter the member's **Email** and select one or more **Roles**. Click **Add another** to invite several people at once.
+  </Step>
+  <Step title="Send the invitation">
+    Click **Invite**. Each member receives an invitation link to join your organization.
+  </Step>
+</Steps>
+
+### Roles
+
+| Role | Permissions |
+|------|-------------|
+| **Can view** | Read-only access |
+| **Member** | Can edit triggers, contracts, and action providers |
+| **Manager** | Same rights as Member, plus adding and managing team members |
+
+### Manage members
+
+Open the **⋮** menu on a member's row:
+
+- **Copy Email**: copy the member's email address.
+- **Change Roles**: update the member's roles. Available for registered members.
+- **Delete**: remove the member, or revoke a pending invitation.
+
+## API Keys
+
+Create keys to access the Extractor API programmatically. The **API Keys Management** table shows each key's **Name**, masked **API Key** value, **Status** (`ACTIVE` or `EXPIRED`), **Creation Date**, **Expiration Date**, and time until expiration.
+
+To create a key, click **Add API key**, enter a **Name**, and choose a **Lifetime**: `30 days`, `90 days`, `1 year`, or a custom number of days. Use the copy icon next to a key to copy it, and the edit and delete icons under **Actions** to manage it.
+
+<Warning>
+  Treat API keys like passwords. Do not commit them to source control, and delete keys you no longer use.
+</Warning>
+
+## Subscription
+
+The **Subscriptions** table lists your plans with their **Status** (`ACTIVE` or `DISABLED`), **Start Date**, **Expiration Date**, and time until expiration. Click **Renew** to extend a plan.
